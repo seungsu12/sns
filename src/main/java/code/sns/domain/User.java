@@ -33,6 +33,16 @@ public class User {
 
     private String userLink;
 
+    @OneToMany(mappedBy = "user")
+    List<Follow> follows = new ArrayList<>();
+
+    @Enumerated(EnumType.STRING)
+    private Gender gender;
+
+
+    @OneToMany(mappedBy = "user")
+    private List<Post> posts = new ArrayList<>();
+
     @Builder
     public User(String email, String password, String name, String profile, String profile_img, LocalDate birth, String userLink, Gender gender) {
         this.email = email;
@@ -45,14 +55,7 @@ public class User {
         this.gender = gender;
     }
 
-    @Enumerated(EnumType.STRING)
-    private Gender gender;
 
 
-    @OneToMany(mappedBy = "user")
-    private List<Post> posts = new ArrayList<>();
 
-
-    @OneToMany(mappedBy = "user")
-    private List<Follow> follows = new ArrayList<>();
 }

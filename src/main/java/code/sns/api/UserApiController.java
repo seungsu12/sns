@@ -21,11 +21,11 @@ public class UserApiController {
     private final UserService userService;
 
     @PostMapping("/join")
-    public ResponseEntity join(@RequestBody @Validated) {
+    public ResponseEntity join() {
 
         
 
 
-        return ResponseEntity.status(HttpStatus.OK);
+        return ResponseEntity.status(HttpStatus.OK).body("");
     }
 }
