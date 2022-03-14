@@ -1,9 +1,7 @@
 package code.sns.domain;
 
 
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -11,7 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@ToString
 public class User {
 
     @Id
@@ -44,10 +44,20 @@ public class User {
     private List<Post> posts = new ArrayList<>();
 
     @Builder
-    public User(String email, String password, String name, String profile, String profile_img, LocalDate birth, String userLink, Gender gender) {
+    public static User JoinUser(String email, String password, String username, LocalDate birth, String userLink) {
+        User user = new User();
+        user.email = email;
+        user.password = password;
+        user.userLink = userLink;
+        user.birth = birth;
+        return user;
+    }
+
+    @Builder
+    public User(String email, String password, String username, String profile, String profile_img, LocalDate birth, String userLink, Gender gender) {
         this.email = email;
         this.password = password;
-        this.username = name;
+        this.username = username;
         this.profile = profile;
         this.profile_img = profile_img;
         this.birth = birth;
