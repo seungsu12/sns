@@ -34,7 +34,7 @@ public class indexController {
 
     @GetMapping("/")
     public String profile() {
-        return "profile";
+        return "index";
     }
 
     @GetMapping("/tags")

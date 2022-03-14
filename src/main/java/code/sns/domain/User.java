@@ -23,7 +23,7 @@ public class User {
 
     private String password;
 
-    private String name;
+    private String username;
 
     private String profile;
 
@@ -47,7 +47,7 @@ public class User {
     public User(String email, String password, String name, String profile, String profile_img, LocalDate birth, String userLink, Gender gender) {
         this.email = email;
         this.password = password;
-        this.name = name;
+        this.username = name;
         this.profile = profile;
         this.profile_img = profile_img;
         this.birth = birth;
