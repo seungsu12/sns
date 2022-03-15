@@ -39,7 +39,8 @@ public class User {
     @OneToMany(mappedBy = "user")
     List<Follow> follows = new ArrayList<>();
 
-
+    @OneToMany(mappedBy = "user")
+    List<Comment> comments =new ArrayList<>();
 
     @OneToMany(mappedBy = "user")
     private List<Post> posts = new ArrayList<>();

@@ -12,12 +12,9 @@ public class PostRequestDto {
     @NotBlank
     private String context;
 
-
-
+    private Long user_id;
 
     private MultipartFile file;
-
-
 
 
 

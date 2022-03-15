@@ -24,7 +24,9 @@ public class Post extends  BaseEntity {
 
     private String context;
 
-    private String imgPath;
+    @Embedded
+    private UploadFile uploadFile;
+
 
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -36,10 +38,10 @@ public class Post extends  BaseEntity {
     List<Comment> comments = new ArrayList<>();
 
 
-    public static Post createPost(String context,String imgPath,User user) {
+    public static Post createPost(String context,UploadFile uploadFile,User user) {
         Post post = new Post();
         post.context = context;
-        post.imgPath = imgPath;
+        post.uploadFile = uploadFile;
         post.changeUser(user);
         return post;
     }

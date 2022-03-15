@@ -19,9 +19,12 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
     properties:
       hiberante:
         format_sql : true
     database-platform: org.hibernate.dialect.H2Dialect
+
+file:
+  dir: /Users/seungsu/dev/sns/src/main/resources/static/img/
 
