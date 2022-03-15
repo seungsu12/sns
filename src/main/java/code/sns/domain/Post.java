@@ -8,11 +8,13 @@ import lombok.ToString;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Post {
+public class Post extends  BaseEntity {
 
     @GeneratedValue
     @Id
@@ -24,11 +26,15 @@ public class Post {
 
     private String imgPath;
 
-    private LocalDate createdAt;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
+
+
+    @OneToMany(mappedBy = "post")
+    List<Comment> comments = new ArrayList<>();
+
 
     public static Post createPost(String context,String imgPath,User user) {
         Post post = new Post();

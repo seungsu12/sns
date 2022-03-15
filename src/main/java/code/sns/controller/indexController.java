@@ -41,4 +41,14 @@ public class indexController {
     public String tags() {
         return "tags";
     }
+
+    @GetMapping("/login")
+    public String login() {
+        return "login";
+    }
+
+    @GetMapping("/signup")
+    public String signup() {
+        return "signup";
+    }
 }

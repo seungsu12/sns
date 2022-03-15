@@ -5,20 +5,29 @@ import code.sns.domain.dto.UserRequestDto;
 import code.sns.exception.NotFoundObjectException;
 import code.sns.repository.UserJpaRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class UserService {
 
     private final UserJpaRepository userJpaRepository;
 
     public void join(UserRequestDto requestDto) {
 
-       userJpaRepository.join(User.JoinUser(requestDto.getEmail(), requestDto.getPassword(),
-                requestDto.getUsername(), requestDto.getBirth(),requestDto.getUserLink()));
+        log.info("requestdto {}",requestDto);
+
+       userJpaRepository.join(User.JoinUser(requestDto.getEmail(),
+               requestDto.getPassword(),
+                requestDto.getUsername(),
+               requestDto.getBirth(),
+               requestDto.getUserLink(),
+               requestDto.getGender()
+       ));
     }
 
     public User findById(Long id) {

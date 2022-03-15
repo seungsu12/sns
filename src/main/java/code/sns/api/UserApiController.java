@@ -25,12 +25,18 @@ public class UserApiController {
 
         userService.join(requestDto);
 
-
-        return ResponseEntity.status(HttpStatus.OK).body("");
+        return ResponseEntity.status(HttpStatus.OK).body("회원가입완료");
     }
 
+//    @PutMapping("/user/{id}")
+//    public ResponseEntity updateUser(@RequestBody @) {
+//
+//
+//        return ResponseEntity.status(HttpStatus.OK).body("")
+//    }
+
     @GetMapping("/user/{id}")
-    public ResponseEntity findById(@PathVariable("id")Long id) {
+    public ResponseEntity findById(@PathVariable("id") Long id) {
 
         User findUser = userService.findById(id);
         return ResponseEntity.status(HttpStatus.OK).body(findUser);

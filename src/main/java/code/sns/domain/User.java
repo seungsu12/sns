@@ -31,37 +31,40 @@ public class User {
 
     private LocalDate birth;
 
-    private String userLink;
+    private String nickname;
+
+    @Enumerated(EnumType.STRING)
+    private Gender gender;
 
     @OneToMany(mappedBy = "user")
     List<Follow> follows = new ArrayList<>();
 
-    @Enumerated(EnumType.STRING)
-    private Gender gender;
 
 
     @OneToMany(mappedBy = "user")
     private List<Post> posts = new ArrayList<>();
 
     @Builder
-    public static User JoinUser(String email, String password, String username, LocalDate birth, String userLink) {
+    public static User JoinUser(String email, String password, String username, LocalDate birth, String nickname,Gender gender) {
         User user = new User();
         user.email = email;
         user.password = password;
-        user.userLink = userLink;
+        user.username =username;
+        user.nickname = nickname;
         user.birth = birth;
+        user.gender = gender;
         return user;
     }
 
     @Builder
-    public User(String email, String password, String username, String profile, String profile_img, LocalDate birth, String userLink, Gender gender) {
+    public User(String email, String password, String username, String profile, String profile_img, LocalDate birth, String nickname, Gender gender) {
         this.email = email;
         this.password = password;
         this.username = username;
         this.profile = profile;
         this.profile_img = profile_img;
         this.birth = birth;
-        this.userLink = userLink;
+        this.nickname = nickname;
         this.gender = gender;
     }
 
