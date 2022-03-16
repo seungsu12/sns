@@ -6,8 +6,7 @@ import code.sns.domain.User;
 import code.sns.domain.dto.PostRequestDto;
 import code.sns.domain.dto.PostResponseDto;
 import code.sns.exception.NotFoundObjectException;
-import code.sns.repository.PostJpaRepository;
-import code.sns.repository.UserJpaRepository;
+import code.sns.repository.post.PostRepository;
 import code.sns.upload.FileStore;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,13 +18,13 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PostService {
 
-    private final PostJpaRepository postJpaRepository;
+    private final PostRepository postRepository;
     private final UserJpaRepository userJpaRepository;
     private final FileStore fileStore;
 
     public List<PostResponseDto> getPosts() {
 
-        return postJpaRepository.getPosts();
+        return postRepository.getPosts();
     }
 
     public void createPost(PostRequestDto requestDto) throws IOException {
@@ -38,11 +37,11 @@ public class PostService {
         Post post = Post.createPost(requestDto.getContext(),
                 uploadFile,user);
 
-        postJpaRepository.save(post);
+        postRepository.save(post);
 
     }
 
     public PostResponseDto getPostById(Long id) {
-        return postJpaRepository.findByIdDto(id).orElseThrow(()-> new NotFoundObjectException(String.format("해당 post[%s]가 존재하지 않습니다.",id)));
+        return postRepository.findByIdDto(id).orElseThrow(()-> new NotFoundObjectException(String.format("해당 post[%s]가 존재하지 않습니다.",id)));
     }
 }

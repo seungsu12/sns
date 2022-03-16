@@ -7,40 +7,41 @@ import code.sns.domain.User;
 import code.sns.domain.dto.CommentRequestDto;
 import code.sns.domain.dto.CommentResponseDto;
 import code.sns.exception.NotFoundObjectException;
-import code.sns.repository.CommentJpaRepository;
-import code.sns.repository.PostJpaRepository;
-import code.sns.repository.UserJpaRepository;
+import code.sns.repository.comment.CommentRepository;
+import code.sns.repository.post.PostRepository;
+import code.sns.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class CommentService {
 
-    private final CommentJpaRepository commentJpaRepository;
-    private final UserJpaRepository userJpaRepository;
-    private final PostJpaRepository postJpaRepository;
+    private final CommentRepository commentRepository;
+    private final UserRepository userRepository;
+    private final PostRepository postRepository;
 
 
     public void createComment(CommentRequestDto requestDto) {
 
-        User user = userJpaRepository.findById(requestDto.getUser_id())
+        User user = userRepository.findById(requestDto.getUser_id())
                 .orElseThrow(()->new NotFoundObjectException("해당 유저가 없습니다."));
-        Post post = postJpaRepository.findById(requestDto.getPost_id())
+        Post post = postRepository.findById(requestDto.getPost_id())
                 .orElseThrow(()->new NotFoundObjectException("해당 게시물이 없습니다."));
 
         Comment comment = Comment.builder()
                 .context(requestDto.getContext())
-                .post(post).build();
+                .post(post)
+                .user(user)
+                .build();
 
-        commentJpaRepository.createComment(comment);
+        commentRepository.save(comment);
 
     }
 
     public List<CommentResponseDto> getCommentById(Long id) {
-        return  commentJpaRepository.getCommentByIdDto(id);
+        return  commentRepository.getCommentByIdDto(id);
     }
 }

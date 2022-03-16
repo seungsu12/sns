@@ -17,11 +17,11 @@ public class Comment {
 
     private String context;
 
-    @Builder
-    public Comment(String context, Post post) {
-        this.context = context;
-        this.post = post;
-    }
+//    @Builder
+//    public Comment(String context, Post post) {
+//        this.context = context;
+//        this.post = post;
+//    }
 
     @Builder
     public Comment(String context, Post post, User user) {
