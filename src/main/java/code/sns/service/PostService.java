@@ -41,4 +41,8 @@ public class PostService {
         postJpaRepository.save(post);
 
     }
+
+    public PostResponseDto getPostById(Long id) {
+        return postJpaRepository.findById(id).orElseThrow(()-> new NotFoundObjectException(String.format("해당 post[%s]가 존재하지 않습니다.",id)));
+    }
 }

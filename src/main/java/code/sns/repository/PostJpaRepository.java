@@ -6,6 +6,7 @@ import code.sns.domain.QComment;
 import code.sns.domain.QPost;
 import code.sns.domain.User;
 import code.sns.domain.dto.PostResponseDto;
+import code.sns.domain.dto.QPostResponseDto;
 import com.querydsl.core.Tuple;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
@@ -34,8 +35,17 @@ public class PostJpaRepository {
         em.persist(post);
     }
 
-    public Optional<Post> findById(Long id) {
-        return Optional.ofNullable(queryFactory.selectFrom(post)
+    public Optional<PostResponseDto> findById(Long id) {
+        return Optional.ofNullable(queryFactory.select(new QPostResponseDto(
+                        user.id,
+                        post.id,
+                        user.profile_img,
+                        user.username,
+                        user.nickname,
+                        post.context,
+                        post.uploadFile.storeFileName
+                )).from(post)
+                .leftJoin(post.user, user)
                 .where(post.id.eq(id))
                 .fetchOne());
 
@@ -43,14 +53,18 @@ public class PostJpaRepository {
 
     public List<PostResponseDto> getPosts() {
 
-//        List<User> fetch = queryFactory.selectFrom(comment)
-//                .join().fetchJoin()
-//                .fetch();
-//
-//        for (User fetch1 : fetch) {
-//            System.out.println(fetch1);
-//        }
+        List<PostResponseDto> result = queryFactory.select(new QPostResponseDto(
+                        user.id,
+                        post.id,
+                        user.profile_img,
+                        user.username,
+                        user.nickname,
+                        post.context,
+                        post.uploadFile.storeFileName
+                )).from(post)
+                .leftJoin(post.user, user)
+                .fetch();
 
-        return null;
+        return result;
     }
 }

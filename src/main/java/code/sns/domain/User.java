@@ -10,6 +10,7 @@ import java.util.List;
 
 @Entity
 @Getter
+@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @ToString(of = {"id","email","username","profile","birth","nickname"})
 public class User {
@@ -39,11 +40,15 @@ public class User {
     @OneToMany(mappedBy = "user")
     List<Follow> follows = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user")
-    List<Comment> comments =new ArrayList<>();
+//    @OneToMany(mappedBy = "user")
+//    List<Comment> comments =new ArrayList<>();
 
     @OneToMany(mappedBy = "user")
     private List<Post> posts = new ArrayList<>();
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "team_id")
+    private Team team;
 
     @Builder
     public static User JoinUser(String email, String password, String username, LocalDate birth, String nickname,Gender gender) {

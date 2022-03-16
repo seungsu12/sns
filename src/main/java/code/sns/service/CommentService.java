@@ -32,8 +32,7 @@ public class CommentService {
 
         Comment comment = Comment.builder()
                 .context(requestDto.getContext())
-                .post(post)
-                .user(user).build();
+                .post(post).build();
 
         commentJpaRepository.createComment(comment);
 
