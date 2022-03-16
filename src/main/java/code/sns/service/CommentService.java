@@ -5,6 +5,7 @@ import code.sns.domain.Comment;
 import code.sns.domain.Post;
 import code.sns.domain.User;
 import code.sns.domain.dto.CommentRequestDto;
+import code.sns.domain.dto.CommentResponseDto;
 import code.sns.exception.NotFoundObjectException;
 import code.sns.repository.CommentJpaRepository;
 import code.sns.repository.PostJpaRepository;
@@ -12,6 +13,7 @@ import code.sns.repository.UserJpaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -36,5 +38,9 @@ public class CommentService {
 
         commentJpaRepository.createComment(comment);
 
+    }
+
+    public List<CommentResponseDto> getCommentById(Long id) {
+        return  commentJpaRepository.getCommentByIdDto(id);
     }
 }

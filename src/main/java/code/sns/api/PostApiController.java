@@ -30,11 +30,7 @@ public class PostApiController {
         return ResponseEntity.status(HttpStatus.OK).body("");
     }
 
-    @GetMapping("/post/{id}")
-    public ResponseEntity getPostById(@PathVariable("id")Long id, Model model) {
-      return ResponseEntity.status(HttpStatus.OK).body(postService.getPostById(id));
 
-    }
 
 
     @GetMapping("/posts")

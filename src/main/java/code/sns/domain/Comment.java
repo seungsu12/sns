@@ -11,7 +11,7 @@ import javax.persistence.*;
 public class Comment {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "comment_id")
     private Long id;
 
@@ -23,18 +23,18 @@ public class Comment {
         this.post = post;
     }
 
-    //    @Builder
-//    public Comment(String context, Post post, User user) {
-//        this.context = context;
-//        this.post = post;
-//        this.user = user;
-//    }
+    @Builder
+    public Comment(String context, Post post, User user) {
+        this.context = context;
+        this.post = post;
+        this.user = user;
+    }
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "post_id")
     private Post post;
 
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "user_id")
-//    private User user;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
 }

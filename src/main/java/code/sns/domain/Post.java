@@ -17,7 +17,7 @@ import java.util.List;
 @ToString(of = {"id","context","user"})
 public class Post extends  BaseEntity {
 
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "post_id")
     private Long id;

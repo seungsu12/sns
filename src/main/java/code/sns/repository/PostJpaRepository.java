@@ -35,7 +35,15 @@ public class PostJpaRepository {
         em.persist(post);
     }
 
-    public Optional<PostResponseDto> findById(Long id) {
+    public Optional<Post> findById(Long id){
+        return Optional.ofNullable(
+                queryFactory.selectFrom(post)
+                        .where(post.id.eq(id))
+                        .fetchOne()
+        );
+    }
+
+    public Optional<PostResponseDto> findByIdDto(Long id) {
         return Optional.ofNullable(queryFactory.select(new QPostResponseDto(
                         user.id,
                         post.id,
@@ -43,7 +51,8 @@ public class PostJpaRepository {
                         user.username,
                         user.nickname,
                         post.context,
-                        post.uploadFile.storeFileName
+                        post.uploadFile.storeFileName,
+                        post.created_at
                 )).from(post)
                 .leftJoin(post.user, user)
                 .where(post.id.eq(id))
@@ -60,7 +69,8 @@ public class PostJpaRepository {
                         user.username,
                         user.nickname,
                         post.context,
-                        post.uploadFile.storeFileName
+                        post.uploadFile.storeFileName,
+                        post.created_at
                 )).from(post)
                 .leftJoin(post.user, user)
                 .fetch();

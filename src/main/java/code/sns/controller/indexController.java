@@ -1,11 +1,20 @@
 package code.sns.controller;
 
 
+import code.sns.domain.dto.PostResponseDto;
+import code.sns.service.PostService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import java.util.List;
+
 @Controller
+@RequiredArgsConstructor
 public class indexController {
+
+    private final PostService postService;
 
     @GetMapping("/upload")
     public String upload() {
@@ -33,7 +42,9 @@ public class indexController {
     }
 
     @GetMapping("/")
-    public String profile() {
+    public String profile(Model model) {
+        List<PostResponseDto> posts = postService.getPosts();
+        model.addAttribute("posts",posts);
         return "index";
     }
 

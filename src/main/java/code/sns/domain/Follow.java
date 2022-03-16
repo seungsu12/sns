@@ -7,7 +7,7 @@ import javax.persistence.*;
 public class Follow {
 
 
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name ="follow_id")
     private Long id;

@@ -6,22 +6,22 @@ spring:
       max-file-size: 100MB
 
 
-  h2:
-    console:
-      enabled: true
-      path: /h2-console
+#  h2:
+#    console:
+#      enabled: true
+#      path: /h2-console
 
   datasource:
-    driver-class-name: org.h2.Driver
-    url: jdbc:h2:mem:sns
-    username: ss
-    password:
+    url: jdbc:mysql://localhost:3306/comedb
+    username: root
+    password: 6568
+    driver-class-name: com.mysql.cj.jdbc.Driver
 
 
   jpa:
-    database-platform: org.hibernate.dialect.H2Dialect
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
     properties:
       hibernate:
         format_sql: true
@@ -29,6 +29,7 @@ spring:
     defer-datasource-initialization: true
     profiles:
       active: true
+    database: mysql
 
 file:
   dir: /Users/seungsu/dev/sns/src/main/resources/static/img/

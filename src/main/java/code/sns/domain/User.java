@@ -2,6 +2,7 @@ package code.sns.domain;
 
 
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -16,7 +17,7 @@ import java.util.List;
 public class User {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
     private Long id;
 
@@ -40,8 +41,8 @@ public class User {
     @OneToMany(mappedBy = "user")
     List<Follow> follows = new ArrayList<>();
 
-//    @OneToMany(mappedBy = "user")
-//    List<Comment> comments =new ArrayList<>();
+    @OneToMany(mappedBy = "user")
+    List<Comment> comments =new ArrayList<>();
 
     @OneToMany(mappedBy = "user")
     private List<Post> posts = new ArrayList<>();
