@@ -28,12 +28,12 @@ public class UserApiController {
         return ResponseEntity.status(HttpStatus.OK).body("회원가입완료");
     }
 
-//    @PutMapping("/user/{id}")
-//    public ResponseEntity updateUser(@RequestBody @) {
-//
-//
-//        return ResponseEntity.status(HttpStatus.OK).body("")
-//    }
+    @PutMapping("/user/{id}")
+    public ResponseEntity updateUser(@RequestBody UserRequestDto requestDto) {
+
+        User user = userService.updateUser(requestDto);
+        return ResponseEntity.status(HttpStatus.OK).body("user");
+    }
 
     @GetMapping("/user/{id}")
     public ResponseEntity findById(@PathVariable("id") Long id) {

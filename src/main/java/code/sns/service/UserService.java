@@ -7,10 +7,12 @@ import code.sns.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
 @Slf4j
+@Transactional
 public class UserService {
 
     private final UserRepository userRepository;
@@ -22,7 +24,7 @@ public class UserService {
                requestDto.getPassword(),
                 requestDto.getUsername(),
                requestDto.getBirth(),
-               requestDto.getUserLink(),
+               requestDto.getNickname(),
                requestDto.getGender()
        ));
     }
@@ -30,5 +32,10 @@ public class UserService {
     public User findById(Long id) {
         return userRepository.findById(id).
                 orElseThrow(() -> new NotFoundObjectException("해당하는 유저는 없습니다."));
+    }
+
+    public User updateUser(UserRequestDto requestDto) {
+
+        return userRepository.findByEmail(requestDto.getEmail());
     }
 }
