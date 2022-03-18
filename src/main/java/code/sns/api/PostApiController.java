@@ -5,6 +5,7 @@ import code.sns.domain.dto.request.PostRequestDto;
 import code.sns.domain.dto.response.PostResponseDto;
 import code.sns.service.CommentService;
 import code.sns.service.PostService;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +21,7 @@ public class PostApiController {
     private final PostService postService;
     private final CommentService commentService;
 
+    @ApiOperation(value = "피드 생성",notes = "정볼를 받아서 피드생성")
     @PostMapping("/post")
     public ResponseEntity createPost(@ModelAttribute PostRequestDto requestDto) throws IOException {
 
