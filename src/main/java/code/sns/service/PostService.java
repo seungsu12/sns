@@ -3,8 +3,10 @@ package code.sns.service;
 import code.sns.domain.Post;
 import code.sns.domain.UploadFile;
 import code.sns.domain.User;
-import code.sns.domain.dto.PostRequestDto;
-import code.sns.domain.dto.PostResponseDto;
+import code.sns.domain.dto.request.PostRequestDto;
+import code.sns.domain.dto.response.PostResponseDto;
+import code.sns.exception.CustomException;
+import code.sns.exception.ErrorCode;
 import code.sns.exception.NotFoundObjectException;
 import code.sns.repository.post.PostRepository;
 import code.sns.repository.user.UserRepository;
@@ -33,7 +35,7 @@ public class PostService {
     public void createPost(PostRequestDto requestDto) throws IOException {
 
         User user = userRepository.findById(requestDto.getUser_id())
-                .orElseThrow(() -> new NotFoundObjectException(String.format("해당 [%s] 아이디는 존재하지않습니다.",requestDto.getUser_id())));
+                .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_POST,String.format("해당 [%s] 아이디는 없습니다.",requestDto.getUser_id())));
 
         UploadFile uploadFile = fileStore.storeFile(requestDto.getFile());
 
@@ -45,6 +47,6 @@ public class PostService {
     }
 
     public PostResponseDto getPostById(Long id) {
-        return postRepository.findByIdDto(id).orElseThrow(()-> new NotFoundObjectException(String.format("해당 post[%s]가 존재하지 않습니다.",id)));
+        return postRepository.findByIdDto(id).orElseThrow(()->new CustomException(ErrorCode.NOT_FOUND_POST,String.format("해당 [%s] 아이디는 없습니다.",id)));
     }
 }

@@ -1,7 +1,8 @@
 package code.sns.repository.comment;
 
-import code.sns.domain.dto.CommentResponseDto;
-import code.sns.domain.dto.QCommentResponseDto;
+import code.sns.domain.dto.response.CommentResponseDto;
+
+import code.sns.domain.dto.response.QCommentResponseDto;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 

@@ -1,17 +1,15 @@
 package code.sns.api;
 
 
-import code.sns.domain.dto.PostRequestDto;
-import code.sns.domain.dto.PostResponseDto;
+import code.sns.domain.dto.request.PostRequestDto;
+import code.sns.domain.dto.response.PostResponseDto;
 import code.sns.service.CommentService;
 import code.sns.service.PostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.io.IOException;
 import java.util.List;
 
@@ -31,6 +29,11 @@ public class PostApiController {
     }
 
 
+    @GetMapping("/api/post/{id}")
+    public ResponseEntity findById(@PathVariable("id")Long id) {
+        PostResponseDto dto = postService.getPostById(id);
+        return ResponseEntity.status(HttpStatus.OK).body(dto);
+    }
 
 
     @GetMapping("/posts")

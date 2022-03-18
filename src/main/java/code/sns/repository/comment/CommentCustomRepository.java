@@ -1,6 +1,6 @@
 package code.sns.repository.comment;
 
-import code.sns.domain.dto.CommentResponseDto;
+import code.sns.domain.dto.response.CommentResponseDto;
 
 import java.util.List;
 

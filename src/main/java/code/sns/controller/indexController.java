@@ -1,7 +1,7 @@
 package code.sns.controller;
 
 
-import code.sns.domain.dto.PostResponseDto;
+import code.sns.domain.dto.response.PostResponseDto;
 import code.sns.service.PostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;

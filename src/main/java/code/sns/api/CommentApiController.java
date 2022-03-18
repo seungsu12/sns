@@ -1,8 +1,8 @@
 package code.sns.api;
 
 
-import code.sns.domain.dto.CommentRequestDto;
-import code.sns.domain.dto.CommentResponseDto;
+import code.sns.domain.dto.request.CommentRequestDto;
+import code.sns.domain.dto.response.CommentResponseDto;
 import code.sns.service.CommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

@@ -1,6 +1,6 @@
 package code.sns.repository.post;
 
-import code.sns.domain.dto.PostResponseDto;
+import code.sns.domain.dto.response.PostResponseDto;
 
 import java.util.List;
 import java.util.Optional;

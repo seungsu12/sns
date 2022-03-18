@@ -1,16 +1,14 @@
 package code.sns.repository.post;
 
-import code.sns.domain.dto.CommentResponseDto;
-import code.sns.domain.dto.PostResponseDto;
-import code.sns.domain.dto.QCommentResponseDto;
-import code.sns.domain.dto.QPostResponseDto;
+import code.sns.domain.dto.response.PostResponseDto;
+
+import code.sns.domain.dto.response.QPostResponseDto;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 import java.util.Optional;
 
-import static code.sns.domain.QComment.comment;
 import static code.sns.domain.QPost.post;
 import static code.sns.domain.QUser.user;
 

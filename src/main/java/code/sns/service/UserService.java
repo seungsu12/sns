@@ -1,7 +1,7 @@
 package code.sns.service;
 
 import code.sns.domain.User;
-import code.sns.domain.dto.UserRequestDto;
+import code.sns.domain.dto.request.UserRequestDto;
 import code.sns.exception.NotFoundObjectException;
 import code.sns.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -31,7 +31,7 @@ public class UserService {
 
     public User findById(Long id) {
         return userRepository.findById(id).
-                orElseThrow(() -> new NotFoundObjectException("해당하는 유저는 없습니다."));
+                orElseThrow(() -> new NotFoundObjectException(String.format("해당하는 유저아이디 [%s]는 없습니다.",id)));
     }
 
     public User updateUser(UserRequestDto requestDto) {
