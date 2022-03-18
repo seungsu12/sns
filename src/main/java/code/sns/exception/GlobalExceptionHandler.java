@@ -9,11 +9,9 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(NotFoundObjectException.class)
-    protected ResponseEntity<?> handleNotFoundArgumentException(NotFoundObjectException e) {
-        final ErrorResponse errorResponse = ErrorResponse.builder()
-                .code("not found item")
-                .message(e.getMessage()).build();
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
+    @ExceptionHandler(CustomException.class)
+    protected ResponseEntity<ErrorResponse> CustomExceptionHandler(CustomException e) {
+        return ErrorResponse.toResponseEntity(e);
+
     }
 }
