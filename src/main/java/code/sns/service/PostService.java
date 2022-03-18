@@ -7,19 +7,22 @@ import code.sns.domain.dto.PostRequestDto;
 import code.sns.domain.dto.PostResponseDto;
 import code.sns.exception.NotFoundObjectException;
 import code.sns.repository.post.PostRepository;
+import code.sns.repository.user.UserRepository;
 import code.sns.upload.FileStore;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class PostService {
 
     private final PostRepository postRepository;
-    private final UserJpaRepository userJpaRepository;
+    private final UserRepository userRepository;
     private final FileStore fileStore;
 
     public List<PostResponseDto> getPosts() {
@@ -29,7 +32,7 @@ public class PostService {
 
     public void createPost(PostRequestDto requestDto) throws IOException {
 
-        User user = userJpaRepository.findById(requestDto.getUser_id())
+        User user = userRepository.findById(requestDto.getUser_id())
                 .orElseThrow(() -> new NotFoundObjectException(String.format("해당 [%s] 아이디는 존재하지않습니다.",requestDto.getUser_id())));
 
         UploadFile uploadFile = fileStore.storeFile(requestDto.getFile());

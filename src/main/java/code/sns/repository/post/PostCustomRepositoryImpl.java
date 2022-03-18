@@ -30,7 +30,9 @@ public class PostCustomRepositoryImpl implements PostCustomRepository {
                         user.nickname,
                         post.context,
                         post.uploadFile.storeFileName,
-                        post.created_at
+                        post.created_at,
+                        post.postLikes.size(),
+                        post.comments.size()
                 )).from(post)
                 .leftJoin(post.user, user)
                 .where(post.id.eq(id))
@@ -47,7 +49,9 @@ public class PostCustomRepositoryImpl implements PostCustomRepository {
                         user.nickname,
                         post.context,
                         post.uploadFile.storeFileName,
-                        post.created_at
+                        post.created_at,
+                        post.postLikes.size(),
+                    post.comments.size()
                 )).from(post)
                 .leftJoin(post.user, user)
                 .fetch();
