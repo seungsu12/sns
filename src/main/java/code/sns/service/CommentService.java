@@ -12,11 +12,13 @@ import code.sns.repository.post.PostRepository;
 import code.sns.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class CommentService {
 
     private final CommentRepository commentRepository;

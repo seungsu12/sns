@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +14,7 @@ import java.util.List;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @ToString(of = {"id","context","user"})
-public class Post extends  BaseEntity {
+public class Post extends BaseEntity {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -28,16 +27,16 @@ public class Post extends  BaseEntity {
     @Embedded
     private UploadFile uploadFile;
 
-
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 
 
-    @OneToMany(mappedBy = "post")
+    @OneToMany(mappedBy = "post" ,cascade = CascadeType.ALL)
     List<Comment> comments = new ArrayList<>();
 
+    @OneToMany(mappedBy = "post",cascade = CascadeType.ALL)
+    List<PostLike> postLikes = new ArrayList<>();
 
     public static Post createPost(String context,UploadFile uploadFile,User user) {
         Post post = new Post();

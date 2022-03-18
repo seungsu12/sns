@@ -1,4 +1,4 @@
-package code.sns.domain;
+package code.sns.domain.enums;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 

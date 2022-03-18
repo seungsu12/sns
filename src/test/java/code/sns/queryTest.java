@@ -1,11 +1,11 @@
 package code.sns;
 
 import code.sns.domain.*;
+import code.sns.domain.enums.Gender;
 import com.querydsl.core.Tuple;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,7 +14,6 @@ import javax.persistence.PersistenceContext;
 import java.time.LocalDate;
 import java.util.List;
 
-import static code.sns.domain.QComment.comment;
 import static code.sns.domain.QPost.post;
 import static code.sns.domain.QTeam.team;
 import static code.sns.domain.QUser.user;
