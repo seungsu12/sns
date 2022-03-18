@@ -1,12 +1,12 @@
-springdoc:
-  default-consumes-media-type: application/json
-  default-produces-media-type: application/json
-  swagger-ui:
-    operations-sorter: alpha
-    tags-sorter: alpha
-    path: /swagger-ui.html
-    disable-swagger-default-url: true
-    display-query-param-without-oauth2: true
+#springdoc:
+#  default-consumes-media-type: application/json
+#  default-produces-media-type: application/json
+#  swagger-ui:
+#    operations-sorter: alpha
+#    tags-sorter: alpha
+#    path: /swagger-ui.html
+#    disable-swagger-default-url: true
+#    display-query-param-without-oauth2: true
 
 spring:
   servlet:
@@ -14,7 +14,6 @@ spring:
       enabled: true
       max-request-size: 100MB
       max-file-size: 100MB
-
 
 #  h2:
 #    console:
@@ -40,6 +39,9 @@ spring:
     profiles:
       active: true
     database: mysql
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
 
 file:
   dir: /Users/seungsu/dev/sns/src/main/resources/static/img/
