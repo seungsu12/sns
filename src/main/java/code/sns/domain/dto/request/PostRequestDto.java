@@ -1,4 +1,4 @@
-package code.sns.domain.dto;
+package code.sns.domain.dto.request;
 
 import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;

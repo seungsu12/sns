@@ -1,4 +1,4 @@
-package code.sns.domain.dto;
+package code.sns.domain.dto.response;
 
 import code.sns.domain.Comment;
 import code.sns.domain.Post;
