@@ -36,7 +36,7 @@ public class indexController {
         return "explore";
     }
 
-    @GetMapping("faq")
+    @GetMapping("/faq")
     public String faq() {
         return "faq";
     }
