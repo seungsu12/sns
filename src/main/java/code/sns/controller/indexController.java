@@ -1,9 +1,13 @@
 package code.sns.controller;
 
 
+import code.sns.auth.PrincipalDetail;
 import code.sns.domain.dto.response.PostResponseDto;
 import code.sns.service.PostService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,6 +16,7 @@ import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
+@Slf4j
 public class indexController {
 
     private final PostService postService;
@@ -31,7 +36,7 @@ public class indexController {
         return "edit-profile";
     }
 
-    @GetMapping("explore")
+    @GetMapping("/explore")
     public String explore() {
         return "explore";
     }
@@ -61,5 +66,19 @@ public class indexController {
     @GetMapping("/signup")
     public String signup() {
         return "signup";
+    }
+
+    @GetMapping("/logout")
+    public void logout() {
+    }
+
+    @GetMapping("/test")
+    public String test(Authentication authentication) {
+        PrincipalDetail principal = (PrincipalDetail) authentication.getPrincipal();
+        log.info("principal {}",principal.getUsername());
+        log.info("principal {}",principal.getId());
+
+
+        return "test";
     }
 }

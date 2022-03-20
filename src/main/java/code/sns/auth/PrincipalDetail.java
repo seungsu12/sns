@@ -1,6 +1,8 @@
-package code.sns.domain;
+package code.sns.auth;
 
+import code.sns.domain.User;
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -8,7 +10,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 @Getter
+@Slf4j
 public class PrincipalDetail implements UserDetails {
+
+    private static final long serialVersionUID= 1L;
+
 
     private User user;
 
@@ -19,11 +25,17 @@ public class PrincipalDetail implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Collection<GrantedAuthority> collectors = new ArrayList<>();
-        collectors.add(()->{
-            return "ROLE_USER";
-        });
+                collectors.add((GrantedAuthority) () -> user.getRole().toString());
 
         return collectors;
+    }
+
+    public Long getId() {
+        return user.getId();
+    }
+
+    public String getEmail() {
+        return user.getEmail();
     }
 
     @Override

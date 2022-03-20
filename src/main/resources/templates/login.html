@@ -21,6 +21,7 @@
       <link href="css/style.css" rel="stylesheet">
       <!-- Material Icons -->
       <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+      <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
    </head>
    <body class="bg-light">
       <div class="web-none d-flex align-items-center px-3 pt-3">
@@ -61,7 +62,7 @@
                                     <label for="password">password</label>
                                  </div>
                                  <!-- Submit Button-->
-                                 <div class="d-grid"><button class="btn btn-primary w-100 rounded-5 text-decoration-none py-3 fw-bold text-uppercase m-0" id="submitButton" type="submit">Login</button></div>
+                                 <div class="d-grid"><button class="btn btn-primary w-100 rounded-5 text-decoration-none py-3 fw-bold text-uppercase m-0" id="loginButton" type="submit">Login</button></div>
                               </form>
                            </div>
                         </div>
@@ -92,6 +93,31 @@
       </div>
       </div>
 <!-- Jquery Js -->
+      <script>
+         const button = $("#loginButton");
+         console.log(button);
+         button.preventDefault();
+
+         $("#loginButton").click(function(){
+            alert("이벤트");
+            $.ajax({
+               method :"post",
+               url : "/api/login",
+               data :JSON.stringify({
+                  "email": $("#name").val(),
+                  "password" :$("#password").val()
+               }),
+               contentType:"application/json"
+
+            })
+            .done(function(response){
+               alert("hello");
+            }).fail(function(response){
+               alert("로그인실패");
+            });
+         });
+
+      </script>
       <script src="vendor/jquery/jquery.min.js"></script>
       <!-- Bootstrap Bundle Js -->
       <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

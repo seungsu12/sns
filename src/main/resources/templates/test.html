@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+    <div>
+        <button sec:authorize="isAuthenticated()"  type="submit">Logout</button>
+        <button sec:authorize="isAnonymous()"   type="submit">Login</button>
+
+        <p sec:authorize="hasAuthority('USERs')" th:value="knockknock"> 1</p>
+
+    </div>
+<!--    <p th:text="${#authentication.username}"></p>-->
+</body>
+</html>
