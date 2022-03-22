@@ -36,15 +36,21 @@ public class User extends BaseEntity {
 
     private String nickname;
 
+    private String job;
+
+
     @Enumerated(EnumType.STRING)
     private Role role;
-
 
     @Enumerated(EnumType.STRING)
     private Gender gender;
 
-//    @OneToMany(mappedBy = "user")
-//    List<Follow> follows = new ArrayList<>();
+
+    @OneToMany(mappedBy = "toFollow")
+    List<Follow> toFollower = new ArrayList<>();
+
+    @OneToMany(mappedBy = "fromFollow")
+    List<Follow> fromFollower = new ArrayList<>();
 
     @OneToMany(mappedBy = "user")
     List<Comment> comments =new ArrayList<>();
@@ -52,8 +58,7 @@ public class User extends BaseEntity {
     @OneToMany(mappedBy = "user")
     private List<Post> posts = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user")
-    private List<PostLike> postLikes = new ArrayList<>();
+
 
     @Builder
     public static User JoinUser(String email, String password, String username, LocalDate birth, String nickname,Gender gender,Role role) {

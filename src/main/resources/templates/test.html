@@ -7,6 +7,8 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+
 </head>
 <body>
 
@@ -17,6 +19,32 @@
         <p sec:authorize="hasAuthority('USERs')" th:value="knockknock"> 1</p>
 
     </div>
-<!--    <p th:text="${#authentication.username}"></p>-->
+        <div>
+            <button id="follow">팔로우</button>
+            <button id="unfollow">언팔로우</button>
+
+        </div>
+<script>
+    $("#follow").click(function(){
+
+        $.ajax({
+            url: "/follow/2",
+            method :"post"
+            }).done(function(response){
+                alert("팔로우");
+        }).fail(function(response){
+            alert("팔로우 실패");
+        });
+    });
+
+    $("#unfollow").click(function(){
+        $.ajax({
+            url:"/unfollow/2",
+            method : "delete"
+        }).done(function(response){
+            alert("언팔");
+        })
+    })
+</script>
 </body>
 </html>

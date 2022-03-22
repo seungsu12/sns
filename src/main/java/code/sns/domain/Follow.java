@@ -18,19 +18,19 @@ public class Follow {
     @Column(name ="follow_id")
     private Long id;
 
-//    @ManyToOne
-//    @JoinColumn(name = "user_id")
-//    private User toFollow;
-//
-//    @ManyToOne
-//    @JoinColumn(name = "user_id")
-//    private User fromFollow;
-//
-//
-//
-//    @Builder
-//    public Follow(User toFollow, User fromFollow) {
-//        this.toFollow = toFollow;
-//        this.fromFollow = fromFollow;
-//    }
+    @ManyToOne
+    @JoinColumn(name = "toFollower")
+    private User toFollow;
+
+    @ManyToOne
+    @JoinColumn(name = "fromFollower")
+    private User fromFollow;
+
+
+
+    @Builder
+    public Follow(User toFollow, User fromFollow) {
+        this.toFollow = toFollow;
+        this.fromFollow = fromFollow;
+    }
 }

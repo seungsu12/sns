@@ -2,6 +2,8 @@ package code.sns.exception;
 
 import lombok.Getter;
 
+import java.util.function.Supplier;
+
 @Getter
 public class CustomException extends RuntimeException {
 
