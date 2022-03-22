@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lagn="ko" xmlns:th="http://www.thymeleaf.org">
+
+<!-- Head -->
+<th:block th:fragment="modalFragment">
+    <div class="modal fade" id="languageModal" tabindex="-1" aria-labelledby="exampleModalLabel1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 rounded-4 p-4">
+                <div class="modal-header border-0 p-1">
+                    <h6 class="modal-title fw-bold text-body fs-6 d-flex justify-content-center" id="exampleModalLabel1">Choose Language</h6>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form>
+                    <div class="modal-body pt-0 px-0">
+                        <div class="row py-3 gy-3 m-0">
+                            <!-- Langauge Item -->
+                            <div class="langauge-item col-6 col-md-3 px-1 mt-2">
+                                <input type="radio" class="btn-check" name="options-outlined" id="hindi1">
+                                <label class="btn btn-language btn-sm px-2 py-2 rounded-5 d-flex align-items-center justify-content-between" for="hindi1">
+                           <span class="text-start d-grid">
+                           <small class="ln-18">हिंदी</small>
+                           <small class="ln-18">Hindi</small>
+                           </span>
+                                    <span class="material-icons text-muted md-20">check_circle</span>
+                                </label>
+                            </div>
+                            <!-- Langauge Item -->
+                            <div class="langauge-item col-6 col-md-3 px-1 mt-2">
+                                <input type="radio" class="btn-check" name="options-outlined" id="english2" checked>
+                                <label class="btn btn-language btn-sm px-2 py-2 rounded-5 d-flex align-items-center justify-content-between" for="english2">
+                           <span class="text-start d-grid">
+                           <small class="ln-18">English</small>
+                           <small class="ln-18">English</small>
+                           </span>
+                                    <span class="material-icons text-muted md-20">check_circle</span>
+                                </label>
+                            </div>
+                            <!-- Langauge Item -->
+                            <div class="langauge-item col-6 col-md-3 px-1 mt-2">
+                                <input type="radio" class="btn-check" name="options-outlined" id="kannada3">
+                                <label class="btn btn-language btn-sm px-2 py-2 rounded-5 d-flex align-items-center justify-content-between" for="kannada3">
+                           <span class="text-start d-grid">
+                           <small class="ln-18">ಕನ್ನಡ</small>
+                           <small class="ln-18">kannada</small>
+                           </span>
+                                    <span class="material-icons text-muted md-20">check_circle</span>
+                                </label>
+                            </div>
+                            <!-- Langauge Item -->
+                            <div class="langauge-item col-6 col-md-3 px-1 mt-2">
+                                <input type="radio" class="btn-check" name="options-outlined" id="tamil4">
+                                <label class="btn btn-language btn-sm px-2 py-2 rounded-5 d-flex align-items-center justify-content-between" for="tamil4">
+                           <span class="text-start d-grid">
+                           <small class="ln-18">தமிழ்</small>
+                           <small class="ln-18">Tamil</small>
+                           </span>
+                                    <span class="material-icons text-muted md-20">check_circle</span>
+                                </label>
+                            </div>
+                            <!-- Langauge Item -->
+                            <div class="langauge-item col-6 col-md-3 px-1 mt-2">
+                                <input type="radio" class="btn-check" name="options-outlined" id="punjabi5">
+                                <label class="btn btn-language btn-sm px-2 py-2 rounded-5 d-flex align-items-center justify-content-between mb-2" for="punjabi5">
+                           <span class="text-start d-grid">
+                           <small class="ln-18">ਪੰਜਾਬੀ</small>
+                           <small class="ln-18">Punjabi</small>
+                           </span>
+                                    <span class="material-icons text-muted md-20">check_circle</span>
+                                </label>
+                            </div>
+                            <!-- Langauge Item -->
+                            <div class="langauge-item col-6 col-md-3 px-1 mt-2">
+                                <input type="radio" class="btn-check" name="options-outlined" id="punjabi511f">
+                                <label class="btn btn-language btn-sm px-2 py-2 rounded-5 d-flex align-items-center justify-content-between mb-2" for="punjabi511f">
+                           <span class="text-start d-grid">
+                           <small class="ln-18">Türk</small>
+                           <small class="ln-18">Turkish</small>
+                           </span>
+                                    <span class="material-icons text-muted md-20">check_circle</span>
+                                </label>
+                            </div>
+                            <!-- Langauge Item -->
+                            <div class="langauge-item col-6 col-md-3 px-1 mt-2">
+                                <input type="radio" class="btn-check" name="options-outlined" id="punjabi51f">
+                                <label class="btn btn-language btn-sm px-2 py-2 rounded-5 d-flex align-items-center justify-content-between mb-2" for="punjabi51f">
+                           <span class="text-start d-grid">
+                           <small class="ln-18">français</small>
+                           <small class="ln-18">French</small>
+                           </span>
+                                    <span class="material-icons text-muted md-20">check_circle</span>
+                                </label>
+                            </div>
+                            <!-- Langauge Item -->
+                            <div class="langauge-item col-6 col-md-3 px-1 mt-2">
+                                <input type="radio" class="btn-check" name="options-outlined" id="other">
+                                <label class="btn btn-language btn-sm px-2 py-2 rounded-5 d-flex align-items-center justify-content-between mb-2" for="other">
+                           <span class="text-start d-grid">
+                           <small class="ln-18">Other</small>
+                           <small class="ln-18">Other</small>
+                           </span>
+                                    <span class="material-icons text-muted md-20">check_circle</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer border-0 p-1">
+                        <button type="button" class="btn btn-primary w-100 text-decoration-none rounded-5 py-3 fw-bold text-uppercase m-0" data-bs-dismiss="modal">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</th:block>
+</html>

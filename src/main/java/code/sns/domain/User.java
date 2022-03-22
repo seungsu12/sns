@@ -2,6 +2,7 @@ package code.sns.domain;
 
 
 import code.sns.domain.enums.Gender;
+import code.sns.domain.enums.Role;
 import lombok.*;
 
 import javax.persistence.*;
@@ -13,7 +14,7 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@ToString(of = {"id","email","username","profile","birth","nickname"})
+@ToString(of = {"id","email","username","profile","birth","nickname","role"})
 public class User extends BaseEntity {
 
     @Id
@@ -35,11 +36,21 @@ public class User extends BaseEntity {
 
     private String nickname;
 
+    private String job;
+
+
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
     @Enumerated(EnumType.STRING)
     private Gender gender;
 
-    @OneToMany(mappedBy = "user")
-    List<Follow> follows = new ArrayList<>();
+
+    @OneToMany(mappedBy = "toFollow")
+    List<Follow> toFollower = new ArrayList<>();
+
+    @OneToMany(mappedBy = "fromFollow")
+    List<Follow> fromFollower = new ArrayList<>();
 
     @OneToMany(mappedBy = "user")
     List<Comment> comments =new ArrayList<>();
@@ -47,11 +58,10 @@ public class User extends BaseEntity {
     @OneToMany(mappedBy = "user")
     private List<Post> posts = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user")
-    private List<PostLike> postLikes = new ArrayList<>();
+
 
     @Builder
-    public static User JoinUser(String email, String password, String username, LocalDate birth, String nickname,Gender gender) {
+    public static User JoinUser(String email, String password, String username, LocalDate birth, String nickname,Gender gender,Role role) {
         User user = new User();
         user.email = email;
         user.password = password;
@@ -59,6 +69,7 @@ public class User extends BaseEntity {
         user.nickname = nickname;
         user.birth = birth;
         user.gender = gender;
+        user.role =role;
         return user;
     }
 
@@ -73,8 +84,6 @@ public class User extends BaseEntity {
         this.nickname = nickname;
         this.gender = gender;
     }
-
-
 
 
 }

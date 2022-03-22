@@ -14,8 +14,9 @@ public enum ErrorCode {
     FORBIDDEN_USER(HttpStatus.FORBIDDEN, "권한이 없는 요청입니다"),
 
     NOT_FOUND_POST(HttpStatus.NOT_FOUND, "해당 글을 찾을 수 없습니다"),
-    NOT_FOUND_MEMBER(HttpStatus.NOT_FOUND, "해당 유저를 찾을 수 없습니다");
-
+    NOT_FOUND_USER(HttpStatus.NOT_FOUND, "해당 유저를 찾을 수 없습니다"),
+    NOT_FOUND_EMAIL(HttpStatus.NOT_FOUND, "해당 이메일을 찾을 수 없습니다"),
+    NOT_FOUND_Follow(HttpStatus.NOT_FOUND, "해당 팔로우를 찾을 수 없습니다");
 
     private final HttpStatus httpStatus;
     private final String detail;

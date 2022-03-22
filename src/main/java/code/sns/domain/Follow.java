@@ -1,9 +1,15 @@
 package code.sns.domain;
 
 
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 
 @Entity
+@NoArgsConstructor
+@Getter
 public class Follow {
 
 
@@ -12,11 +18,19 @@ public class Follow {
     @Column(name ="follow_id")
     private Long id;
 
-    private Long follower;
+    @ManyToOne
+    @JoinColumn(name = "toFollower")
+    private User toFollow;
 
-    private Long followed;
+    @ManyToOne
+    @JoinColumn(name = "fromFollower")
+    private User fromFollow;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private User user;
+
+
+    @Builder
+    public Follow(User toFollow, User fromFollow) {
+        this.toFollow = toFollow;
+        this.fromFollow = fromFollow;
+    }
 }
