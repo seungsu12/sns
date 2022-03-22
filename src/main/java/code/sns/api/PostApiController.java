@@ -31,8 +31,8 @@ public class PostApiController {
     }
 
 
-    @GetMapping("/api/post/{id}")
-    public ResponseEntity findById(@PathVariable("id")Long id) {
+    @GetMapping("/api/post/{postId}")
+    public ResponseEntity findById(@PathVariable("postId")Long id) {
         PostResponseDto dto = postService.getPostById(id);
         return ResponseEntity.status(HttpStatus.OK).body(dto);
     }
@@ -44,5 +44,7 @@ public class PostApiController {
         List<PostResponseDto> posts = postService.getPosts();
         return ResponseEntity.status(HttpStatus.OK).body(posts);
     }
+
+
 
 }

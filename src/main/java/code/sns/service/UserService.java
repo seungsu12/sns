@@ -2,6 +2,7 @@ package code.sns.service;
 
 import code.sns.domain.User;
 import code.sns.domain.dto.request.UserRequestDto;
+import code.sns.domain.dto.response.UserProfileDto;
 import code.sns.domain.enums.Role;
 import code.sns.exception.CustomException;
 import code.sns.exception.ErrorCode;
@@ -13,6 +14,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 @Slf4j
@@ -21,9 +24,8 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder encoder;
+
     public void join(UserRequestDto requestDto) {
-
-
        userRepository.save(User.JoinUser(requestDto.getEmail(),
                encoder.encode(requestDto.getPassword()),
                 requestDto.getUsername(),
@@ -40,8 +42,19 @@ public class UserService {
     }
 
     public User updateUser(UserRequestDto requestDto) {
-
         return userRepository.findByEmail(requestDto.getEmail()).orElseThrow(()->
                 new CustomException(ErrorCode.NOT_FOUND_EMAIL,String.format("해당하는 이메일 [%s]는 없습니다.",requestDto.getEmail())));
+    }
+
+    public UserProfileDto getProfile(Long id) {
+        return userRepository.getProfile(id);
+    }
+
+    public List<String> getToFollowImg(Long id){
+        return userRepository.getToFollowImg(id);
+    }
+
+    public List<String> getFromFollowImg(Long id){
+        return userRepository.getFromFollowImg(id);
     }
 }

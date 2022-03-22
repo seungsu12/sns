@@ -57,15 +57,7 @@
                                  </div>
                               </div>
                            </div>
-                           <!-- Account Item -->
 
-                           <!-- Account Item -->
-
-                           <!-- Account Item -->
-
-                           <!-- Account Item -->
-
-                           <!-- Account Item -->
 
                         </div>
                         <!-- Feeds -->
@@ -119,13 +111,13 @@
                                                 <a href="#" class="text-muted text-decoration-none d-flex align-items-start fw-light"><span class="material-icons md-18 me-2">share</span><span>Share</span></a>
                                              </div>
                                           </div>
-                                          <div class="d-flex align-items-center mb-3" data-bs-toggle="modal" data-bs-target="#commentModal">
+                                          <div class="d-flex align-items-center mb-3" data-bs-toggle="modal" data-bs-target="#commentModal" th:attr="data-id=${post.post_id}">
+                                             <div style="display: none" class="feed-post-id" th:value="${post.post_id}"> </div>
                                              <span class="material-icons bg-white border-0 text-primary pe-2 md-36">account_circle</span>
-                                             <input type="text" class="form-control form-control-sm rounded-3 fw-light" placeholder="Write Your comment">
+                                             <input type="text" class="form-control form-control-sm rounded-3 fw-light" placeholder="Write Your comment" >
                                           </div>
                                           <!--                                                   comments-->
 
-<!--                                          commentend-->
                                        </div>
                                     </div>
                                  </div>
@@ -475,7 +467,6 @@
                <p class="mb-0 mt-2">Loading</p>
             </div>
          </main>
-
 </th:block>
 
 </html>
