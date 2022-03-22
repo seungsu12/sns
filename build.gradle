@@ -28,7 +28,7 @@ repositories {
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'
-
+	implementation'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect'
 	implementation 'io.springfox:springfox-swagger-ui:3.0.0'
 	implementation 'io.springfox:springfox-boot-starter:3.0.0'
 	implementation 'mysql:mysql-connector-java'

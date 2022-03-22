@@ -91,11 +91,17 @@ public class indexController {
     public void logout() {
     }
 
+    @GetMapping("/profile")
+    public String profile() {
+        return "profile";
+    }
+
     @GetMapping("/test")
     public String test(Authentication authentication) {
+
         PrincipalDetail principal = (PrincipalDetail) authentication.getPrincipal();
-        log.info("principal {}",principal.getUsername());
-        log.info("principal {}",principal.getId());
+        log.info("principal {}", principal.getUsername());
+        log.info("principal {}", principal.getId());
 
 
         return "test";
