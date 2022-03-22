@@ -5,6 +5,9 @@ import code.sns.domain.dto.response.PostResponseDto;
 import code.sns.domain.dto.response.QPostResponseDto;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 import java.util.Optional;
@@ -55,5 +58,28 @@ public class PostCustomRepositoryImpl implements PostCustomRepository {
                 .fetch();
 
         return result;
+    }
+    @Override
+    public Page<PostResponseDto> getPostsByUserId(Long id, Pageable pageable) {
+        List<PostResponseDto> fetch = queryFactory.select(new QPostResponseDto(
+                        user.id,
+                        post.id,
+                        user.profile_img,
+                        user.username,
+                        user.nickname,
+                        post.context,
+                        post.uploadFile.storeFileName,
+                        post.created_at,
+                        post.postLikes.size(),
+                        post.comments.size()
+                )).from(post)
+                .leftJoin(post.user, user)
+                .where(user.id.eq(id))
+                .orderBy(post.created_at.desc())
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .fetch();
+
+        return new PageImpl<>(fetch,pageable, fetch.size());
     }
 }

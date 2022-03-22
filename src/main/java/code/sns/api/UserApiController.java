@@ -3,6 +3,7 @@ package code.sns.api;
 
 import code.sns.domain.User;
 import code.sns.domain.dto.request.UserRequestDto;
+import code.sns.domain.dto.response.UserProfileDto;
 import code.sns.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -11,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -50,5 +52,17 @@ public class UserApiController {
         return ResponseEntity.status(HttpStatus.OK).body(findUser);
     }
 
+    @GetMapping("/user/profile/{id}")
+    public ResponseEntity getProfile(@PathVariable("id") Long id) {
 
+        UserProfileDto profile = userService.getProfile(id);
+        return ResponseEntity.status(HttpStatus.OK).body(profile);
+    }
+
+    @GetMapping("/user/profile/tofollow/{id}")
+    public ResponseEntity getToFollowImg(@PathVariable("id") Long id) {
+
+        List<String> result = userService.getToFollowImg(id);
+        return ResponseEntity.status(HttpStatus.OK).body(result);
+    }
 }

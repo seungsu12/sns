@@ -12,6 +12,8 @@ import code.sns.repository.post.PostRepository;
 import code.sns.repository.user.UserRepository;
 import code.sns.upload.FileStore;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -48,5 +50,10 @@ public class PostService {
 
     public PostResponseDto getPostById(Long id) {
         return postRepository.findByIdDto(id).orElseThrow(()->new CustomException(ErrorCode.NOT_FOUND_POST,String.format("해당 [%s] 아이디는 없습니다.",id)));
+    }
+
+
+    public List<PostResponseDto> getPostsById(Long id, Pageable pageable) {
+        return  postRepository.getPostsByUserId(id,pageable).toList();
     }
 }
