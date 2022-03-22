@@ -5,11 +5,13 @@ import code.sns.domain.Post;
 import code.sns.domain.PostLike;
 import com.querydsl.core.annotations.QueryProjection;
 import lombok.Data;
+import lombok.ToString;
 
 import java.time.LocalDate;
 import java.util.List;
 
 @Data
+@ToString
 public class PostResponseDto {
 
     private Long user_id;

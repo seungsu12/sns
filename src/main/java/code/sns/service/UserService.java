@@ -2,10 +2,14 @@ package code.sns.service;
 
 import code.sns.domain.User;
 import code.sns.domain.dto.request.UserRequestDto;
+import code.sns.domain.enums.Role;
+import code.sns.exception.CustomException;
+import code.sns.exception.ErrorCode;
 import code.sns.exception.NotFoundObjectException;
 import code.sns.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,17 +20,18 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserService {
 
     private final UserRepository userRepository;
-
+    private final BCryptPasswordEncoder encoder;
     public void join(UserRequestDto requestDto) {
 
 
        userRepository.save(User.JoinUser(requestDto.getEmail(),
-               requestDto.getPassword(),
+               encoder.encode(requestDto.getPassword()),
                 requestDto.getUsername(),
                requestDto.getBirth(),
                requestDto.getNickname(),
-               requestDto.getGender()
-       ));
+               requestDto.getGender(),
+               Role.USER
+               ));
     }
 
     public User findById(Long id) {
@@ -36,6 +41,7 @@ public class UserService {
 
     public User updateUser(UserRequestDto requestDto) {
 
-        return userRepository.findByEmail(requestDto.getEmail());
+        return userRepository.findByEmail(requestDto.getEmail()).orElseThrow(()->
+                new CustomException(ErrorCode.NOT_FOUND_EMAIL,String.format("해당하는 이메일 [%s]는 없습니다.",requestDto.getEmail())));
     }
 }
