@@ -5,6 +5,7 @@ import code.sns.auth.PrincipalDetail;
 import code.sns.domain.User;
 import code.sns.domain.dto.response.FollowResponseDto;
 import code.sns.domain.dto.response.PostResponseDto;
+import code.sns.domain.dto.response.PostResponseLoginDto;
 import code.sns.domain.dto.response.UserProfileDto;
 import code.sns.exception.CustomException;
 import code.sns.exception.ErrorCode;
@@ -37,34 +38,34 @@ public class indexController {
     private final UserRepository userRepository;
 
     @GetMapping("/")
-    public String profile(Model model,Authentication authentication) {
+    public String index(Model model,Authentication authentication) {
 
         List<FollowResponseDto> followList;
-        List<PostResponseDto> posts;
 
         if(authentication==null){
                 followList = followService.getBasicList();
+                model.addAttribute("posts",postService.getPosts());
+
         }else{
-            Long id = authCheck(authentication);
-            followList =followService.getFollowList(id);
+            Long userId = authCheck(authentication);
+            followList =followService.getFollowList(userId);
+             model.addAttribute("posts",postService.getPostsLogin(userId,Pageable.ofSize(3)));
         }
-          posts =postService.getPosts();
 
 
         model.addAttribute("followList",followList);
-        model.addAttribute("posts",posts);
         return "index";
     }
 
     @GetMapping("/profile")
     public String profile(Authentication authentication,Model model) {
-        Long id = authCheck(authentication);
+        Long userId = authCheck(authentication);
         
         Pageable pageable = Pageable.ofSize(3);
-        UserProfileDto profile = userRepository.getProfile(id);
-        List<String> toFollowImg = userRepository.getToFollowImg(id);
-        List<String> fromFollowImg = userRepository.getFromFollowImg(id);
-        List<PostResponseDto> posts = postService.getPostsById(id, pageable);
+        UserProfileDto profile = userRepository.getProfile(userId);
+        List<String> toFollowImg = userRepository.getToFollowImg(userId);
+        List<String> fromFollowImg = userRepository.getFromFollowImg(userId);
+        List<PostResponseLoginDto> posts = postService.getPostsLogin(userId, pageable);
 
         model.addAttribute("user",profile);
         model.addAttribute("toFollow",toFollowImg);

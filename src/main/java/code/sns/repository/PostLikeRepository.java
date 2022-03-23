@@ -11,4 +11,6 @@ import java.util.Optional;
 @Transactional(readOnly = true)
 public interface PostLikeRepository extends JpaRepository<PostLike,Long> {
     Optional<PostLike> findByUserAndPost(User user,Post post);
+
+    void deleteByUserAndPost(User user, Post post);
 }

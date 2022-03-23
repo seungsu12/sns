@@ -20,3 +20,28 @@ $('#commentModal').on('show.bs.modal',function(event) {
 
 
 });
+
+$(".post_like_btn").click(function (event){
+    const postId =$(this).attr('data-id');
+    const obj = $(this);
+    let ico =obj.children().eq(0);
+    let like = obj.children().eq(1);
+    $.ajax({
+        "url" :"/api/postLike/"+postId,
+        "method":"post"
+    }).done(function (response){
+        console.log(response);
+        if(response == true){
+            ico.css('color','blue');
+            like.css('color','blue');
+            like.text(parseInt(like.text())+1);
+        }else{
+            ico.css('color','#6c757d');
+            like.css('color','#6c757d');
+            like.text(parseInt(like.text()) ==0 ? 0 : parseInt(like.text())-1);
+        }
+    }).fail(function(response){
+        alert("로그인이 필요합니다");
+        location.href="/login";
+    })
+});
