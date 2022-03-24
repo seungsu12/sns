@@ -32,6 +32,7 @@ public class UserService {
                requestDto.getBirth(),
                requestDto.getNickname(),
                requestDto.getGender(),
+               requestDto.getJob (),
                Role.USER
                ));
     }

@@ -38,22 +38,34 @@
                                     <input class="form-control rounded-5" name="birth" id="birth" type="date" placeholder="Enter birth"/>
                                     <label for="birth">birth</label>
                                  </div>
+                                 <div class="form-floating mb-3">
+                                    <select class="form-control rounded-5" name="job" id="job" type="date" placeholder="Enter birth">
+                                       <option>TEACHER</option>
+                                       <option>DESIGNER</option>
+                                       <option>DEVELOPER</option>
+                                       <option>DOCTOR</option>
+                                       <option>STUDENT</option>
+                                       <option>DANCER</option>
+                                       <option>FARMER</option>
+                                    </select>
+                                    <label for="job">birth</label>
+                                 </div>
                                  <label class="mb-2 text-muted small">GENDER</label>
                                  <div class="d-flex align-items-center mb-3 px-0">
                                     <div class="form-check">
-                                       <input class="form-check-input" name="gender" type="radio" name="flexRadioDefault" id="male">
+                                       <input class="form-check-input" name="gender" type="radio" value="male"  id="male">
                                        <label class="form-check-label" for="male">
                                           Male
                                        </label>
                                     </div>
                                     <div class="form-check mx-3">
-                                       <input class="form-check-input" name="gender" type="radio" name="flexRadioDefault" id="female">
+                                       <input class="form-check-input" name="gender" type="radio" value="female" id="female">
                                        <label class="form-check-label" for="female">
                                           Female
                                        </label>
                                     </div>
                                     <div class="form-check">
-                                       <input class="form-check-input" name="gender" type="radio" name="flexRadioDefault" id="not" checked>
+                                       <input class="form-check-input" name="gender" type="radio"  value="none" id="not" checked>
                                        <label class="form-check-label" for="not">
                                           Prefer not to say
                                        </label>

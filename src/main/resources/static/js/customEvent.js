@@ -1,15 +1,29 @@
+//회원가입
 $(".signup-btn").click(function (event){
-    const form =$("#signupForm")[0];
-    const data = new FormData(form);
+    const data ={
+        "email" : $("#name").val(),
+        "password" : $("#password").val(),
+        "username" : $("#username").val(),
+        "nickname" : $("#nickname").val(),
+        "birth" : $("#birth").val(),
+        "job" : $("#job").val(),
+        "gender" : $(':radio[name="gender"]:checked').val()
+    }
 
     $.ajax({
-        url:"/user",
-        method
-
-
-    })
+        url:"/user/signup",
+        method :"post",
+        data: JSON.stringify(data),
+        contentType : "application/json"
+    }).done(function(response){
+        alert("가입 완료");
+        location.href ="/";
+    }).fail(function (response){
+        alert("가입 실패");
+    });
 });
 
+//게시물 등록
 $(".post-create-btn").click(function (event) {
    const form =$(".post-create-form")[0];
    const data = new FormData(form);
@@ -31,6 +45,7 @@ $(".post-create-btn").click(function (event) {
     });
 });
 
+//게시물 삭제
 $(".post-delete-btn").click(function (event) {
     const postId =$(event.target).attr('data-postId');
     const userId =$(event.target).attr('data-userId');
@@ -50,7 +65,7 @@ $(".post-delete-btn").click(function (event) {
     })
 
 });
-
+// 게시물 모달시 데이터 전송
 $('#commentModal').on('show.bs.modal',function(event) {
     const modal = $(this);
     const id =$(event.relatedTarget).attr('data-id');
@@ -71,6 +86,7 @@ $('#commentModal').on('show.bs.modal',function(event) {
 
 });
 
+// 좋아요 버튼
 $(".post_like_btn").click(function (event){
     const postId =$(this).attr('data-id');
     const obj = $(this);

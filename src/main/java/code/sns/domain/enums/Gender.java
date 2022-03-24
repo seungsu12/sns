@@ -12,10 +12,9 @@ public enum Gender {
                 return Gender.Male;
             case "female":
                 return Gender.Female;
-            case "none":
+            default:
                 return Gender.None;
 
         }
-        return null;
     }
 }
