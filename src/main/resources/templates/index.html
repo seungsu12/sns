@@ -81,7 +81,7 @@
                                                 <a href="#" class="text-muted text-decoration-none material-icons ms-2 md-20 rounded-circle bg-light p-1" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">more_vert</a>
                                                 <ul class="dropdown-menu fs-13 dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
                                                    <li><a class="dropdown-item text-muted" href="#"><span class="material-icons md-13 me-1">edit</span>Edit</a></li>
-                                                   <li><a class="dropdown-item text-muted" href="#"><span class="material-icons md-13 me-1">delete</span>Delete</a></li>
+                                                   <li><a class="dropdown-item text-muted post-delete-btn" th:attr="data-postId=${post.post_id},data-userId=${post.user_id}" ><span class="material-icons md-13 me-1">delete</span>Delete</a></li>
                                                    <li><a class="dropdown-item text-muted" href="#"><span class="material-icons md-13 me-1 ltsp-n5">arrow_back_ios arrow_forward_ios</span>Embed Vogel</a></li>
                                                    <li><a class="dropdown-item text-muted d-flex align-items-center" href="#"><span class="material-icons md-13 me-1">share</span>Share via another apps</a></li>
                                                 </ul>
@@ -99,7 +99,8 @@
                                           <div class="d-flex align-items-center justify-content-between mb-2">
                                              <div sec:authorize="isAuthenticated()">
                                                 <a th:attr="data-id =${post.post_id}"  class="post_like_btn text-muted text-decoration-none d-flex align-items-start fw-light">
-                                                   <span th:style="${post.userSelfLike == true ? 'color: blue;' : ''}"  class="material-icons md-20 me-2">thumb_up_off_alt</span>
+<!--                                                   th:style="${post.userSelfLike == true ? 'color: blue;' : ''}"-->
+                                                   <span class="material-icons md-20 me-2">thumb_up_off_alt</span>
                                                    <span th:text="${post.postLikeCount}">좋아요수</span></a>
                                              </div>
                                              <div sec:authorize="isAnonymous()">

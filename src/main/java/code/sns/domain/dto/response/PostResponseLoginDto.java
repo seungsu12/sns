@@ -17,11 +17,10 @@ public class PostResponseLoginDto {
     private LocalDate createdAt;
     private Integer postLikeCount;
     private Integer commentsCount;
-    private boolean userSelfLike;
 
 
     @QueryProjection
-    public PostResponseLoginDto(Long user_id, Long post_id, String profile_img, String username, String nickname, String context, String storeFilename, LocalDate createdAt, Integer postLikeCount, Integer commentsCount, boolean userSelfLike) {
+    public PostResponseLoginDto(Long user_id, Long post_id, String profile_img, String username, String nickname, String context, String storeFilename, LocalDate createdAt, Integer postLikeCount, Integer commentsCount){
         this.user_id = user_id;
         this.post_id = post_id;
         this.profile_img = profile_img;
@@ -32,6 +31,6 @@ public class PostResponseLoginDto {
         this.createdAt = createdAt;
         this.postLikeCount = postLikeCount;
         this.commentsCount = commentsCount;
-        this.userSelfLike = userSelfLike;
+
     }
 }
