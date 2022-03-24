@@ -30,7 +30,7 @@ public class UserApiController {
     }
 
 
-    @PostMapping("/join")
+    @PostMapping("/user")
     public ResponseEntity join(@RequestBody @Valid UserRequestDto requestDto) {
 
         userService.join(requestDto);

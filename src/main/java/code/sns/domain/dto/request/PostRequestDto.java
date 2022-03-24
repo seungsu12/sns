@@ -10,10 +10,8 @@ public class PostRequestDto {
 
 
     @NotBlank
-    private String context;
-
     private Long user_id;
-
+    private String context;
     private MultipartFile file;
 
 
