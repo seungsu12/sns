@@ -1,8 +1,25 @@
+$(".post-delete-btn").click(function (event) {
+    const postId =$(event.target).attr('data-postId');
+    const userId =$(event.target).attr('data-userId');
+    let map = new Map();
+    map.set("postId",postId);
+    map.set("userId",userId);
+
+    $.ajax({
+        url :"/post/delete",
+        method:"delete",
+        contentType: "application/json",
+        data :JSON.stringify(Object.fromEntries(map))
+    }).done(function (response){
+        alert("삭제");
+    }).fail(function(response){
+        alert("권한이 없습니다.")
+    })
+
+});
+
 $('#commentModal').on('show.bs.modal',function(event) {
     const modal = $(this);
-
-
-
     const id =$(event.relatedTarget).attr('data-id');
 
     $.ajax({

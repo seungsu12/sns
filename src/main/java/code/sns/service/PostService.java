@@ -20,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -61,5 +62,11 @@ public class PostService {
 
     public List<PostResponseLoginDto> getPostsLogin(Long userId, Pageable pageable) {
         return  postRepository.getPostsByUserId(userId,pageable).toList();
+    }
+
+    public void deleteById(Long postId) {
+        Post post = postRepository.findById(postId).orElseThrow(()-> new CustomException(ErrorCode.BAD_REQUEST_POST));
+        postRepository.delete(post);
+
     }
 }

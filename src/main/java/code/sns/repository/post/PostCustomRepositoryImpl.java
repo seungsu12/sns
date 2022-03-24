@@ -42,7 +42,7 @@ public class PostCustomRepositoryImpl implements PostCustomRepository {
                         post.created_at,
                         post.postLikes.size(),
                         post.comments.size()
-                )).from(post,postLike)
+                )).from(post)
                 .leftJoin(post.user, user)
                 .where(post.id.eq(postId))
                 .fetchOne());
@@ -61,7 +61,7 @@ public class PostCustomRepositoryImpl implements PostCustomRepository {
                         post.created_at,
                         post.postLikes.size(),
                         post.comments.size()
-                )).from(post,postLike)
+                )).from(post)
                 .leftJoin(post.user, user)
                 .fetch();
 
@@ -79,15 +79,14 @@ public class PostCustomRepositoryImpl implements PostCustomRepository {
                         post.uploadFile.storeFileName,
                         post.created_at,
                         post.postLikes.size(),
-                        post.comments.size(),
-                        postLike.post.eq(post).isNotNull()
-                ).from(post, postLike)
+                        post.comments.size()
+
+                )).from(post)
                 .leftJoin(post.user, user)
                 .where(user.id.eq(userId))
-                .where(postLike.user.id.eq(userId))
                 .orderBy(post.created_at.desc())
-//                .offset(pageable.getOffset())
-//                .limit(pageable.getPageSize())
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
                 .fetch();
 
         return new PageImpl<>(fetch,pageable, fetch.size());
