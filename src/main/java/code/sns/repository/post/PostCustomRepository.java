@@ -16,4 +16,6 @@ public interface PostCustomRepository {
     Page<PostResponseLoginDto> getPostsByUserId(Long userId, Pageable pageable);
 
     Page<PostResponseLoginDto> getPostsLogin(Long userId, Pageable pageable);
+
+    List<PostResponseLoginDto> getPostsByFollow(Long userId, Pageable pageable);
 }

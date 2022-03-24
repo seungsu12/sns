@@ -19,9 +19,9 @@ public class PostController {
 
 
     @GetMapping("/post/{id}")
-    public void getPostById(@PathVariable("id")Long id, Model model) {
-        model.addAttribute("post",postService.getPostById(id));
-        commentService.getCommentById(id);
+    public void getPostById(@PathVariable("id")Long postId, Model model) {
+        model.addAttribute("post",postService.getPostById(postId));
+//        commentService.getCommentById(id);
 
     }
 }

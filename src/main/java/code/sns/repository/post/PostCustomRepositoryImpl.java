@@ -95,6 +95,34 @@ public class PostCustomRepositoryImpl implements PostCustomRepository {
     }
 
     @Override
+    public List<PostResponseLoginDto> getPostsByFollow(Long userId, Pageable pageable) {
+
+        List<PostResponseLoginDto> fetch = queryFactory.select(new QPostResponseLoginDto(
+                        user.id,
+                        post.id,
+                        user.profile_img,
+                        user.username,
+                        user.nickname,
+                        post.context,
+                        post.uploadFile.storeFileName,
+                        post.created_at,
+                        post.postLikes.size(),
+                        post.comments.size()
+
+                )).distinct()
+                .from(post,follow)
+                .leftJoin(post.user, user)
+                .where(user.id.eq(userId))
+                .where (follow.toFollow.id.eq (userId))
+                .orderBy(post.created_at.desc())
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .fetch();
+
+        return fetch;
+    }
+
+    @Override
     public Page<PostResponseLoginDto> getPostsLogin(Long id, Pageable pageable) {
        return null;
     }

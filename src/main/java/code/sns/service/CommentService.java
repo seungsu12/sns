@@ -11,6 +11,7 @@ import code.sns.repository.comment.CommentRepository;
 import code.sns.repository.post.PostRepository;
 import code.sns.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -43,7 +44,7 @@ public class CommentService {
 
     }
 
-    public List<CommentResponseDto> getCommentById(Long id) {
-        return  commentRepository.getCommentByIdDto(id);
+    public List<CommentResponseDto> getCommentById(Long postId, Pageable pageable) {
+        return  commentRepository.getCommentByIdDto(postId,pageable);
     }
 }

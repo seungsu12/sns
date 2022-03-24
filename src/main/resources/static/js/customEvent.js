@@ -68,10 +68,11 @@ $(".post-delete-btn").click(function (event) {
 // 게시물 모달시 데이터 전송
 $('#commentModal').on('show.bs.modal',function(event) {
     const modal = $(this);
-    const id =$(event.relatedTarget).attr('data-id');
+    const postId =$(event.relatedTarget).attr('data-id');
+
 
     $.ajax({
-        "url":'/api/post/'+id,
+        "url":'/api/post/'+postId,
         "method":'get',
 
     }).done(function (response){
@@ -79,9 +80,18 @@ $('#commentModal').on('show.bs.modal',function(event) {
         modal.find('h6#comment-username').text(response.username);
         modal.find('p#comment-nickname').text(response.nickname);
         modal.find('img#comment-img').attr('src','img/'+response.profile_img);
-        modal.find('span.post-thumbs-up').text(response.postLikes);
+        modal.find('span#comment-modal-like').text(response.postLikeCount);
         modal.find('img.d-block').attr('src','img/'+response.storeFilename);
-    })
+    });
+
+    $.ajax({
+        url: '/api/comment/' + postId,
+    }).done(function (fragment) {
+        for(let i in fragment){
+            console.log(i);
+            console.log(i[0]);
+        }
+    });
 
 
 });
