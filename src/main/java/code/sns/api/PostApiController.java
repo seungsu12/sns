@@ -3,10 +3,12 @@ package code.sns.api;
 
 import code.sns.domain.dto.request.PostRequestDto;
 import code.sns.domain.dto.response.PostResponseDto;
+import code.sns.domain.dto.response.PostResponseLoginDto;
 import code.sns.service.CommentService;
 import code.sns.service.PostService;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +23,7 @@ public class PostApiController {
     private final PostService postService;
     private final CommentService commentService;
 
-    @ApiOperation(value = "피드 생성",notes = "정볼를 받아서 피드생성")
+    @ApiOperation(value = "피드 생성", notes = "정볼를 받아서 피드생성")
     @PostMapping("/post")
     public ResponseEntity createPost(@ModelAttribute PostRequestDto requestDto) throws IOException {
 
@@ -32,7 +34,7 @@ public class PostApiController {
 
 
     @GetMapping("/api/post/{postId}")
-    public ResponseEntity findById(@PathVariable("postId")Long id) {
+    public ResponseEntity findById(@PathVariable("postId") Long id) {
         PostResponseDto dto = postService.getPostById(id);
         return ResponseEntity.status(HttpStatus.OK).body(dto);
     }
@@ -46,5 +48,9 @@ public class PostApiController {
     }
 
 
-
+    @GetMapping("/api/login/posts")
+    public ResponseEntity getPostsLogin() {
+        List<PostResponseLoginDto> result = postService.getPostsLogin(1L, Pageable.ofSize(3));
+        return ResponseEntity.status(HttpStatus.OK).body(result);
+    }
 }

@@ -1,8 +1,14 @@
 package code.sns.repository.post;
 
+import code.sns.domain.QPostLike;
 import code.sns.domain.dto.response.PostResponseDto;
 
+import code.sns.domain.dto.response.PostResponseLoginDto;
 import code.sns.domain.dto.response.QPostResponseDto;
+import code.sns.domain.dto.response.QPostResponseLoginDto;
+import com.querydsl.core.types.ExpressionUtils;
+import com.querydsl.jpa.JPAExpressions;
+import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -12,7 +18,9 @@ import org.springframework.data.domain.Pageable;
 import java.util.List;
 import java.util.Optional;
 
+import static code.sns.domain.QFollow.follow;
 import static code.sns.domain.QPost.post;
+import static code.sns.domain.QPostLike.postLike;
 import static code.sns.domain.QUser.user;
 
 @RequiredArgsConstructor
@@ -21,7 +29,7 @@ public class PostCustomRepositoryImpl implements PostCustomRepository {
     private final JPAQueryFactory queryFactory;
 
     @Override
-    public Optional<PostResponseDto> findByIdDto(Long id) {
+    public Optional<PostResponseDto> findByIdDto(Long postId) {
 
         return Optional.ofNullable(queryFactory.select(new QPostResponseDto(
                         user.id,
@@ -34,9 +42,9 @@ public class PostCustomRepositoryImpl implements PostCustomRepository {
                         post.created_at,
                         post.postLikes.size(),
                         post.comments.size()
-                )).from(post)
+                )).from(post,postLike)
                 .leftJoin(post.user, user)
-                .where(post.id.eq(id))
+                .where(post.id.eq(postId))
                 .fetchOne());
     }
 
@@ -52,16 +60,16 @@ public class PostCustomRepositoryImpl implements PostCustomRepository {
                         post.uploadFile.storeFileName,
                         post.created_at,
                         post.postLikes.size(),
-                    post.comments.size()
-                )).from(post)
+                        post.comments.size()
+                )).from(post,postLike)
                 .leftJoin(post.user, user)
                 .fetch();
 
         return result;
     }
     @Override
-    public Page<PostResponseDto> getPostsByUserId(Long id, Pageable pageable) {
-        List<PostResponseDto> fetch = queryFactory.select(new QPostResponseDto(
+    public Page<PostResponseLoginDto> getPostsByUserId(Long userId, Pageable pageable) {
+        List<PostResponseLoginDto> fetch = queryFactory.select(new QPostResponseLoginDto(
                         user.id,
                         post.id,
                         user.profile_img,
@@ -71,15 +79,22 @@ public class PostCustomRepositoryImpl implements PostCustomRepository {
                         post.uploadFile.storeFileName,
                         post.created_at,
                         post.postLikes.size(),
-                        post.comments.size()
-                )).from(post)
+                        post.comments.size(),
+                        postLike.post.eq(post).isNotNull()
+                ).from(post, postLike)
                 .leftJoin(post.user, user)
-                .where(user.id.eq(id))
+                .where(user.id.eq(userId))
+                .where(postLike.user.id.eq(userId))
                 .orderBy(post.created_at.desc())
-                .offset(pageable.getOffset())
-                .limit(pageable.getPageSize())
+//                .offset(pageable.getOffset())
+//                .limit(pageable.getPageSize())
                 .fetch();
 
         return new PageImpl<>(fetch,pageable, fetch.size());
+    }
+
+    @Override
+    public Page<PostResponseLoginDto> getPostsLogin(Long id, Pageable pageable) {
+       return null;
     }
 }

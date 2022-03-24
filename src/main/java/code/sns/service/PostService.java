@@ -5,6 +5,7 @@ import code.sns.domain.UploadFile;
 import code.sns.domain.User;
 import code.sns.domain.dto.request.PostRequestDto;
 import code.sns.domain.dto.response.PostResponseDto;
+import code.sns.domain.dto.response.PostResponseLoginDto;
 import code.sns.exception.CustomException;
 import code.sns.exception.ErrorCode;
 import code.sns.exception.NotFoundObjectException;
@@ -48,12 +49,17 @@ public class PostService {
 
     }
 
-    public PostResponseDto getPostById(Long id) {
-        return postRepository.findByIdDto(id).orElseThrow(()->new CustomException(ErrorCode.NOT_FOUND_POST,String.format("해당 [%s] 아이디는 없습니다.",id)));
+    public PostResponseDto getPostById(Long postId) {
+        return postRepository.findByIdDto(postId).orElseThrow(()->new CustomException(ErrorCode.NOT_FOUND_POST,String.format("해당 [%s] 아이디는 없습니다.",postId)));
     }
 
 
-    public List<PostResponseDto> getPostsById(Long id, Pageable pageable) {
-        return  postRepository.getPostsByUserId(id,pageable).toList();
+    public List<PostResponseLoginDto> getPostsById(Long userId, Pageable pageable) {
+        return  postRepository.getPostsByUserId(userId,pageable).toList();
+    }
+
+
+    public List<PostResponseLoginDto> getPostsLogin(Long userId, Pageable pageable) {
+        return  postRepository.getPostsByUserId(userId,pageable).toList();
     }
 }
