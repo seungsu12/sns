@@ -33,7 +33,7 @@ public class TestApiController {
 
         String path = "/Users/seungsu/front/";
         String realPath = path + file.getOriginalFilename();
-        System.out.println(realPath);
+
         file.transferTo(new File(realPath));
         return ResponseEntity.status(HttpStatus.OK).body("ok");
     }

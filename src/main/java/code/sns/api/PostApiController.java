@@ -2,6 +2,7 @@ package code.sns.api;
 
 
 import code.sns.auth.PrincipalDetail;
+import code.sns.domain.UploadFile;
 import code.sns.domain.dto.request.PostRequestDto;
 import code.sns.domain.dto.response.PostResponseDto;
 import code.sns.domain.dto.response.PostResponseLoginDto;
@@ -9,6 +10,7 @@ import code.sns.exception.CustomException;
 import code.sns.exception.ErrorCode;
 import code.sns.service.CommentService;
 import code.sns.service.PostService;
+import code.sns.upload.FileStore;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,7 +19,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
@@ -32,12 +36,22 @@ public class PostApiController {
 
     @ApiOperation(value = "피드 생성", notes = "정볼를 받아서 피드생성")
     @PostMapping("/post")
-    public ResponseEntity createPost(@ModelAttribute PostRequestDto requestDto) throws IOException {
+    public ResponseEntity createPost(@ModelAttribute PostRequestDto requestDto,Authentication authentication) throws IOException {
+
+        Long userId = authCheck(authentication);
+        log.info("file {}",requestDto.getFile());
+        log.info("context {}",requestDto.getContext());
+
+        requestDto.setUser_id(userId);
 
         postService.createPost(requestDto);
 
+
         return ResponseEntity.status(HttpStatus.OK).body("");
+
+
     }
+
 
 
     @GetMapping("/api/post/{postId}")
@@ -75,7 +89,7 @@ public class PostApiController {
 
     private Long authCheck(Authentication authentication) {
         if (authentication == null) {
-            throw new CustomException(ErrorCode.FORBIDDEN_USER);
+            throw new CustomException(ErrorCode.FORBIDDEN_USER,"권한이 없습니다.");
         }
         PrincipalDetail principal = (PrincipalDetail) authentication.getPrincipal();
         return  principal.getId();

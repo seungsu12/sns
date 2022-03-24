@@ -1,3 +1,36 @@
+$(".signup-btn").click(function (event){
+    const form =$("#signupForm")[0];
+    const data = new FormData(form);
+
+    $.ajax({
+        url:"/user",
+        method
+
+
+    })
+});
+
+$(".post-create-btn").click(function (event) {
+   const form =$(".post-create-form")[0];
+   const data = new FormData(form);
+
+    $.ajax({
+        url: "/post",
+        method: "post",
+        enctype: 'multipart/form-data',
+        data: data,
+        processData: false,
+        contentType: false,
+        cache: false,
+        timeout: 60000
+    }).done(function (response) {
+        alert("게시물 등록 완료");
+        location.href = "/";
+    }).fail(function (response) {
+        alert("등록 실패");
+    });
+});
+
 $(".post-delete-btn").click(function (event) {
     const postId =$(event.target).attr('data-postId');
     const userId =$(event.target).attr('data-userId');

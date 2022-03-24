@@ -21,6 +21,7 @@ public class UserCustomRepositoryImpl implements  UserCustomRepository {
     public UserProfileDto getProfile(Long id) {
 
         return queryFactory.select(new QUserProfileDto(
+                        user.id,
                         user.username,
                         user.nickname,
                         user.profile,

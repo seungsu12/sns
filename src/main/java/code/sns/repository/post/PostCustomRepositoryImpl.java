@@ -45,6 +45,7 @@ public class PostCustomRepositoryImpl implements PostCustomRepository {
                 )).from(post)
                 .leftJoin(post.user, user)
                 .where(post.id.eq(postId))
+                .orderBy (post.created_at.desc ())
                 .fetchOne());
     }
 
@@ -63,6 +64,7 @@ public class PostCustomRepositoryImpl implements PostCustomRepository {
                         post.comments.size()
                 )).from(post)
                 .leftJoin(post.user, user)
+                .orderBy (post.created_at.desc ())
                 .fetch();
 
         return result;

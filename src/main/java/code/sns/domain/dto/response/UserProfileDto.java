@@ -8,6 +8,7 @@ import java.time.LocalDate;
 @Data
 public class UserProfileDto {
 
+    private Long userId;
     private String username;
     private String nickname;
     private String profile;
@@ -17,7 +18,7 @@ public class UserProfileDto {
     private Integer followingCount;
 
     @QueryProjection
-    public UserProfileDto(String username, String nickname, String profile, String profile_img, LocalDate createdAt, Integer followerCount, Integer followingCount) {
+    public UserProfileDto(Long userId,String username, String nickname, String profile, String profile_img, LocalDate createdAt, Integer followerCount, Integer followingCount) {
         this.username = username;
         this.nickname = nickname;
         this.profile = profile;
