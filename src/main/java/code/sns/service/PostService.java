@@ -5,23 +5,18 @@ import code.sns.domain.UploadFile;
 import code.sns.domain.User;
 import code.sns.domain.dto.request.PostRequestDto;
 import code.sns.domain.dto.response.PostResponseDto;
-import code.sns.domain.dto.response.PostResponseLoginDto;
 import code.sns.exception.CustomException;
 import code.sns.exception.ErrorCode;
-import code.sns.exception.NotFoundObjectException;
 import code.sns.repository.post.PostRepository;
 import code.sns.repository.user.UserRepository;
 import code.sns.upload.FileStore;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -56,12 +51,12 @@ public class PostService {
     }
 
 
-    public List<PostResponseLoginDto> getPostsById(Long userId, Pageable pageable) {
+    public List<PostResponseDto> getPostsById(Long userId, Pageable pageable) {
         return  postRepository.getPostsByUserId(userId,pageable).toList();
     }
 
 
-    public List<PostResponseLoginDto> getPostsLogin(Long userId, Pageable pageable) {
+    public List<PostResponseDto> getPostsLogin(Long userId, Pageable pageable) {
         return  postRepository.getPostsByUserId(userId,pageable).toList();
     }
 
@@ -71,7 +66,11 @@ public class PostService {
 
     }
 
-    public List<PostResponseLoginDto> getFollowPost(Long userId, Pageable pageable) {
+    public List<PostResponseDto> getFollowPost(Long userId, Pageable pageable) {
         return postRepository.getPostsByFollow(userId,pageable);
+    }
+
+    public List<PostResponseDto> getPostsLiked(Long userId, Pageable pageable) {
+        return  postRepository.getPostsLiked(userId,pageable);
     }
 }

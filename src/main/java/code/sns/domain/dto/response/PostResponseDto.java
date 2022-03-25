@@ -2,15 +2,12 @@ package code.sns.domain.dto.response;
 
 import com.querydsl.core.annotations.QueryProjection;
 import lombok.Data;
-import lombok.ToString;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Data
-@ToString
 public class PostResponseDto {
-
     private Long user_id;
     private Long post_id;
     private String profile_img;
@@ -22,10 +19,9 @@ public class PostResponseDto {
     private Integer postLikeCount;
     private Integer commentsCount;
 
+
     @QueryProjection
-    public PostResponseDto(Long user_id, Long post_id, String profile_img, String username, String nickname,
-                           String context, String storeFilename, LocalDateTime createdAt, Integer postLikeCount,
-                           Integer commentsCount) {
+    public PostResponseDto(Long user_id, Long post_id, String profile_img, String username, String nickname, String context, String storeFilename, LocalDateTime createdAt, Integer postLikeCount, Integer commentsCount){
         this.user_id = user_id;
         this.post_id = post_id;
         this.profile_img = profile_img;
@@ -36,6 +32,6 @@ public class PostResponseDto {
         this.createdAt = createdAt.toLocalDate ();
         this.postLikeCount = postLikeCount;
         this.commentsCount = commentsCount;
-    }
 
+    }
 }
