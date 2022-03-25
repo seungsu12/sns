@@ -1,6 +1,7 @@
 package code.sns.repository.post;
 
 import code.sns.domain.dto.response.PostResponseDto;
+import code.sns.domain.dto.response.PostResponseLoginDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -11,6 +12,7 @@ public interface PostCustomRepository {
 
     Optional<PostResponseDto> findByIdDto(Long postId);
     List<PostResponseDto> getPosts();
+
     Page<PostResponseDto> getPostsByUserId(Long userId, Pageable pageable);
 
     Page<PostResponseDto> getPostsLogin(Long userId, Pageable pageable);
@@ -18,4 +20,8 @@ public interface PostCustomRepository {
     List<PostResponseDto> getPostsByFollow(Long userId, Pageable pageable);
 
     List<PostResponseDto> getPostsLiked(Long userId, Pageable pageable);
+
+    List<PostResponseDto> getScraps(Long userId, Pageable pageable);
+
+    List<PostResponseLoginDto> getPostsLogins(Long userId, Pageable pageable);
 }

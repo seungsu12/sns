@@ -1,6 +1,7 @@
 package code.sns.api;
 
 import code.sns.auth.PrincipalDetail;
+import code.sns.config.util.AuthUtil;
 import code.sns.domain.dto.response.FollowResponseDto;
 import code.sns.exception.CustomException;
 import code.sns.exception.ErrorCode;
@@ -23,7 +24,7 @@ public class FollowApiController {
 
     @PostMapping("/follow/{toId}")
     public ResponseEntity follow(@PathVariable("toId")Long aLong,Authentication authentication) {
-        Long loginId = authCheck(authentication);
+        Long loginId = AuthUtil.getAuthenticationUserId();
 
         followService.follow(aLong,loginId);
 
@@ -38,12 +39,4 @@ public class FollowApiController {
         return list;
     }
 
-
-    private Long authCheck(Authentication authentication) {
-        if (authentication == null) {
-            throw new CustomException(ErrorCode.FORBIDDEN_USER);
-        }
-        PrincipalDetail principal = (PrincipalDetail) authentication.getPrincipal();
-        return  principal.getId();
-    }
 }

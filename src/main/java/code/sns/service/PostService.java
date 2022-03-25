@@ -5,6 +5,7 @@ import code.sns.domain.UploadFile;
 import code.sns.domain.User;
 import code.sns.domain.dto.request.PostRequestDto;
 import code.sns.domain.dto.response.PostResponseDto;
+import code.sns.domain.dto.response.PostResponseLoginDto;
 import code.sns.exception.CustomException;
 import code.sns.exception.ErrorCode;
 import code.sns.repository.post.PostRepository;
@@ -28,7 +29,6 @@ public class PostService {
     private final FileStore fileStore;
 
     public List<PostResponseDto> getPosts() {
-
         return postRepository.getPosts();
     }
 
@@ -55,16 +55,17 @@ public class PostService {
         return  postRepository.getPostsByUserId(userId,pageable).toList();
     }
 
-
-    public List<PostResponseDto> getPostsLogin(Long userId, Pageable pageable) {
-        return  postRepository.getPostsByUserId(userId,pageable).toList();
-    }
-
     public void deleteById(Long postId) {
         Post post = postRepository.findById(postId).orElseThrow(()-> new CustomException(ErrorCode.BAD_REQUEST_POST));
         postRepository.delete(post);
 
     }
+
+    public List<PostResponseDto> getPostsLogin(Long userId, Pageable pageable) {
+
+        return  postRepository.getPostsByUserId(userId,pageable).toList();
+    }
+
 
     public List<PostResponseDto> getFollowPost(Long userId, Pageable pageable) {
         return postRepository.getPostsByFollow(userId,pageable);
@@ -72,5 +73,14 @@ public class PostService {
 
     public List<PostResponseDto> getPostsLiked(Long userId, Pageable pageable) {
         return  postRepository.getPostsLiked(userId,pageable);
+    }
+
+    public List<PostResponseDto> getScraps(Long userId, Pageable pageable) {
+        return postRepository.getScraps(userId,pageable);
+    }
+
+    public List<PostResponseLoginDto> getPostsLogins(Long userId, Pageable pageable) {
+        return postRepository.getPostsLogins (userId, pageable);
+
     }
 }

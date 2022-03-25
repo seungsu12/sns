@@ -2,6 +2,7 @@ package code.sns.controller;
 
 
 import code.sns.auth.PrincipalDetail;
+import code.sns.config.util.AuthUtil;
 import code.sns.domain.dto.response.CommentResponseDto;
 import code.sns.domain.dto.response.FollowResponseDto;
 import code.sns.domain.dto.response.PostResponseDto;
@@ -42,7 +43,7 @@ public class indexController {
                 model.addAttribute("posts",postService.getPosts());
 
         }else{
-            Long userId = authCheck(authentication);
+            Long userId = AuthUtil.getAuthenticationUserId ();
             followList =followService.getFollowList(userId);
             model.addAttribute("posts",postService.getFollowPost(userId,Pageable.ofSize (5)));
 
@@ -55,7 +56,7 @@ public class indexController {
 
     @GetMapping("/profile")
     public String loginProfile(Authentication authentication,Model model) {
-        Long userId = authCheck(authentication);
+        Long userId = AuthUtil.getAuthenticationUserId ();
         
         Pageable pageable = Pageable.ofSize(3);
         profileModeling (userId,pageable , model);
@@ -74,25 +75,19 @@ public class indexController {
         return "profile";
     }
 
-    private Long authCheck(Authentication authentication) {
-
-        if (authentication == null) {
-            throw new CustomException(ErrorCode.FORBIDDEN_USER);
-        }
-        PrincipalDetail principal = (PrincipalDetail) authentication.getPrincipal();
-        return principal.getId();
-    }
     private void profileModeling(Long userId, Pageable pageable, Model model) {
         UserProfileDto profile = userRepository.getProfile (userId);
         List<String> toFollowImg = userRepository.getToFollowImg (userId);
         List<String> fromFollowImg = userRepository.getFromFollowImg (userId);
         List<PostResponseDto> myPosts = postService.getPostsLogin (userId, pageable);
         List<PostResponseDto> postsLiked= postService.getPostsLiked(userId,pageable);
+        List<PostResponseDto> scraps =postService.getScraps(userId,pageable);
 
         model.addAttribute ("user", profile);
         model.addAttribute ("toFollow", toFollowImg);
         model.addAttribute ("fromFollow", fromFollowImg);
         model.addAttribute ("myPosts", myPosts);
         model.addAttribute ("postsLiked", postsLiked);
+        model.addAttribute ("scraps",scraps);
     }
 }
