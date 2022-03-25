@@ -44,8 +44,8 @@ public class indexController {
         }else{
             Long userId = authCheck(authentication);
             followList =followService.getFollowList(userId);
-            model.addAttribute("pots",postService.getFollowPost(userId,Pageable.ofSize (3)));
-//             model.addAttribute("posts",postService.getPostsLogin(userId,Pageable.ofSize(3)));
+            model.addAttribute("posts",postService.getFollowPost(userId,Pageable.ofSize (5)));
+
         }
 
         model.addAttribute ("comments",comments);

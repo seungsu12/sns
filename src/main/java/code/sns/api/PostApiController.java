@@ -34,6 +34,13 @@ public class PostApiController {
     private final PostService postService;
     private final CommentService commentService;
 
+    @GetMapping("/testing")
+    public ResponseEntity follow() {
+        List<PostResponseLoginDto> data = postService.getFollowPost (1L, Pageable.ofSize (3));
+        return ResponseEntity.status(HttpStatus.OK).body(data);
+    }
+
+
     @ApiOperation(value = "피드 생성", notes = "정볼를 받아서 피드생성")
     @PostMapping("/post")
     public ResponseEntity createPost(@ModelAttribute PostRequestDto requestDto,Authentication authentication) throws IOException {

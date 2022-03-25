@@ -108,15 +108,18 @@ public class PostCustomRepositoryImpl implements PostCustomRepository {
                         post.created_at,
                         post.postLikes.size(),
                         post.comments.size()
-
-                )).distinct()
-                .from(post,follow)
+                ))
+                .from(post)
                 .leftJoin(post.user, user)
-                .where(user.id.eq(userId))
-                .where (follow.toFollow.id.eq (userId))
+                .where(user.id.in((
+                        JPAExpressions
+                                .select(follow.toFollow.id)
+                                .from(follow)
+                                .where(follow.fromFollow.id.eq(userId))
+                )).or (user.id.eq (userId)))
                 .orderBy(post.created_at.desc())
-                .offset(pageable.getOffset())
-                .limit(pageable.getPageSize())
+                .offset (0)
+                .limit (5)
                 .fetch();
 
         return fetch;
