@@ -40,6 +40,9 @@ public class Post extends BaseEntity {
     @OneToMany(mappedBy = "post",cascade = CascadeType.ALL)
     List<Scrap> scraps = new ArrayList<>();
 
+    @OneToMany(mappedBy = "post",cascade = CascadeType.ALL)
+    List<PostHash> postHashes = new ArrayList<> ();
+
     public static Post createPost(String context,UploadFile uploadFile,User user) {
         Post post = new Post();
         post.context = context;

@@ -2,11 +2,15 @@ package code.sns.api;
 
 
 import code.sns.auth.PrincipalDetail;
+import code.sns.config.HashTagConfig;
+import code.sns.config.util.AuthUtil;
 import code.sns.domain.dto.request.PostRequestDto;
 import code.sns.domain.dto.response.PostResponseDto;
+import code.sns.domain.dto.response.PostResponseLoginDto;
 import code.sns.exception.CustomException;
 import code.sns.exception.ErrorCode;
 import code.sns.service.CommentService;
+import code.sns.service.HashTagService;
 import code.sns.service.PostService;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -28,23 +32,27 @@ public class PostApiController {
 
     private final PostService postService;
     private final CommentService commentService;
+    private final AuthUtil authUtil;
+    private final HashTagService hashTagService;
 
     @GetMapping("/testing")
     public ResponseEntity follow() {
-        List<PostResponseDto> data = postService.getPostsLiked (1L, Pageable.ofSize (3));
+        List<PostResponseLoginDto> data = postService.getPostsLogins (1L, Pageable.ofSize (5));
         return ResponseEntity.status(HttpStatus.OK).body(data);
     }
 
 
     @ApiOperation(value = "피드 생성", notes = "정볼를 받아서 피드생성")
     @PostMapping("/post")
-    public ResponseEntity createPost(@ModelAttribute PostRequestDto requestDto,Authentication authentication) throws IOException {
+    public ResponseEntity createPost(@ModelAttribute PostRequestDto requestDto) throws IOException {
 
-        Long userId = authCheck(authentication);
-        log.info("file {}",requestDto.getFile());
-        log.info("context {}",requestDto.getContext());
-
+        Long userId = authUtil.getAuthenticationUserId();
         requestDto.setUser_id(userId);
+
+        //해시태그 작업
+        List<String> hashes = HashTagConfig.extractionHash(requestDto.getContext ());
+        hashTagService.IsExistHash (hashes);
+
 
         postService.createPost(requestDto);
         return ResponseEntity.status(HttpStatus.OK).body("");
@@ -65,7 +73,7 @@ public class PostApiController {
     @DeleteMapping("/post/delete")
     public ResponseEntity deletePost(@RequestBody Map<String,Long> map, Authentication authentication) {
 
-        Long loginUserId = authCheck(authentication);
+        Long loginUserId = AuthUtil.getAuthenticationUserId();
         Long userId = map.get("userId");
         ownerCheck(loginUserId,userId);
         log.info("userId {}",userId);
@@ -75,18 +83,10 @@ public class PostApiController {
     }
 
 
-
-    private Long authCheck(Authentication authentication) {
-        if (authentication == null) {
-            throw new CustomException(ErrorCode.FORBIDDEN_USER,"권한이 없습니다.");
-        }
-        PrincipalDetail principal = (PrincipalDetail) authentication.getPrincipal();
-        return  principal.getId();
-    }
-
     private void ownerCheck(Long loginId, Long postUserId) {
         if (!loginId.equals(postUserId)) {
             throw new CustomException(ErrorCode.FORBIDDEN_AUTHORITY);
         }
+
     }
 }

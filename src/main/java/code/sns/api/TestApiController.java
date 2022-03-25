@@ -1,8 +1,12 @@
 package code.sns.api;
 
 
+import code.sns.config.HashTagConfig;
 import code.sns.domain.Item;
+import code.sns.repository.HashTag.HashTagRepository;
+import code.sns.service.HashTagService;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpStatus;
@@ -16,26 +20,37 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 
 @RestController
 @Slf4j
+@RequiredArgsConstructor
 public class TestApiController {
 
+    private final HashTagService hashTagService;
 
+    @GetMapping("/hash")
+    public ResponseEntity hash(@RequestBody String text) {
+
+        List<String> hashes = HashTagConfig.extractionHash (text);
+        hashTagService.IsExistHash (hashes);
+
+        return ResponseEntity.status (HttpStatus.OK).body (null);
+    }
 
     @PostMapping("/upload")
     public ResponseEntity upload(@ModelAttribute Item item) throws IOException {
 
-        MultipartFile file = item.getFile();
+        MultipartFile file = item.getFile ();
 
-        System.out.println(file.getOriginalFilename());
-        System.out.println(file.getSize());
+        System.out.println (file.getOriginalFilename ());
+        System.out.println (file.getSize ());
 
         String path = "/Users/seungsu/front/";
-        String realPath = path + file.getOriginalFilename();
+        String realPath = path + file.getOriginalFilename ();
 
-        file.transferTo(new File(realPath));
-        return ResponseEntity.status(HttpStatus.OK).body("ok");
+        file.transferTo (new File (realPath));
+        return ResponseEntity.status (HttpStatus.OK).body ("ok");
     }
 
     @GetMapping("/download")

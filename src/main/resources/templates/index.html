@@ -37,26 +37,29 @@
                         <!-- Slider Accounts -->
                         <div class="account-slider">
                            <!-- Account Item -->
-                           <div class="account-item" th:each="follow :${followList}">
-                              <div class="me-2 bg-white shadow-sm rounded-4 p-3 user-list-item d-flex justify-content-center my-2">
-                                 <div class="text-center">
-                                    <div class="position-relative d-flex justify-content-center">
-                                       <a th:href="'/profile/'+${follow.user_id}" class="text-decoration-none">
-                                          <img th:src="'/img/'+${follow.profile_img}" class="img-fluid rounded-circle mb-3" alt="profile-img">
-                                          <div class="position-absolute">
-                                             <span class="material-icons bg-primary small p-1 fw-bold text-white rounded-circle">done</span>
-                                          </div>
-                                       </a>
-                                    </div>
-                                    <p class="fw-bold text-dark m-0" th:text="${follow.username}">username</p>
-                                    <p class="small text-muted" th:text="${follow.job}">직업r</p>
-                                    <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
-                                       <input type="checkbox" class="btn-check" id="btncheck1" checked>
-                                       <label class="btn btn-outline-primary btn-sm px-3 rounded-pill" for="btncheck1"><span class="follow">+ Follow</span><span class="following d-none">Following</span></label>
+                           <th:block th:each="follow,index :${followList}">
+
+                              <div class="account-item" >
+                                 <div class="me-2 bg-white shadow-sm rounded-4 p-3 user-list-item d-flex justify-content-center my-2">
+                                    <div class="text-center">
+                                       <div class="position-relative d-flex justify-content-center">
+                                          <a th:href="'/profile/'+${follow.user_id}" class="text-decoration-none">
+                                             <img th:src="'/img/'+${follow.profile_img}" class="img-fluid rounded-circle mb-3" alt="profile-img">
+                                             <div class="position-absolute">
+                                                <span class="material-icons bg-primary small p-1 fw-bold text-white rounded-circle">done</span>
+                                             </div>
+                                          </a>
+                                       </div>
+                                       <p class="fw-bold text-dark m-0" th:text="${follow.username}">username</p>
+                                       <p class="small text-muted" th:text="${follow.job}">직업r</p>
+                                       <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
+                                          <input type="checkbox" class="btn-check" th:id="'btncheck'+${index.index}" checked>
+                                          <label class="btn btn-outline-primary btn-sm px-3 rounded-pill" th:for="'btncheck'+${index.index}"><span class="follow">+ Follow</span><span class="following d-none">Following</span></label>
+                                       </div>
                                     </div>
                                  </div>
                               </div>
-                           </div>
+                           </th:block>
 
 
                         </div>
@@ -112,10 +115,14 @@
                                                 <a href="#" class="text-muted text-decoration-none d-flex align-items-start fw-light"><span class="material-icons md-20 me-2">chat_bubble_outline</span><span th:text="${post.commentsCount}">코멘트수</span></a>
                                              </div>
                                              <div>
-                                                <a href="#" class="text-muted text-decoration-none d-flex align-items-start fw-light"><span class="material-icons md-20 me-2">repeat</span><span>617</span></a>
+                                                <a th:attr="data-id =${post.post_id}" class="scrap_btn text-muted text-decoration-none d-flex align-items-start fw-light">
+                                                   <span class="material-icons md-20 me-2">repeat</span>
+                                                   <span th:text="${post.scrapCount}">스크랩수</span></a>
                                              </div>
                                              <div>
-                                                <a href="#" class="text-muted text-decoration-none d-flex align-items-start fw-light"><span class="material-icons md-18 me-2">share</span><span>Share</span></a>
+                                                <a class="text-muted text-decoration-none d-flex align-items-start fw-light">
+                                                   <span class="material-icons md-18 me-2">share</span>
+                                                   <span>Share</span></a>
                                              </div>
                                           </div>
                                           <div class="d-flex align-items-center mb-3" data-bs-toggle="modal" data-bs-target="#commentModal" th:attr="data-id=${post.post_id}">
