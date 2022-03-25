@@ -26,6 +26,10 @@ public class HashTag {
     @Column(unique = true)
     private String tagName;
 
+    public HashTag(String tagName) {
+        this.tagName = tagName;
+    }
+
     @OneToMany(mappedBy = "hashTag")
     List<PostHash> postHashes = new ArrayList<> ();
 }

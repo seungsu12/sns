@@ -2,6 +2,7 @@ package code.sns.api;
 
 
 import code.sns.auth.PrincipalDetail;
+import code.sns.config.HashTagConfig;
 import code.sns.config.util.AuthUtil;
 import code.sns.domain.dto.request.PostRequestDto;
 import code.sns.domain.dto.response.PostResponseDto;
@@ -9,6 +10,7 @@ import code.sns.domain.dto.response.PostResponseLoginDto;
 import code.sns.exception.CustomException;
 import code.sns.exception.ErrorCode;
 import code.sns.service.CommentService;
+import code.sns.service.HashTagService;
 import code.sns.service.PostService;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -31,6 +33,7 @@ public class PostApiController {
     private final PostService postService;
     private final CommentService commentService;
     private final AuthUtil authUtil;
+    private final HashTagService hashTagService;
 
     @GetMapping("/testing")
     public ResponseEntity follow() {
@@ -43,11 +46,13 @@ public class PostApiController {
     @PostMapping("/post")
     public ResponseEntity createPost(@ModelAttribute PostRequestDto requestDto) throws IOException {
 
-        Long userId = authUtil.getAuthenticationUserId ();
-        log.info("file {}",requestDto.getFile());
-        log.info("context {}",requestDto.getContext());
-
+        Long userId = authUtil.getAuthenticationUserId();
         requestDto.setUser_id(userId);
+
+        //해시태그 작업
+        List<String> hashes = HashTagConfig.extractionHash(requestDto.getContext ());
+        hashTagService.IsExistHash (hashes);
+
 
         postService.createPost(requestDto);
         return ResponseEntity.status(HttpStatus.OK).body("");
