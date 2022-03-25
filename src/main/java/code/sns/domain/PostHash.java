@@ -3,12 +3,8 @@ package code.sns.domain;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import static javax.persistence.GenerationType.IDENTITY;
 import static lombok.AccessLevel.PROTECTED;
@@ -16,16 +12,20 @@ import static lombok.AccessLevel.PROTECTED;
 @Entity
 @NoArgsConstructor(access = PROTECTED)
 @Getter
-public class HashTag {
+public class PostHash {
 
     @Id
-    @Column(name = "hashTag_id")
+    @Column(name = "posthash_id")
     @GeneratedValue(strategy = IDENTITY)
     private Long id;
 
-    @Column(unique = true)
-    private String tagName;
 
-    @OneToMany(mappedBy = "hashTag")
-    List<PostHash> postHashes = new ArrayList<> ();
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "hashTag_id")
+    private HashTag hashTag;
+
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "post_id")
+    private Post post;
 }
