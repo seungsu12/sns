@@ -19,13 +19,13 @@
                         <div class="d-flex align-items-center px-3 pt-3">
                            <img th:src="'/img/'+${user.profile_img}" class="img-fluid rounded-circle" alt="profile-img">
                            <div class="ms-3">
-                              <h6 class="mb-0 d-flex align-items-start text-body fs-6 fw-bold" th:text="${user.nickname}">유저네임<span class="ms-2 material-icons bg-primary p-0 md-16 fw-bold text-white rounded-circle ov-icon">done</span></h6>
+                              <h6 class="mb-0 d-flex align-items-start text-body fs-6 fw-bold" th:text="${user.username}">유저네임<span class="ms-2 material-icons bg-primary p-0 md-16 fw-bold text-white rounded-circle ov-icon">done</span></h6>
                               <p class="text-muted mb-0" th:text="'@'+${user.nickname}">@닉네임</p>
                            </div>
-<!--                           <div class="ms-auto btn-group" role="group" aria-label="Basic checkbox toggle button group">-->
-<!--                              <input type="checkbox" class="btn-check" id="btncheck1">-->
-<!--                              <label class="btn btn-outline-primary btn-sm px-3 rounded-pill" for="btncheck1"><span class="follow">+ Follow</span><span class="following d-none">Following</span></label>-->
-<!--                           </div>-->
+                           <div class="ms-auto btn-group" role="group" aria-label="Basic checkbox toggle button group">
+                              <input type="checkbox" class="btn-check" id="btncheck1">
+                              <label class="btn btn-outline-primary btn-sm px-3 rounded-pill" for="btncheck1"><span class="follow">+ Follow</span><span class="following d-none">Following</span></label>
+                           </div>
                         </div>
                         <div class="p-3">
                            <p class="mb-2 fs-6" th:text="${user.profile}">프로필 내용</p>
@@ -73,7 +73,7 @@
                               <!-- Vogel       Vogel  VOGEL -->
                               <div class="feeds">
                                  <!-- Feed Item -->
-                                 <div class="bg-white p-3 feed-item rounded-4 mb-3 shadow-sm" th:each="post:${posts}">
+                                 <div class="bg-white p-3 feed-item rounded-4 mb-3 shadow-sm" th:each="post:${myPosts}">
                                     <div class="d-flex">
                                        <img th:src="'/img/'+${post.profile_img}" class="img-fluid rounded-circle user-img" alt="profile-img">
                                        <div class="d-flex ms-3 align-items-start w-100">
@@ -129,46 +129,54 @@
 <!--                              like    like like-->
                         <div class="tab-pane fade" id="pills-people" role="tabpanel" aria-labelledby="pills-people-tab">
                            <!-- Feeds -->
-                           <div class="feeds">
+                           <div class="feeds" th:each="post :${postsLiked}">
                               <!-- Feed Item -->
                               <div class="bg-white p-3 feed-item rounded-4 mb-3 shadow-sm">
                                  <div class="d-flex">
-                                    <img src="/img/rmate3.jpg" class="img-fluid rounded-circle user-img" alt="profile-img">
+                                    <img th:src="'/img/'+${post.profile_img}" class="img-fluid rounded-circle user-img" alt="profile-img">
                                     <div class="d-flex ms-3 align-items-start w-100">
                                        <div class="w-100">
                                           <div class="d-flex align-items-center justify-content-between">
                                              <a href="profile.html" class="text-decoration-none d-flex align-items-center">
-                                                <h6 class="fw-bold mb-0 text-body">Lucile Felmlee</h6>
+                                                <h6 class="fw-bold mb-0 text-body" th:text="${post.username}">name</h6>
                                                 <span class="ms-2 material-icons bg-primary p-0 md-16 fw-bold text-white rounded-circle ov-icon">done</span>
-                                                <small class="text-muted ms-2">@lucile-felmlee</small>
+                                                <small class="text-muted ms-2" th:text="'@'+${post.nickname}">nickname</small>
                                              </a>
                                              <div class="d-flex align-items-center small">
-                                                <p class="text-muted mb-0">19 Feb</p>
+                                                <p class="text-muted mb-0" th:text="${post.createdAt}">19 Feb</p>
                                                 <div class="dropdown">
-                                                   <a href="#" class="text-muted text-decoration-none material-icons ms-2 md-20 rounded-circle bg-light p-1" id="dropdownMenuButton3" data-bs-toggle="dropdown" aria-expanded="false">more_vert</a>
-                                                   <ul class="dropdown-menu fs-13 dropdown-menu-end" aria-labelledby="dropdownMenuButton3">
+                                                   <a href="#" class="text-muted text-decoration-none material-icons ms-2 md-20 rounded-circle bg-light p-1" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">more_vert</a>
+                                                   <ul class="dropdown-menu fs-13 dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
                                                       <li><a class="dropdown-item text-muted" href="#"><span class="material-icons md-13 me-1">edit</span>Edit</a></li>
-                                                      <li><a class="dropdown-item text-muted" href="#"><span class="material-icons md-13 me-1">delete</span>Delete</a></li>
+                                                      <li><a class="dropdown-item text-muted post-delete-btn" th:attr="data-postId=${post.post_id},data-userId=${post.user_id}" ><span class="material-icons md-13 me-1">delete</span>Delete</a></li>
                                                       <li><a class="dropdown-item text-muted" href="#"><span class="material-icons md-13 me-1 ltsp-n5">arrow_back_ios arrow_forward_ios</span>Embed Vogel</a></li>
                                                       <li><a class="dropdown-item text-muted d-flex align-items-center" href="#"><span class="material-icons md-13 me-1">share</span>Share via another apps</a></li>
                                                    </ul>
                                                 </div>
                                              </div>
                                           </div>
+                                          <!--                                       본문-->
                                           <div class="my-2">
-                                             <p>Scripserit eam ex, vis ad prompta mnesarchum, ad atqui suscipit vel. Omnis soluta ut mel, eum consequat adversarium definitionem ei. Sit cu elit laboramus similique, error exerci tacimates nam eu. Ferri eirmod latine ex sit. Cu nec munere viderer. Vix inermis periculis abhorreant te. Augue homero prompta eum eu, no est discere commune, velit mentitum vis ne.
-                                                🙂
+                                             <p th:text="${post.context}">
+                                                본문
                                              </p>
-                                             <p class="text-dark">Happy Vogel to you!</p>
                                              <a href="#" class="text-decoration-none" data-bs-toggle="modal" data-bs-target="#commentModal">
-                                             <img src="/img/post1.png" class="img-fluid rounded mb-3" alt="post-img">
+                                                <img th:src="'/img/'+${post.storeFilename}" class="img-fluid rounded mb-3" alt="post-img">
                                              </a>
                                              <div class="d-flex align-items-center justify-content-between mb-2">
-                                                <div>
-                                                   <a href="#" class="text-primary text-decoration-none d-flex align-items-start fw-light"><span class="material-icons md-20 me-2">thumb_up_off_alt</span><span>30.4k</span></a>
+                                                <div sec:authorize="isAuthenticated()">
+                                                   <a th:attr="data-id =${post.post_id}"  class="post_like_btn text-muted text-decoration-none d-flex align-items-start fw-light">
+                                                      <!--                                                   th:style="${post.userSelfLike == true ? 'color: blue;' : ''}"-->
+                                                      <span class="material-icons md-20 me-2">thumb_up_off_alt</span>
+                                                      <span th:text="${post.postLikeCount}">좋아요수</span></a>
+                                                </div>
+                                                <div sec:authorize="isAnonymous()">
+                                                   <a th:attr="data-id =${post.post_id}"  class="post_like_btn text-muted text-decoration-none d-flex align-items-start fw-light">
+                                                      <span class="material-icons md-20 me-2">thumb_up_off_alt</span>
+                                                      <span th:text="${post.postLikeCount}">좋아요수</span></a>
                                                 </div>
                                                 <div>
-                                                   <a href="#" class="text-muted text-decoration-none d-flex align-items-start fw-light"><span class="material-icons md-20 me-2">chat_bubble_outline</span><span>4.0k</span></a>
+                                                   <a href="#" class="text-muted text-decoration-none d-flex align-items-start fw-light"><span class="material-icons md-20 me-2">chat_bubble_outline</span><span th:text="${post.commentsCount}">코멘트수</span></a>
                                                 </div>
                                                 <div>
                                                    <a href="#" class="text-muted text-decoration-none d-flex align-items-start fw-light"><span class="material-icons md-20 me-2">repeat</span><span>617</span></a>
@@ -177,78 +185,18 @@
                                                    <a href="#" class="text-muted text-decoration-none d-flex align-items-start fw-light"><span class="material-icons md-18 me-2">share</span><span>Share</span></a>
                                                 </div>
                                              </div>
-                                             <div class="d-flex align-items-center mb-3" data-bs-toggle="modal" data-bs-target="#commentModal">
+                                             <div class="d-flex align-items-center mb-3" data-bs-toggle="modal" data-bs-target="#commentModal" th:attr="data-id=${post.post_id}">
+                                                <div style="display: none" class="feed-post-id" th:value="${post.post_id}"> </div>
                                                 <span class="material-icons bg-white border-0 text-primary pe-2 md-36">account_circle</span>
-                                                <input type="text" class="form-control form-control-sm rounded-3 fw-light" placeholder="Write Your comment">
-                                             </div>
-                                             <div class="comments">
-                                                <div class="d-flex mb-2">
-                                                   <a href="#" class="text-dark text-decoration-none" data-bs-toggle="modal" data-bs-target="#commentModal">
-                                                   <img src="/img/rmate1.jpg" class="img-fluid rounded-circle" alt="commenters-img">
-                                                   </a>
-                                                   <div class="ms-2 small">
-                                                      <a href="#" class="text-dark text-decoration-none" data-bs-toggle="modal" data-bs-target="#commentModal">
-                                                         <div class="bg-light px-3 py-2 rounded-4 mb-1 chat-text">
-                                                            <p class="fw-500 mb-0">Macie Bellis</p>
-                                                            <span class="text-muted">Consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolor.</span>
-                                                         </div>
-                                                      </a>
-                                                      <div class="d-flex align-items-center ms-2">
-                                                         <a href="#" class="small text-muted text-decoration-none">Like</a>
-                                                         <span class="fs-3 text-muted material-icons mx-1">circle</span>
-                                                         <a href="#" class="small text-muted text-decoration-none">Reply</a>
-                                                         <span class="fs-3 text-muted material-icons mx-1">circle</span>
-                                                         <span class="small text-muted">1h</span>
-                                                      </div>
-                                                   </div>
-                                                </div>
-                                                <div class="d-flex mb-2">
-                                                   <a href="#" class="text-dark text-decoration-none" data-bs-toggle="modal" data-bs-target="#commentModal">
-                                                   <img src="/img/rmate3.jpg" class="img-fluid rounded-circle" alt="commenters-img">
-                                                   </a>
-                                                   <div class="ms-2 small">
-                                                      <a href="#" class="text-dark text-decoration-none" data-bs-toggle="modal" data-bs-target="#commentModal">
-                                                         <div class="bg-light px-3 py-2 rounded-4 mb-1 chat-text">
-                                                            <p class="fw-500 mb-0">John Smith</p>
-                                                            <span class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</span>
-                                                         </div>
-                                                      </a>
-                                                      <div class="d-flex align-items-center ms-2">
-                                                         <a href="#" class="small text-muted text-decoration-none">Like</a>
-                                                         <span class="fs-3 text-muted material-icons mx-1">circle</span>
-                                                         <a href="#" class="small text-muted text-decoration-none">Reply</a>
-                                                         <span class="fs-3 text-muted material-icons mx-1">circle</span>
-                                                         <span class="small text-muted">20min</span>
-                                                      </div>
-                                                   </div>
-                                                </div>
-                                                <div class="d-flex mb-2">
-                                                   <a href="#" class="text-dark text-decoration-none" data-bs-toggle="modal" data-bs-target="#commentModal">
-                                                   <img src="/img/rmate2.jpg" class="img-fluid rounded-circle" alt="commenters-img">
-                                                   </a>
-                                                   <div class="ms-2 small">
-                                                      <a href="#" class="text-dark text-decoration-none" data-bs-toggle="modal" data-bs-target="#commentModal">
-                                                         <div class="bg-light px-3 py-2 rounded-4 mb-1 chat-text">
-                                                            <p class="fw-500 mb-0">Shay Jordon</p>
-                                                            <span class="text-muted">With our vastly improved notifications system, users have more control.</span>
-                                                         </div>
-                                                      </a>
-                                                      <div class="d-flex align-items-center ms-2">
-                                                         <a href="#" class="small text-muted text-decoration-none">Like</a>
-                                                         <span class="fs-3 text-muted material-icons mx-1">circle</span>
-                                                         <a href="#" class="small text-muted text-decoration-none">Reply</a>
-                                                         <span class="fs-3 text-muted material-icons mx-1">circle</span>
-                                                         <span class="small text-muted">10min</span>
-                                                      </div>
-                                                   </div>
-                                                </div>
+                                                <input type="text" class="form-control form-control-sm rounded-3 fw-light" placeholder="Write Your comment" >
                                              </div>
                                           </div>
                                        </div>
                                     </div>
                                  </div>
                               </div>
-                              <!-- Feed Item -->
+
+
 
                         <div class="tab-pane fade" id="pills-trending" role="tabpanel" aria-labelledby="pills-trending-tab">
                            <!-- Feeds -->

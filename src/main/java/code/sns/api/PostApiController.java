@@ -2,15 +2,12 @@ package code.sns.api;
 
 
 import code.sns.auth.PrincipalDetail;
-import code.sns.domain.UploadFile;
 import code.sns.domain.dto.request.PostRequestDto;
 import code.sns.domain.dto.response.PostResponseDto;
-import code.sns.domain.dto.response.PostResponseLoginDto;
 import code.sns.exception.CustomException;
 import code.sns.exception.ErrorCode;
 import code.sns.service.CommentService;
 import code.sns.service.PostService;
-import code.sns.upload.FileStore;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,9 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
@@ -36,7 +31,7 @@ public class PostApiController {
 
     @GetMapping("/testing")
     public ResponseEntity follow() {
-        List<PostResponseLoginDto> data = postService.getFollowPost (1L, Pageable.ofSize (3));
+        List<PostResponseDto> data = postService.getPostsLiked (1L, Pageable.ofSize (3));
         return ResponseEntity.status(HttpStatus.OK).body(data);
     }
 
@@ -52,14 +47,8 @@ public class PostApiController {
         requestDto.setUser_id(userId);
 
         postService.createPost(requestDto);
-
-
         return ResponseEntity.status(HttpStatus.OK).body("");
-
-
     }
-
-
 
     @GetMapping("/api/post/{postId}")
     public ResponseEntity findById(@PathVariable("postId") Long id) {
@@ -67,10 +56,8 @@ public class PostApiController {
         return ResponseEntity.status(HttpStatus.OK).body(dto);
     }
 
-
     @GetMapping("/posts")
     public ResponseEntity getPosts() {
-
         List<PostResponseDto> posts = postService.getPosts();
         return ResponseEntity.status(HttpStatus.OK).body(posts);
     }
@@ -85,14 +72,9 @@ public class PostApiController {
         log.info("postId {}",map.get("postId"));
         postService.deleteById(map.get("postId"));
         return ResponseEntity.status(HttpStatus.OK).body("삭제완료");
-
     }
 
-    @GetMapping("/api/login/posts")
-    public ResponseEntity getPostsLogin() {
-        List<PostResponseLoginDto> result = postService.getPostsLogin(1L, Pageable.ofSize(3));
-        return ResponseEntity.status(HttpStatus.OK).body(result);
-    }
+
 
     private Long authCheck(Authentication authentication) {
         if (authentication == null) {

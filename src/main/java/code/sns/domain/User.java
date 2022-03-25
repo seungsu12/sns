@@ -62,6 +62,8 @@ public class User extends BaseEntity {
     @OneToMany(mappedBy = "user")
     private List<Post> posts = new ArrayList<>();
 
+    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
+    List<Scrap> scraps = new ArrayList<>();
 
 
     @Builder

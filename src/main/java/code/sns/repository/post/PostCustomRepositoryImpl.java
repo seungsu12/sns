@@ -2,13 +2,8 @@ package code.sns.repository.post;
 
 import code.sns.domain.QPostLike;
 import code.sns.domain.dto.response.PostResponseDto;
-
-import code.sns.domain.dto.response.PostResponseLoginDto;
 import code.sns.domain.dto.response.QPostResponseDto;
-import code.sns.domain.dto.response.QPostResponseLoginDto;
-import com.querydsl.core.types.ExpressionUtils;
 import com.querydsl.jpa.JPAExpressions;
-import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -70,8 +65,8 @@ public class PostCustomRepositoryImpl implements PostCustomRepository {
         return result;
     }
     @Override
-    public Page<PostResponseLoginDto> getPostsByUserId(Long userId, Pageable pageable) {
-        List<PostResponseLoginDto> fetch = queryFactory.select(new QPostResponseLoginDto(
+    public Page<PostResponseDto> getPostsByUserId(Long userId, Pageable pageable) {
+        List<PostResponseDto> fetch = queryFactory.select(new QPostResponseDto(
                         user.id,
                         post.id,
                         user.profile_img,
@@ -95,9 +90,9 @@ public class PostCustomRepositoryImpl implements PostCustomRepository {
     }
 
     @Override
-    public List<PostResponseLoginDto> getPostsByFollow(Long userId, Pageable pageable) {
+    public List<PostResponseDto> getPostsByFollow(Long userId, Pageable pageable) {
 
-        List<PostResponseLoginDto> fetch = queryFactory.select(new QPostResponseLoginDto(
+        List<PostResponseDto> fetch = queryFactory.select(new QPostResponseDto(
                         user.id,
                         post.id,
                         user.profile_img,
@@ -126,7 +121,37 @@ public class PostCustomRepositoryImpl implements PostCustomRepository {
     }
 
     @Override
-    public Page<PostResponseLoginDto> getPostsLogin(Long id, Pageable pageable) {
+    public List<PostResponseDto> getPostsLiked(Long userId, Pageable pageable) {
+        List<PostResponseDto> fetch = queryFactory.select(new QPostResponseDto(
+                        user.id,
+                        post.id,
+                        user.profile_img,
+                        user.username,
+                        user.nickname,
+                        post.context,
+                        post.uploadFile.storeFileName,
+                        post.created_at,
+                        post.postLikes.size(),
+                        post.comments.size()
+                ))
+                .from(post)
+                .leftJoin(post.user, user)
+                .where (post.id.in(
+                        JPAExpressions
+                                .select (postLike.post.id)
+                                .from (postLike)
+                                .where (postLike.user.id.eq (userId))
+                ))
+                .orderBy(post.created_at.desc())
+                .offset (0)
+                .limit (5)
+                .fetch();
+
+        return fetch;
+    }
+
+    @Override
+    public Page<PostResponseDto> getPostsLogin(Long id, Pageable pageable) {
        return null;
     }
 }
