@@ -4,6 +4,7 @@ import com.querydsl.core.annotations.QueryProjection;
 import lombok.Data;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 public class PostResponseLoginDto {
@@ -20,7 +21,7 @@ public class PostResponseLoginDto {
 
 
     @QueryProjection
-    public PostResponseLoginDto(Long user_id, Long post_id, String profile_img, String username, String nickname, String context, String storeFilename, LocalDate createdAt, Integer postLikeCount, Integer commentsCount){
+    public PostResponseLoginDto(Long user_id, Long post_id, String profile_img, String username, String nickname, String context, String storeFilename, LocalDateTime createdAt, Integer postLikeCount, Integer commentsCount){
         this.user_id = user_id;
         this.post_id = post_id;
         this.profile_img = profile_img;
@@ -28,7 +29,7 @@ public class PostResponseLoginDto {
         this.nickname = nickname;
         this.context = context;
         this.storeFilename = storeFilename;
-        this.createdAt = createdAt;
+        this.createdAt = createdAt.toLocalDate ();
         this.postLikeCount = postLikeCount;
         this.commentsCount = commentsCount;
 

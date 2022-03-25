@@ -4,6 +4,7 @@ import com.querydsl.core.annotations.QueryProjection;
 import lombok.Data;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 public class UserProfileDto {
@@ -18,12 +19,12 @@ public class UserProfileDto {
     private Integer followingCount;
 
     @QueryProjection
-    public UserProfileDto(Long userId,String username, String nickname, String profile, String profile_img, LocalDate createdAt, Integer followerCount, Integer followingCount) {
+    public UserProfileDto(Long userId, String username, String nickname, String profile, String profile_img, LocalDateTime createdAt, Integer followerCount, Integer followingCount) {
         this.username = username;
         this.nickname = nickname;
         this.profile = profile;
         this.profile_img = profile_img;
-        this.createdAt = createdAt;
+        this.createdAt = createdAt.toLocalDate ();
         this.followerCount = followerCount;
         this.followingCount = followingCount;
     }

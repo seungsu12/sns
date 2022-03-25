@@ -2,8 +2,10 @@ package code.sns.domain;
 
 
 import code.sns.domain.enums.Gender;
+import code.sns.domain.enums.Job;
 import code.sns.domain.enums.Role;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -30,13 +32,15 @@ public class User extends BaseEntity {
 
     private String profile;
 
+    @ColumnDefault("basic.jpg")
     private String profile_img;
 
     private LocalDate birth;
 
     private String nickname;
 
-    private String job;
+    @Enumerated(EnumType.STRING)
+    private Job job;
 
 
     @Enumerated(EnumType.STRING)
@@ -61,7 +65,7 @@ public class User extends BaseEntity {
 
 
     @Builder
-    public static User JoinUser(String email, String password, String username, LocalDate birth, String nickname,Gender gender,Role role) {
+    public static User JoinUser(String email, String password, String username, LocalDate birth, String nickname,Gender gender,Job job,Role role) {
         User user = new User();
         user.email = email;
         user.password = password;
@@ -70,6 +74,8 @@ public class User extends BaseEntity {
         user.birth = birth;
         user.gender = gender;
         user.role =role;
+        user.job = job;
+        user.profile_img="basic.jpg";
         return user;
     }
 

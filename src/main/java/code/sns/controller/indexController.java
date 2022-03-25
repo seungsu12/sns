@@ -2,6 +2,7 @@ package code.sns.controller;
 
 
 import code.sns.auth.PrincipalDetail;
+import code.sns.domain.dto.response.CommentResponseDto;
 import code.sns.domain.dto.response.FollowResponseDto;
 import code.sns.domain.dto.response.PostResponseLoginDto;
 import code.sns.domain.dto.response.UserProfileDto;
@@ -34,6 +35,7 @@ public class indexController {
     public String index(Model model,Authentication authentication) {
 
         List<FollowResponseDto> followList;
+        List<CommentResponseDto> comments = null;
 
         if(authentication==null){
                 followList = followService.getBasicList();
@@ -42,10 +44,11 @@ public class indexController {
         }else{
             Long userId = authCheck(authentication);
             followList =followService.getFollowList(userId);
-             model.addAttribute("posts",postService.getPostsLogin(userId,Pageable.ofSize(3)));
+            model.addAttribute("posts",postService.getFollowPost(userId,Pageable.ofSize (5)));
+
         }
 
-
+        model.addAttribute ("comments",comments);
         model.addAttribute("followList",followList);
         return "index";
     }

@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -30,16 +31,16 @@ public class UserApiController {
     }
 
 
-    @PostMapping("/user")
-    public ResponseEntity join(@RequestBody @Valid UserRequestDto requestDto) {
+    @PostMapping("/user/signup")
+    public ResponseEntity signUp(@RequestBody @Valid UserRequestDto requestDto) throws IOException {
 
         userService.join(requestDto);
 
         return ResponseEntity.status(HttpStatus.OK).body("회원가입완료");
     }
 
-    @PutMapping("/api/user/{id}")
-    public ResponseEntity updateUser(@RequestBody UserRequestDto requestDto) {
+    @PutMapping("/api/user")
+    public ResponseEntity updateUser(@RequestBody @Valid UserRequestDto requestDto) {
 
         User user = userService.updateUser(requestDto);
         return ResponseEntity.status(HttpStatus.OK).body("user");

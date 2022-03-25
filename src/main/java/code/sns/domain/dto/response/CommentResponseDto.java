@@ -4,6 +4,9 @@ package code.sns.domain.dto.response;
 import com.querydsl.core.annotations.QueryProjection;
 import lombok.Data;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 @Data
 public class CommentResponseDto {
 
@@ -12,13 +15,15 @@ public class CommentResponseDto {
     private String username;
     private String context;
     private String profile_img;
+    private LocalDate created_at;
 
     @QueryProjection
-    public CommentResponseDto(Long comment_id, Long user_id, String username, String context, String profile_img) {
+    public CommentResponseDto(Long comment_id, Long user_id, String username, String context, String profile_img,LocalDateTime created_at) {
         this.comment_id = comment_id;
         this.user_id = user_id;
         this.username = username;
         this.context = context;
         this.profile_img = profile_img;
+        this.created_at =  created_at.toLocalDate ();
     }
 }

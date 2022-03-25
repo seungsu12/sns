@@ -5,14 +5,19 @@ import code.sns.domain.dto.request.CommentRequestDto;
 import code.sns.domain.dto.response.CommentResponseDto;
 import code.sns.service.CommentService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.parameters.P;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
+@Slf4j
 public class CommentApiController {
 
     private final CommentService commentService;
@@ -25,9 +30,12 @@ public class CommentApiController {
         return ResponseEntity.status(HttpStatus.OK).body("");
     }
 
-    @GetMapping("/comment/{id}")
-    public ResponseEntity getCommentsById(@PathVariable("id")Long id){
-        List<CommentResponseDto> result = commentService.getCommentById(id);
-        return ResponseEntity.status(HttpStatus.OK).body(result);
+    @GetMapping("/api/comment/{postId}")
+    public List<CommentResponseDto> getCommentsByPostId(@PathVariable("postId")Long postId, Model model){
+        Pageable pageable = Pageable.ofSize (5);
+        List<CommentResponseDto> result = commentService.getCommentById(postId,pageable);
+        model.addAttribute ("comments",result);
+        log.info ("comments {}",result);
+        return result;
     }
 }

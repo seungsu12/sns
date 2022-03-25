@@ -70,4 +70,8 @@ public class PostService {
         postRepository.delete(post);
 
     }
+
+    public List<PostResponseLoginDto> getFollowPost(Long userId, Pageable pageable) {
+        return postRepository.getPostsByFollow(userId,pageable);
+    }
 }
