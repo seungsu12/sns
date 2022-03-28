@@ -5,6 +5,7 @@ import code.sns.domain.dto.response.PostResponseDto;
 import code.sns.domain.dto.response.PostResponseLoginDto;
 import code.sns.domain.dto.response.QPostResponseDto;
 import code.sns.domain.dto.response.QPostResponseLoginDto;
+import com.querydsl.core.QueryResults;
 import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
@@ -91,12 +92,11 @@ public class PostCustomRepositoryImpl implements PostCustomRepository {
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetch();
-
         return new PageImpl<>(fetch,pageable, fetch.size());
     }
 
     @Override
-    public List<PostResponseDto> getPostsByFollow(Long userId, Pageable pageable) {
+    public Page<PostResponseDto> getPostsByFollow(Long userId, Pageable pageable) {
 
         List<PostResponseDto> fetch = queryFactory.select(new QPostResponseDto(
                         user.id,
@@ -118,13 +118,13 @@ public class PostCustomRepositoryImpl implements PostCustomRepository {
                                 .select(follow.toFollow.id)
                                 .from(follow)
                                 .where(follow.fromFollow.id.eq(userId))
-                )).or (user.id.eq (userId)))
+                )).or(user.id.eq(userId)))
                 .orderBy(post.created_at.desc())
-                .offset (0)
-                .limit (5)
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
                 .fetch();
 
-        return fetch;
+        return new PageImpl<>(fetch,pageable,fetch.size());
     }
 
     @Override
