@@ -2,11 +2,16 @@ package code.sns.domain.dto.response;
 
 import com.querydsl.core.annotations.QueryProjection;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-@Data
+@Getter
+@Setter
+@ToString
 public class PostResponseDto {
     private Long user_id;
     private Long post_id;
@@ -19,6 +24,7 @@ public class PostResponseDto {
     private Integer postLikeCount;
     private Integer commentsCount;
     private Integer scrapCount;
+    private Boolean IsFollow;
 
     @QueryProjection
     public PostResponseDto(Long user_id, Long post_id, String profile_img, String username, String nickname, String context, String storeFilename, LocalDateTime createdAt, Integer postLikeCount, Integer commentsCount,Integer scrapCount){

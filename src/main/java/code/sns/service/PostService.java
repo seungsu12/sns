@@ -9,6 +9,7 @@ import code.sns.domain.dto.response.PostResponseLoginDto;
 import code.sns.exception.CustomException;
 import code.sns.exception.ErrorCode;
 import code.sns.repository.follow.FollowRepository;
+import code.sns.repository.like.PostLikeRepository;
 import code.sns.repository.post.PostRepository;
 import code.sns.repository.user.UserRepository;
 import code.sns.upload.FileStore;
@@ -19,6 +20,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -28,7 +30,7 @@ public class PostService {
 
     private final PostRepository postRepository;
     private final UserRepository userRepository;
-    private final FollowRepository followRepository;
+    private final PostLikeRepository postLikeRepository;
     private final FileStore fileStore;
 
     public List<PostResponseDto> getPosts() {
@@ -71,11 +73,16 @@ public class PostService {
 
 
     public List<PostResponseDto> getFollowPost(Long userId, Pageable pageable) {
-        Page<PostResponseDto> pageResult = postRepository.getPostsByFollow(userId, pageable);
-        int pageCount = pageResult.getTotalPages();
+        Page<PostResponseDto> pageResult = postRepository.getPostsByFollow(userId,pageable);
+        List<PostResponseDto> result =new ArrayList<>();
 
+        for (PostResponseDto dto : pageResult) {
 
+            dto.setIsFollow(postLikeRepository.IsFollowList(dto.getUser_id(), dto.getPost_id()));
+            result.add(dto);
+        }
 
+        return  result;
     }
 
     public List<PostResponseDto> getPostsLiked(Long userId, Pageable pageable) {

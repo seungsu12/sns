@@ -1,16 +1,19 @@
 package code.sns.repository.follow;
 
 import code.sns.domain.QFollow;
+import code.sns.domain.QPost;
 import code.sns.domain.QUser;
 import code.sns.domain.dto.response.FollowResponseDto;
 import code.sns.domain.dto.response.QFollowResponseDto;
 import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
 import static code.sns.domain.QFollow.follow;
+import static code.sns.domain.QPost.post;
 import static code.sns.domain.QUser.user;
 
 @RequiredArgsConstructor
@@ -68,4 +71,6 @@ public class FollowCustomRepositoryImpl implements FollowCustomRepository{
 
                 )).fetch();
     }
+
+
 }
