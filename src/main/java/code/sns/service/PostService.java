@@ -8,10 +8,12 @@ import code.sns.domain.dto.response.PostResponseDto;
 import code.sns.domain.dto.response.PostResponseLoginDto;
 import code.sns.exception.CustomException;
 import code.sns.exception.ErrorCode;
+import code.sns.repository.follow.FollowRepository;
 import code.sns.repository.post.PostRepository;
 import code.sns.repository.user.UserRepository;
 import code.sns.upload.FileStore;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,6 +28,7 @@ public class PostService {
 
     private final PostRepository postRepository;
     private final UserRepository userRepository;
+    private final FollowRepository followRepository;
     private final FileStore fileStore;
 
     public List<PostResponseDto> getPosts() {
@@ -68,7 +71,11 @@ public class PostService {
 
 
     public List<PostResponseDto> getFollowPost(Long userId, Pageable pageable) {
-        return postRepository.getPostsByFollow(userId,pageable);
+        Page<PostResponseDto> pageResult = postRepository.getPostsByFollow(userId, pageable);
+        int pageCount = pageResult.getTotalPages();
+
+
+
     }
 
     public List<PostResponseDto> getPostsLiked(Long userId, Pageable pageable) {

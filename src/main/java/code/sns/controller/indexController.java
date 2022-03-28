@@ -36,7 +36,6 @@ public class indexController {
     public String index(Model model,Authentication authentication) {
 
         List<FollowResponseDto> followList;
-        List<CommentResponseDto> comments = null;
 
         if(authentication==null){
                 followList = followService.getBasicList();
@@ -49,7 +48,6 @@ public class indexController {
 
         }
 
-        model.addAttribute ("comments",comments);
         model.addAttribute("followList",followList);
         return "index";
     }
