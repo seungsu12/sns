@@ -19,9 +19,9 @@ public interface PostCustomRepository {
 
     Page<PostResponseDto> getPostsByFollow(Long userId, Pageable pageable);
 
-    List<PostResponseDto> getPostsLiked(Long userId, Pageable pageable);
+    Page<PostResponseDto> getPostsLiked(Long userId, Pageable pageable);
 
-    List<PostResponseDto> getScraps(Long userId, Pageable pageable);
+    Page<PostResponseDto> getScraps(Long userId, Pageable pageable);
 
     List<PostResponseLoginDto> getPostsLogins(Long userId, Pageable pageable);
 }

@@ -23,8 +23,8 @@ public class ScrapApiController {
     @PostMapping("/scrap/{postId}")
     public ResponseEntity createScrap(@PathVariable("postId")Long postId , Authentication authentication) {
         Long userId = AuthUtil.getAuthenticationUserId ();
-        scrapService.createScrap(userId,postId);
-        return ResponseEntity.status (HttpStatus.OK).body("ok");
+        boolean existScrap = scrapService.createScrap(userId, postId);
+        return ResponseEntity.status (HttpStatus.OK).body(existScrap);
     }
 
     @DeleteMapping("/scarp/{postId}")

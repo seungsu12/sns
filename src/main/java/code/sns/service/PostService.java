@@ -73,41 +73,49 @@ public class PostService {
 
     }
 
-    public List<PostResponseDto> getPostsLogin(Long userId, Pageable pageable) {
+    public List<PostResponseDto> getPostsByUserId(Long userId, Pageable pageable) {
 
-        return  postRepository.getPostsByUserId(userId,pageable).toList();
+        Page<PostResponseDto> pageResult = postRepository.getPostsByUserId(userId, pageable);
+
+        return addScrapAndLike(pageResult,userId);
     }
 
 
     public List<PostResponseDto> getFollowPost(Long userId, Pageable pageable) {
         Page<PostResponseDto> pageResult = postRepository.getPostsByFollow(userId,pageable);
-        List<PostResponseDto> result =new ArrayList<>();
 
-        for (PostResponseDto dto : pageResult) {
-
-            dto.setIsLike(postLikeRepository.IsFollowList(dto.getUser_id(), dto.getPost_id()));
-            User user = userRepository.findById(dto.getUser_id()).orElseThrow(()->new CustomException(ErrorCode.NOT_FOUND_USER));
-            Post post = postRepository.findById(dto.getPost_id()).orElseThrow(()->new CustomException(ErrorCode.NOT_FOUND_POST));
-            dto.setIsScrap(scrapRepository.existsByUserAndPost(user,post));
-            log.info("is scrap {}",dto.getIsScrap());
-            log.info("context {}",dto.getContext());
-            result.add(dto);
-        }
-
-        return  result;
+        return addScrapAndLike(pageResult,userId);
     }
 
     public List<PostResponseDto> getPostsLiked(Long userId, Pageable pageable) {
-        return  postRepository.getPostsLiked(userId,pageable);
+        Page<PostResponseDto> pageResult = postRepository.getPostsLiked(userId, pageable);
+
+        return addScrapAndLike(pageResult,userId);
     }
 
+
+
     public List<PostResponseDto> getScraps(Long userId, Pageable pageable) {
-        return postRepository.getScraps(userId,pageable);
+        Page<PostResponseDto> pageResult = postRepository.getScraps(userId, pageable);
+        return addScrapAndLike(pageResult,userId);
     }
 
     public List<PostResponseLoginDto> getPostsLogins(Long userId, Pageable pageable) {
         return postRepository.getPostsLogins (userId, pageable);
 
+    }
+    private List<PostResponseDto> addScrapAndLike(Page<PostResponseDto> pageResult, Long userId) {
+        List<PostResponseDto> result =new ArrayList<>();
+
+        for (PostResponseDto dto : pageResult) {
+
+            dto.setIsLike(postLikeRepository.IsFollowList(userId ,dto.getPost_id()));
+            User user = userRepository.findById(userId).orElseThrow(()->new CustomException(ErrorCode.NOT_FOUND_USER));
+            Post post = postRepository.findById(dto.getPost_id()).orElseThrow(()->new CustomException(ErrorCode.NOT_FOUND_POST));
+            dto.setIsScrap(scrapRepository.existsByUserAndPost(user,post));
+            result.add(dto);
+        }
+        return result;
     }
 
     public List<FollowResponseDto> getUnFollowList(Long userId, PageRequest pageRequest) {

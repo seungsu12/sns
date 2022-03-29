@@ -1,9 +1,7 @@
 package code.sns.controller;
 
 
-import code.sns.auth.PrincipalDetail;
 import code.sns.config.util.AuthUtil;
-import code.sns.domain.dto.response.CommentResponseDto;
 import code.sns.domain.dto.response.FollowResponseDto;
 import code.sns.domain.dto.response.PostResponseDto;
 import code.sns.domain.dto.response.UserProfileDto;
@@ -79,7 +77,7 @@ public class indexController {
         UserProfileDto profile = userRepository.getProfile (userId);
         List<String> toFollowImg = userRepository.getToFollowImg (userId);
         List<String> fromFollowImg = userRepository.getFromFollowImg (userId);
-        List<PostResponseDto> myPosts = postService.getPostsLogin (userId, pageable);
+        List<PostResponseDto> myPosts = postService.getPostsByUserId(userId, pageable);
         List<PostResponseDto> postsLiked= postService.getPostsLiked(userId,pageable);
         List<PostResponseDto> scraps =postService.getScraps(userId,pageable);
 

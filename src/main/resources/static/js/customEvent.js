@@ -126,16 +126,17 @@ $(".post_like_btn").click(function (event){
 $(".scrap_btn").click(function (event){
     const postId =$(this).attr('data-id');
     const obj = $(this);
+    // const isClicked = $(this).attr('data-clicked');
+
     let ico =obj.children().eq(0);
     let like = obj.children().eq(1);
-    console.log(ico);
-    console.log(like);
+
 
     $.ajax({
         "url" :"/scrap/"+postId,
         "method":"post"
     }).done(function (response){
-
+        console.log(response);
         if(response === true){
             ico.css('color','blue');
             like.css('color','blue');

@@ -128,7 +128,7 @@ public class PostCustomRepositoryImpl implements PostCustomRepository {
     }
 
     @Override
-    public List<PostResponseDto> getPostsLiked(Long userId, Pageable pageable) {
+    public Page<PostResponseDto> getPostsLiked(Long userId, Pageable pageable) {
         List<PostResponseDto> fetch = queryFactory.select(new QPostResponseDto(
                         user.id,
                         post.id,
@@ -155,12 +155,12 @@ public class PostCustomRepositoryImpl implements PostCustomRepository {
                 .limit (5)
                 .fetch();
 
-        return fetch;
+        return new PageImpl<>(fetch,pageable,fetch.size());
     }
 
     @Override
-    public List<PostResponseDto> getScraps(Long userId, Pageable pageable) {
-        List<PostResponseDto> result = queryFactory.select(new QPostResponseDto(
+    public Page<PostResponseDto> getScraps(Long userId, Pageable pageable) {
+        List<PostResponseDto> fetch = queryFactory.select(new QPostResponseDto(
                         user.id,
                         post.id,
                         user.profile_img,
@@ -186,7 +186,7 @@ public class PostCustomRepositoryImpl implements PostCustomRepository {
                 .limit (5)
                 .fetch();
 
-        return result;
+        return new PageImpl<>(fetch,pageable, fetch.size());
     }
 
     @Override
