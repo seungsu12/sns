@@ -51,9 +51,9 @@
                                           </a>
                                        </div>
                                        <p class="fw-bold text-dark m-0" th:text="${follow.username}">username</p>
-                                       <p class="small text-muted" th:text="${follow.job}">직업r</p>
+                                       <p class="small text-muted" th:text="${follow.job}">직업</p>
                                        <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
-                                          <input type="checkbox" class="btn-check" th:id="'btncheck'+${index.index}" checked>
+                                          <input type="checkbox" th:attr="data-followId=${follow.user_id}" class="main_follow_btn btn-check" th:id="'btncheck'+${index.index}" checked>
                                           <label class="btn btn-outline-primary btn-sm px-3 rounded-pill" th:for="'btncheck'+${index.index}"><span class="follow">+ Follow</span><span class="following d-none">Following</span></label>
                                        </div>
                                     </div>
@@ -101,8 +101,7 @@
                                           </a>
                                           <div class="d-flex align-items-center justify-content-between mb-2">
                                              <div sec:authorize="isAuthenticated()">
-                                                <a th:attr="data-id =${post.post_id}"  class="post_like_btn text-muted text-decoration-none d-flex align-items-start fw-light">
-<!--                                                   th:style="${post.userSelfLike == true ? 'color: blue;' : ''}"-->
+                                                <a th:attr="data-id =${post.post_id}"  th:class="${post.isLike == true ? 'post_like_btn text-decoration-none d-flex align-items-start fw-light':'text-muted post_like_btn text-decoration-none d-flex align-items-start fw-light' }" >
                                                    <span class="material-icons md-20 me-2">thumb_up_off_alt</span>
                                                    <span th:text="${post.postLikeCount}">좋아요수</span></a>
                                              </div>
@@ -115,9 +114,17 @@
                                                 <a href="#" class="text-muted text-decoration-none d-flex align-items-start fw-light"><span class="material-icons md-20 me-2">chat_bubble_outline</span><span th:text="${post.commentsCount}">코멘트수</span></a>
                                              </div>
                                              <div>
-                                                <a th:attr="data-id =${post.post_id}" class="scrap_btn text-muted text-decoration-none d-flex align-items-start fw-light">
-                                                   <span class="material-icons md-20 me-2">repeat</span>
-                                                   <span th:text="${post.scrapCount}">스크랩수</span></a>
+                                                <th:block sec:authorize="isAuthenticated()">
+                                                   <a th:attr="data-id =${post.post_id}" th:class="${post.isScrap == true ? 'scrap_btn text-decoration-none d-flex align-items-start fw-light':'text-muted scrap_btn text-decoration-none d-flex align-items-start fw-light' }">
+                                                      <span class="material-icons md-20 me-2">repeat</span>
+                                                      <span th:text="${post.scrapCount}">스크랩수</span></a>
+                                                </th:block>
+
+                                                <th:block sec:authorize="isAnonymous()">
+                                                   <a th:attr="data-id =${post.post_id}" class="scrap_btn text-muted text-decoration-none d-flex align-items-start fw-light">
+                                                      <span class="material-icons md-20 me-2">repeat</span>
+                                                      <span th:text="${post.scrapCount}">스크랩수</span></a>
+                                                </th:block>
                                              </div>
                                              <div>
                                                 <a class="text-muted text-decoration-none d-flex align-items-start fw-light">
@@ -145,73 +152,24 @@
                   <div class="tab-pane fade" id="pills-people" role="tabpanel" aria-labelledby="pills-people-tab">
                      <h6 class="mb-3 fw-bold text-body">People you can follow</h6>
                      <div class="bg-white rounded-4 overflow-hidden mb-4 shadow-sm">
-                        <!-- Account Item -->
-                        <a href="profile.html" class="p-3 border-bottom d-flex text-dark text-decoration-none account-item pf-item">
-                           <img src="/img/rmate5.jpg" class="img-fluid rounded-circle me-3" alt="profile-img">
-                           <div>
-                              <p class="fw-bold mb-0 pe-3 d-flex align-items-center">Webartinfo <span class="ms-2 material-icons bg-primary p-0 md-16 fw-bold text-white rounded-circle ov-icon">done</span></p>
-                              <div class="text-muted fw-light">
-                                 <p class="mb-1 small">@abcdsec</p>
-                                 <span class="text-muted d-flex align-items-center small"><span class="material-icons me-1 small">open_in_new</span>Promoted</span>
-                              </div>
-                           </div>
-                           <div class="ms-auto">
-                              <span class="btn btn-outline-primary btn-sm px-3 rounded-pill">+ Follow</span>
-                           </div>
-                        </a>
+                        <th:block th:each ="user : ${unFollowList}">
 
-                     </div>
-                     <h6 class="mb-3 fw-bold text-body">Popular</h6>
-                     <div class="bg-white rounded-4 overflow-hidden mb-4 shadow-sm">
                         <!-- Account Item -->
                         <a href="profile.html" class="p-3 border-bottom d-flex text-dark text-decoration-none account-item pf-item">
-                           <img src="/img/rmate2.jpg" class="img-fluid rounded-circle me-3" alt="profile-img">
+                           <img style="width: 60px" th:src="'/img/'+${user.profile_img}" class="img-fluid rounded-circle me-3" alt="profile-img">
                            <div>
-                              <p class="fw-bold mb-0 pe-3 d-flex align-items-center">Anushuka Shetty <span class="ms-2 material-icons bg-primary p-0 md-16 fw-bold text-white rounded-circle ov-icon">done</span></p>
+                              <p class="fw-bold mb-0 pe-3 d-flex align-items-center" th:text="${user.username}">Webartinfo <span class="ms-2 material-icons bg-primary p-0 md-16 fw-bold text-white rounded-circle ov-icon">done</span></p>
                               <div class="text-muted fw-light">
-                                 <p class="mb-1 small">@anushuka</p>
+                                 <p class="mb-1 small" th:text="'@'+${user.nickname}">@abcdsec</p>
                                  <span class="text-muted d-flex align-items-center small"><span class="material-icons me-1 small">open_in_new</span>Promoted</span>
                               </div>
                            </div>
                            <div class="ms-auto">
-                              <span class="btn btn-outline-primary btn-sm px-3 rounded-pill">+ Follow</span>
+                              <span  th:attr="data-userId =${user.user_id}" class="profile_follow_btn btn btn-outline-primary btn-sm px-3 rounded-pill">+ Follow</span>
                            </div>
                         </a>
-                     </div>
-                     <h6 class="mb-3 fw-bold text-body">News Papers & Channels</h6>
-                     <div class="bg-white rounded-4 overflow-hidden mb-4 shadow-sm">
-                        <!-- Account Item -->
-                        <a href="profile.html" class="p-3 border-bottom d-flex text-dark text-decoration-none account-item pf-item">
-                           <img src="/img/rmate5.jpg" class="img-fluid rounded-circle me-3" alt="profile-img">
-                           <div>
-                              <p class="fw-bold mb-0 pe-3 d-flex align-items-center">Webartinfo <span class="ms-2 material-icons bg-primary p-0 md-16 fw-bold text-white rounded-circle ov-icon">done</span></p>
-                              <div class="text-muted fw-light">
-                                 <p class="mb-1 small">@abcdsec</p>
-                                 <span class="text-muted d-flex align-items-center small"><span class="material-icons me-1 small">open_in_new</span>Promoted</span>
-                              </div>
-                           </div>
-                           <div class="ms-auto">
-                              <span class="btn btn-outline-primary btn-sm px-3 rounded-pill">+ Follow</span>
-                           </div>
-                        </a>
-                     </div>
+                        </th:block>
 
-                     <h6 class="mb-3 fw-bold text-body">Politicians</h6>
-                     <div class="bg-white rounded-4 overflow-hidden mb-4 shadow-sm">
-                        <!-- Account Item -->
-                        <a href="profile.html" class="p-3 border-bottom d-flex text-dark text-decoration-none account-item pf-item">
-                           <img src="/img/rmate2.jpg" class="img-fluid rounded-circle me-3" alt="profile-img">
-                           <div>
-                              <p class="fw-bold mb-0 pe-3 d-flex align-items-center">Anushuka Shetty <span class="ms-2 material-icons bg-primary p-0 md-16 fw-bold text-white rounded-circle ov-icon">done</span></p>
-                              <div class="text-muted fw-light">
-                                 <p class="mb-1 small">@anushuka</p>
-                                 <span class="text-muted d-flex align-items-center small"><span class="material-icons me-1 small">open_in_new</span>Promoted</span>
-                              </div>
-                           </div>
-                           <div class="ms-auto">
-                              <span class="btn btn-outline-primary btn-sm px-3 rounded-pill">+ Follow</span>
-                           </div>
-                        </a>
                      </div>
                   </div>
 

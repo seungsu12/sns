@@ -97,8 +97,7 @@ public class PostCustomRepositoryImpl implements PostCustomRepository {
 
     @Override
     public Page<PostResponseDto> getPostsByFollow(Long userId, Pageable pageable) {
-        System.out.println(pageable.getPageSize());
-        System.out.println(pageable.getOffset());
+
         List<PostResponseDto> fetch = queryFactory.select(new QPostResponseDto(
                         user.id,
                         post.id,

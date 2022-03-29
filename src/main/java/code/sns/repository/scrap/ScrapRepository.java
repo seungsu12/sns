@@ -8,4 +8,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface ScrapRepository extends JpaRepository<Scrap,Long> {
 
     void deleteByUserAndPost(User user, Post post);
+
+    Boolean existsByUserAndPost(User user, Post post);
 }

@@ -122,17 +122,21 @@ $(".post_like_btn").click(function (event){
     })
 });
 
+//스크랩
 $(".scrap_btn").click(function (event){
     const postId =$(this).attr('data-id');
     const obj = $(this);
     let ico =obj.children().eq(0);
     let like = obj.children().eq(1);
+    console.log(ico);
+    console.log(like);
+
     $.ajax({
         "url" :"/scrap/"+postId,
         "method":"post"
     }).done(function (response){
 
-        if(response == true){
+        if(response === true){
             ico.css('color','blue');
             like.css('color','blue');
             like.text(parseInt(like.text())+1);
@@ -146,3 +150,34 @@ $(".scrap_btn").click(function (event){
         location.href="/login";
     })
 });
+
+//메인페이지 팔로우
+$(".main_follow_btn").click(function(event){
+    const followId = $(this).attr('data-followId');
+
+    $.ajax({
+        "url" : "/follow/"+followId,
+        "method":"post"
+    }).done(function(response){
+
+    }).fail(function(response){
+        alert("권한이 없습니다.");
+        location.href="/login";
+
+    })
+})
+
+//프로필 팔로우
+$(".profile_follow_btn").click(function(event){
+    const userId = $(this).attr('data-userId');
+    alert(userId);
+
+    $.ajax({
+        "url" : "/follow/"+userId,
+        "method":"post"
+    }).done(function(response){
+
+    }).fail(function(response){
+        alert("권한이 없습니다.");
+    })
+})

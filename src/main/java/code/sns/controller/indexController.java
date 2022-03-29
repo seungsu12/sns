@@ -14,6 +14,7 @@ import code.sns.service.FollowService;
 import code.sns.service.PostService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -41,11 +42,12 @@ public class indexController {
                 followList = followService.getBasicList();
                 model.addAttribute("posts",postService.getPosts());
 
+
         }else{
             Long userId = AuthUtil.getAuthenticationUserId();
             followList =followService.getFollowList(userId);
             model.addAttribute("posts",postService.getFollowPost(userId,Pageable.ofSize (5)));
-
+            model.addAttribute("unFollowList",postService.getUnFollowList(userId, PageRequest.of(0,5)));
         }
 
         model.addAttribute("followList",followList);
@@ -80,6 +82,7 @@ public class indexController {
         List<PostResponseDto> myPosts = postService.getPostsLogin (userId, pageable);
         List<PostResponseDto> postsLiked= postService.getPostsLiked(userId,pageable);
         List<PostResponseDto> scraps =postService.getScraps(userId,pageable);
+
 
         model.addAttribute ("user", profile);
         model.addAttribute ("toFollow", toFollowImg);

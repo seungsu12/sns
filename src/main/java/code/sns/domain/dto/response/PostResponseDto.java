@@ -24,7 +24,8 @@ public class PostResponseDto {
     private Integer postLikeCount;
     private Integer commentsCount;
     private Integer scrapCount;
-    private Boolean IsFollow;
+    private Boolean isLike;
+    private Boolean isScrap;
 
     @QueryProjection
     public PostResponseDto(Long user_id, Long post_id, String profile_img, String username, String nickname, String context, String storeFilename, LocalDateTime createdAt, Integer postLikeCount, Integer commentsCount,Integer scrapCount){

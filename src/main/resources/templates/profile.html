@@ -23,7 +23,7 @@
                               <p class="text-muted mb-0" th:text="'@'+${user.nickname}">@닉네임</p>
                            </div>
                            <div class="ms-auto btn-group" role="group" aria-label="Basic checkbox toggle button group">
-                              <input type="checkbox" class="btn-check" id="btncheck1">
+                              <input th:attr="data-userId=${user.userId}" type="checkbox" class="profile_follow_btn btn-check" id="btncheck1">
                               <label class="btn btn-outline-primary btn-sm px-3 rounded-pill" for="btncheck1"><span class="follow">+ Follow</span><span class="following d-none">Following</span></label>
                            </div>
                         </div>
@@ -54,7 +54,7 @@
                      </div>
                      <ul class="top-osahan-nav-tab nav nav-pills justify-content-center nav-justified mb-4 shadow-sm rounded-4 overflow-hidden bg-white mt-4" id="pills-tab" role="tablist">
                         <li class="nav-item" role="presentation">
-                           <button class="p-3 nav-link text-muted active" id="pills-feed-tab" data-bs-toggle="pill" data-bs-target="#pills-feed" type="button" role="tab" aria-controls="pills-feed" aria-selected="true">Vogel(2)</button>
+                           <button class="p-3 nav-link text-muted active" id="pills-feed-tab" data-bs-toggle="pill" data-bs-target="#pills-feed" type="button" role="tab" aria-controls="pills-feed" aria-selected="true">Vogel</button>
                         </li>
                         <li class="nav-item" role="presentation">
                            <button class="p-3 nav-link text-muted" id="pills-people-tab" data-bs-toggle="pill" data-bs-target="#pills-people" type="button" role="tab" aria-controls="pills-people" aria-selected="false">Liked</button>

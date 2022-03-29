@@ -9,13 +9,15 @@ import lombok.Data;
 @Data
 public class FollowResponseDto {
     private Long user_id;
+    private String nickname;
     private String username;
     private String profile_img;
     private Job job;
 
     @QueryProjection
-    public FollowResponseDto(Long user_id,String username, String profile_img,Job job) {
+    public FollowResponseDto(Long user_id,String nickname,String username, String profile_img,Job job) {
         this.user_id =user_id;
+        this.nickname = nickname;
         this.username = username;
         this.profile_img = profile_img;
         this.job =job;
