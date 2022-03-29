@@ -3,12 +3,17 @@ package code.sns.api;
 
 import code.sns.config.HashTagConfig;
 import code.sns.domain.Item;
+import code.sns.domain.dto.response.PostResponseDto;
 import code.sns.repository.HashTag.HashTagRepository;
+import code.sns.repository.like.PostLikeRepository;
 import code.sns.service.HashTagService;
+import code.sns.service.PostService;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.InputStreamResource;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +26,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @Slf4j
@@ -28,7 +34,7 @@ import java.util.List;
 public class TestApiController {
 
     private final HashTagService hashTagService;
-
+    private final PostService postService;
     @GetMapping("/hash")
     public ResponseEntity hash(@RequestBody String text) {
 
@@ -38,19 +44,29 @@ public class TestApiController {
         return ResponseEntity.status (HttpStatus.OK).body (null);
     }
 
+    @GetMapping("/postLike/{userId}/")
+    public ResponseEntity IsPostLike(@PathVariable("userId")Long userId , @RequestBody Map<String,String> map){
+        int size = Integer.valueOf(map.get("size"));
+        int page = Integer.valueOf(map.get("page"));
+        List<PostResponseDto> followPost = postService.getFollowPost(userId, PageRequest.of(page,size));
+
+
+        return ResponseEntity.status(HttpStatus.OK).body(followPost);
+    }
+
     @PostMapping("/upload")
     public ResponseEntity upload(@ModelAttribute Item item) throws IOException {
 
-        MultipartFile file = item.getFile ();
+        MultipartFile file = item.getFile();
 
-        System.out.println (file.getOriginalFilename ());
-        System.out.println (file.getSize ());
+        System.out.println(file.getOriginalFilename());
+        System.out.println(file.getSize());
 
         String path = "/Users/seungsu/front/";
-        String realPath = path + file.getOriginalFilename ();
+        String realPath = path + file.getOriginalFilename();
 
-        file.transferTo (new File (realPath));
-        return ResponseEntity.status (HttpStatus.OK).body ("ok");
+        file.transferTo(new File(realPath));
+        return ResponseEntity.status(HttpStatus.OK).body("ok");
     }
 
     @GetMapping("/download")

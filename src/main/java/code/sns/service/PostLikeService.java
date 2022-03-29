@@ -5,7 +5,7 @@ import code.sns.domain.PostLike;
 import code.sns.domain.User;
 import code.sns.exception.CustomException;
 import code.sns.exception.ErrorCode;
-import code.sns.repository.PostLikeRepository;
+import code.sns.repository.like.PostLikeRepository;
 import code.sns.repository.post.PostRepository;
 import code.sns.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
