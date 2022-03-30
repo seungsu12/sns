@@ -27,11 +27,11 @@ public class CommentService {
     private final PostRepository postRepository;
 
 
-    public void createComment(CommentRequestDto requestDto) {
+    public CommentResponseDto createComment(CommentRequestDto requestDto) {
 
-        User user = userRepository.findById(requestDto.getUser_id())
+        User user = userRepository.findById(requestDto.getUserId())
                 .orElseThrow(()->new NotFoundObjectException("해당 유저가 없습니다."));
-        Post post = postRepository.findById(requestDto.getPost_id())
+        Post post = postRepository.findById(requestDto.getPostId())
                 .orElseThrow(()->new NotFoundObjectException("해당 게시물이 없습니다."));
 
         Comment comment = Comment.builder()
@@ -40,11 +40,12 @@ public class CommentService {
                 .user(user)
                 .build();
 
-        commentRepository.save(comment);
-
+            commentRepository.save(comment);
+        return commentRepository.getCommentById(comment.getId());
     }
 
     public List<CommentResponseDto> getCommentById(Long postId, Pageable pageable) {
-        return  commentRepository.getCommentByIdDto(postId,pageable);
+        List<CommentResponseDto> commentByIdDto = commentRepository.getCommentByIdDto(postId, pageable);
+        return commentByIdDto;
     }
 }

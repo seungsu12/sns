@@ -1,19 +1,23 @@
 package code.sns.api;
 
 
+import code.sns.config.util.AuthUtil;
 import code.sns.domain.dto.request.CommentRequestDto;
 import code.sns.domain.dto.response.CommentResponseDto;
 import code.sns.service.CommentService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.parameters.P;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -22,20 +26,23 @@ public class CommentApiController {
 
     private final CommentService commentService;
 
-    @PostMapping("/comment/{post_id}/{user_id}")
-    public ResponseEntity createComment(@RequestBody CommentRequestDto requestDto) {
+    @PostMapping("/api/comment")
+    public ResponseEntity createComment(@RequestBody CommentRequestDto requestDto, Authentication authentication) {
+        Long userId = AuthUtil.getAuthenticationUserId();
+        requestDto.setUserId(userId);
+        CommentResponseDto comment = commentService.createComment(requestDto);
 
-        commentService.createComment(requestDto);
-
-        return ResponseEntity.status(HttpStatus.OK).body("");
+        return ResponseEntity.status(HttpStatus.OK).body(comment);
     }
 
     @GetMapping("/api/comment/{postId}")
-    public List<CommentResponseDto> getCommentsByPostId(@PathVariable("postId")Long postId, Model model){
-        Pageable pageable = Pageable.ofSize (5);
-        List<CommentResponseDto> result = commentService.getCommentById(postId,pageable);
-        model.addAttribute ("comments",result);
-        log.info ("comments {}",result);
+    public List<CommentResponseDto> getCommentsByPostId(@PathVariable("postId")Long postId){
+//        int size = Integer.valueOf(map.get("size"));
+//        int page = Integer.valueOf(map.get("page"));
+        int page = 0;
+        int size =5;
+        List<CommentResponseDto> result = commentService.getCommentById(postId, PageRequest.of(page,size));
+
         return result;
     }
 }

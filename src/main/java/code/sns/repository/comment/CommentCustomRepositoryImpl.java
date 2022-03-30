@@ -28,12 +28,27 @@ public class CommentCustomRepositoryImpl implements CommentCustomRepository{
                         user.profile_img,
                         comment.created_at
                 )).from(comment)
-                .leftJoin(comment.user, user)
+                .leftJoin(comment.user,user)
                 .where(comment.post.id.eq(postId))
-                .orderBy (comment.created_at.asc ())
+                .orderBy (comment.created_at.asc())
                 .limit (pageable.getPageSize ())
                 .offset (pageable.getOffset ())
                 .fetch();
         return result;
+    }
+
+    @Override
+    public CommentResponseDto getCommentById(Long id) {
+        return queryFactory.select(new QCommentResponseDto(
+                        comment.id,
+                        user.id,
+                        user.username,
+                        comment.context,
+                        user.profile_img,
+                        comment.created_at
+                )).from(comment)
+                .leftJoin(comment.user,user)
+                .where(comment.id.eq(id))
+                .fetchOne();
     }
 }

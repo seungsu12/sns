@@ -4,31 +4,31 @@
 <th:block th:fragment="modalFragment">
     <div class="modal fade" id="searchModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
 
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content rounded-4 p-4 border-0 bg-light">
-                <div class="modal-header d-flex align-items-center justify-content-start border-0 p-0 mb-3">
-                </div>
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div style="width: 540px" class="modal-content rounded-4 p-4 border-0 bg-light">
 
-                    <div class="modal-footer justify-content-start px-1 py-1 bg-white shadow-sm rounded-5">
+                    <div style="width: 500px;" class=" modal-footer justify-content-start px-1 py-1 bg-white shadow-sm rounded-5">
                         <div class="rounded-4 m-0 px-3 py-2 d-flex align-items-center justify-content-between w-75">
-                            <input type="text" placeholder="유저는 @, Feeds는 #">
+                            <input style="width: 400px;border: none" type="text" placeholder="유저는 @, Feeds는 #">
 
                         </div>
                         <div class="ms-auto m-0">
                             <a data-bs-dismiss="modal"  class="post-create-btn btn btn-primary rounded-5 fw-bold px-3 py-2 fs-6 mb-0 d-flex align-items-center"><span class="material-icons me-2 md-16">send</span>Search</a>
                         </div>
-                    </div>
 
+
+                    </div>
+                <div class="modal-footer justify-content-start px-1 py-1 bg-white shadow-sm rounded-5">
+<!--                    <div style="display: none" class="rounded-4 m-0 px-3 py-2 d-flex align-items-center justify-content-between w-75">-->
+                    <!--                    </div>-->
+                    <button data-bs-dismiss="modal" >exit </button>
+                </div>
             </div>
         </div>
     </div>
+<style>
+
+</style>
 </th:block>
 
-<style>
-.main_wrapper{
-    width: 200px;
-    height: 600px;
-    background: white;
-}
-</style>
 </html>
