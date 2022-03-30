@@ -231,8 +231,6 @@ $(".main_follow_btn").click(function(event){
 //프로필 팔로우
 $(".profile_follow_btn").click(function(event){
     const userId = $(this).attr('data-userId');
-    alert(userId);
-
     $.ajax({
         "url" : "/follow/"+userId,
         "method":"post"
@@ -240,5 +238,19 @@ $(".profile_follow_btn").click(function(event){
 
     }).fail(function(response){
         alert("권한이 없습니다.");
+        event.preventDefault();
     })
 })
+let isRequestPost = false;
+window.addEventListener('scroll',() => {
+    // $("#mainPost").height() : DOM의 길이
+    // $("#mainPost").offset().top : DOM의 최상단 위치
+    //window.pageYOffset : 현제 스크롤 최상단 위치
+    //window.innerHeight : 창 길이
+    const domPositionY = $("#mainPost").height() + $("#mainPost").offset().top;
+    const windowPositionY = window.pageYOffset + window.innerHeight;
+    if(domPositionY <= windowPositionY && !this.isRequestPost) {
+        this.isRequestPost = true;
+        setTimeout(() => this.isRequestPost = false, 1000);
+    }
+});

@@ -55,4 +55,11 @@ public class FollowService {
     public List<FollowResponseDto> getBasicList() {
         return followRepository.getBasicList();
     }
+
+    public boolean isFollow(Long userId, Long loginId) {
+        User toUser =  userRepository.findById(userId).orElseThrow(()-> new CustomException(ErrorCode.NOT_FOUND_USER));
+        User fromUser =  userRepository.findById(loginId).orElseThrow(()-> new CustomException(ErrorCode.NOT_FOUND_USER));
+
+        return followRepository.existsByToFollowAndFromFollow(toUser,fromUser);
+    }
 }

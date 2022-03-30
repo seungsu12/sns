@@ -1,6 +1,7 @@
 package code.sns.controller;
 
 
+import code.sns.auth.PrincipalDetail;
 import code.sns.config.util.AuthUtil;
 import code.sns.domain.dto.response.FollowResponseDto;
 import code.sns.domain.dto.response.PostResponseDto;
@@ -64,12 +65,16 @@ public class indexController {
 
 
     @GetMapping("/profile/{userId}")
-    public String profile(@PathVariable("userId")Long userId,Model model) {
+    public String profile(@PathVariable("userId")Long userId,Model model,Authentication authentication) {
 
         userRepository.findById(userId).orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_USER));
         Pageable pageable=Pageable.ofSize(3);
         profileModeling (userId, pageable, model);
-
+        if (authentication != null) {
+            PrincipalDetail principal = (PrincipalDetail) authentication.getPrincipal();
+            Long loginId = principal.getId();
+            model.addAttribute("isFollow", followService.isFollow(userId,loginId));
+        }
         return "profile";
     }
 
