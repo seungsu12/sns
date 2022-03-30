@@ -43,7 +43,7 @@
                                  <div class="me-2 bg-white shadow-sm rounded-4 p-3 user-list-item d-flex justify-content-center my-2">
                                     <div class="text-center">
                                        <div class="position-relative d-flex justify-content-center">
-                                          <a th:href="'/profile/'+${follow.user_id}" class="text-decoration-none">
+                                          <a th:href="'/profile/'+${follow.getUserId}" class="text-decoration-none">
                                              <img th:src="'/img/'+${follow.profile_img}" class="img-fluid rounded-circle mb-3" alt="profile-img">
                                              <div class="position-absolute">
                                                 <span class="material-icons bg-primary small p-1 fw-bold text-white rounded-circle">done</span>
@@ -53,7 +53,7 @@
                                        <p class="fw-bold text-dark m-0" th:text="${follow.username}">username</p>
                                        <p class="small text-muted" th:text="${follow.job}">직업</p>
                                        <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
-                                          <input type="checkbox" th:attr="data-followId=${follow.user_id}" class="main_follow_btn btn-check" th:id="'btncheck'+${index.index}" checked>
+                                          <input type="checkbox" th:attr="data-followId=${follow.getUserId}" class="main_follow_btn btn-check" th:id="'btncheck'+${index.index}" checked>
                                           <label class="btn btn-outline-primary btn-sm px-3 rounded-pill" th:for="'btncheck'+${index.index}"><span class="follow">+ Follow</span><span class="following d-none">Following</span></label>
                                        </div>
                                     </div>
@@ -155,7 +155,7 @@
                         <th:block th:each ="user : ${unFollowList}">
 
                         <!-- Account Item -->
-                        <a href="profile.html" class="p-3 border-bottom d-flex text-dark text-decoration-none account-item pf-item">
+                        <a th:href="'/profile/'+${user.userId}" class="p-3 border-bottom d-flex text-dark text-decoration-none account-item pf-item">
                            <img style="width: 60px" th:src="'/img/'+${user.profile_img}" class="img-fluid rounded-circle me-3" alt="profile-img">
                            <div>
                               <p class="fw-bold mb-0 pe-3 d-flex align-items-center" th:text="${user.username}">Webartinfo <span class="ms-2 material-icons bg-primary p-0 md-16 fw-bold text-white rounded-circle ov-icon">done</span></p>
@@ -165,7 +165,7 @@
                               </div>
                            </div>
                            <div class="ms-auto">
-                              <span  th:attr="data-userId =${user.user_id}" class="profile_follow_btn btn btn-outline-primary btn-sm px-3 rounded-pill">+ Follow</span>
+                              <span th:attr="data-userId =${user.getUserId}" class="profile_follow_btn btn btn-outline-primary btn-sm px-3 rounded-pill">+ Follow</span>
                            </div>
                         </a>
                         </th:block>
