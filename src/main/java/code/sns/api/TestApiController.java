@@ -3,9 +3,11 @@ package code.sns.api;
 
 import code.sns.config.HashTagConfig;
 import code.sns.domain.Item;
+import code.sns.domain.dto.response.CommentResponseDto;
 import code.sns.domain.dto.response.PostResponseDto;
 import code.sns.repository.HashTag.HashTagRepository;
 import code.sns.repository.like.PostLikeRepository;
+import code.sns.service.CommentService;
 import code.sns.service.HashTagService;
 import code.sns.service.PostService;
 import lombok.Getter;
@@ -35,6 +37,15 @@ public class TestApiController {
 
     private final HashTagService hashTagService;
     private final PostService postService;
+    private final CommentService commentService;
+
+    @GetMapping("/comments")
+    public List<CommentResponseDto> comment() {
+
+        List<CommentResponseDto> commentById = commentService.getCommentById(3L, PageRequest.of(0, 5));
+        return commentById;
+    }
+
     @GetMapping("/hash")
     public ResponseEntity hash(@RequestBody String text) {
 

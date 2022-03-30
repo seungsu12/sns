@@ -20,6 +20,7 @@ public class UserProfileDto {
 
     @QueryProjection
     public UserProfileDto(Long userId, String username, String nickname, String profile, String profile_img, LocalDateTime createdAt, Integer followerCount, Integer followingCount) {
+        this.userId = userId;
         this.username = username;
         this.nickname = nickname;
         this.profile = profile;

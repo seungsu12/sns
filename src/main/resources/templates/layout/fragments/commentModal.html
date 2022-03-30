@@ -73,52 +73,11 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div id="commentTable" class="comments p-3" th:each="comment :${comments}">
+                                <div id="commentTable" class="comments p-3">
 
-                                    <div class="d-flex mb-2">
-                                        <img th:src="'/img/'+${comment.profile_img}" class="img-fluid rounded-circle" alt="profile-img">
-                                        <div class="ms-2 small">
-                                            <div class="bg-light px-3 py-2 rounded-4 mb-1 chat-text">
-                                                <p class="fw-500 mb-0" th:text="${comment.username}">이름</p>
-                                                <span class="text-muted" th:text="${comment.context}">텍스트</span>
-                                            </div>
-                                            <div class="d-flex align-items-center ms-2">
-                                                <a href="#" class="small text-muted text-decoration-none">Like</a>
-                                                <span class="fs-3 text-muted material-icons mx-1">circle</span>
-                                                <a href="#" class="small text-muted text-decoration-none">Reply</a>
-                                                <span class="fs-3 text-muted material-icons mx-1">circle</span>
-                                                <span class="small text-muted">1h</span>
-                                            </div>
-                                        </div>
-
-                                    </div>
+<!--                                추가될 comment-->
 
                                 </div>
-
-
-<!--                                <div id="commentTable" class="comments p-3" th:each="comment :${comments}">-->
-
-<!--                                    <div class="d-flex mb-2">-->
-<!--                                        <img th:src="'/img/'+${comment.profile_img}" class="img-fluid rounded-circle" alt="profile-img">-->
-<!--                                        <div class="ms-2 small">-->
-<!--                                            <div class="bg-light px-3 py-2 rounded-4 mb-1 chat-text">-->
-<!--                                                <p class="fw-500 mb-0" th:text="${comment.username}">이름</p>-->
-<!--                                                <span class="text-muted" th:text="${comment.context}">텍스트</span>-->
-<!--                                            </div>-->
-<!--                                            <div class="d-flex align-items-center ms-2">-->
-<!--                                                <a href="#" class="small text-muted text-decoration-none">Like</a>-->
-<!--                                                <span class="fs-3 text-muted material-icons mx-1">circle</span>-->
-<!--                                                <a href="#" class="small text-muted text-decoration-none">Reply</a>-->
-<!--                                                <span class="fs-3 text-muted material-icons mx-1">circle</span>-->
-<!--                                                <span class="small text-muted">1h</span>-->
-<!--                                            </div>-->
-<!--                                        </div>-->
-
-<!--                                    </div>-->
-
-<!--                                </div>-->
-
-
 
                                 <div class="border-top p-3 mt-auto">
                                     <div class="d-flex align-items-center justify-content-between mb-2">
@@ -136,7 +95,7 @@
                                         <span class="material-icons bg-white border-0 text-primary pe-2 md-36">account_circle</span>
                                         <div class="d-flex align-items-center border rounded-4 px-3 py-1 w-100">
                                             <input type="text" class="form-control form-control-sm p-0 rounded-3 fw-light border-0" placeholder="Write Your comment">
-                                            <a href="#" class="bg-white border-0 text-primary ps-2 text-decoration-none">Post</a>
+                                            <a  class="create-comment-btn bg-white border-0 text-primary ps-2 text-decoration-none">Post</a>
                                         </div>
                                     </div>
                                 </div>

@@ -8,4 +8,6 @@ import java.util.List;
 public interface CommentCustomRepository {
 
     List<CommentResponseDto> getCommentByIdDto(Long id, Pageable pageable);
+
+    CommentResponseDto getCommentById(Long id);
 }

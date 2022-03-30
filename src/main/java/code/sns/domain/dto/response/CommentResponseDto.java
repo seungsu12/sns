@@ -15,15 +15,15 @@ public class CommentResponseDto {
     private String username;
     private String context;
     private String profile_img;
-    private LocalDate created_at;
+    private LocalDate createdAt;
 
     @QueryProjection
-    public CommentResponseDto(Long comment_id, Long user_id, String username, String context, String profile_img,LocalDateTime created_at) {
+    public CommentResponseDto(Long comment_id, Long user_id, String username, String context, String profile_img,LocalDateTime createdAt) {
         this.comment_id = comment_id;
         this.user_id = user_id;
         this.username = username;
         this.context = context;
         this.profile_img = profile_img;
-        this.created_at =  created_at.toLocalDate ();
+        this.createdAt =  createdAt.toLocalDate();
     }
 }

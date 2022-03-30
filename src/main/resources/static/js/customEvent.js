@@ -74,11 +74,11 @@ $('#commentModal').on('show.bs.modal',function(event) {
     $.ajax({
         "url":'/api/post/'+postId,
         "method":'get',
-
     }).done(function (response){
 
         modal.find('h6#comment-username').text(response.username);
         modal.find('p#comment-nickname').text(response.nickname);
+        modal.find('a.create-comment-btn').attr('data-postId',postId);
         modal.find('img#comment-img').attr('src','img/'+response.profile_img);
         modal.find('span#comment-modal-like').text(response.postLikeCount);
         modal.find('img.d-block').attr('src','img/'+response.storeFilename);
@@ -86,17 +86,77 @@ $('#commentModal').on('show.bs.modal',function(event) {
 
     $.ajax({
         url: '/api/comment/' + postId,
-    }).done(function (fragment) {
-        for(let i in fragment){
-            console.log(i);
-            console.log(i[0]);
+        // data :JSON.stringify({
+        //     "size" :"5",
+        //     "page": "0"
+        // }),
+        contentType : "application/json"
+    }).done(function (result) {
+        if(result.length >=1){
+            result.forEach(function(item){
+                console.log(item.username);
+                console.log(item.profile_img);
+                let str='<div class="d-flex mb-2">';
+                str+='<img src="/img/'+item.profile_img+'" class="img-fluid rounded-circle">';
+                str+='<div class="ms-2 small">';
+                str+='<div class="bg-light px-3 py-2 rounded-4 mb-1 chat-text">';
+                str+='<p class="fw-500 mb-0">'+item.username+'</p>';
+                str+='<span class="text-muted">'+item.context+'</span>';
+                str+='</div>';
+                str+='<div class="d-flex align-items-center ms-2">';
+                str+='<a href="#" class="small text-muted text-decoration-none">Like</a>';
+                str+='<span class="fs-3 text-muted material-icons mx-1">circle</span>';
+                str+='<a href="#" class="small text-muted text-decoration-none">Reply</a>';
+                str+='<span class="fs-3 text-muted material-icons mx-1">circle</span>';
+                str+='<span class="small text-muted">1h</span>';
+                str+='</div></div></div>';
+                modal.find('div#commentTable').append(str);
+            })
         }
     });
 
 
 });
 
-// 좋아요 버튼
+// 댓글 작성
+
+$(".create-comment-btn").click(function(event){
+   const text =$(this).parent().children('input').val();
+   console.log(text);
+   const postId =$(this).attr('data-postId');
+   let data ={
+       "context": text,
+       "postId" : postId
+   }
+   $.ajax({
+       url:"/api/comment",
+       method :"post",
+       data: JSON.stringify(data),
+       contentType : "application/json"
+   }).done(function (response){
+       let str='<div class="d-flex mb-2">';
+       str+='<img src="/img/'+response.profile_img+'" class="img-fluid rounded-circle">';
+       str+='<div class="ms-2 small">';
+       str+='<div class="bg-light px-3 py-2 rounded-4 mb-1 chat-text">';
+       str+='<p class="fw-500 mb-0">'+response.username+'</p>';
+       str+='<span class="text-muted">'+response.context+'</span>';
+       str+='</div>';
+       str+='<div class="d-flex align-items-center ms-2">';
+       str+='<a href="#" class="small text-muted text-decoration-none">Like</a>';
+       str+='<span class="fs-3 text-muted material-icons mx-1">circle</span>';
+       str+='<a href="#" class="small text-muted text-decoration-none">Reply</a>';
+       str+='<span class="fs-3 text-muted material-icons mx-1">circle</span>';
+       str+='<span class="small text-muted">1h</span>';
+       str+='</div></div></div>';
+       $('#commentTable').append(str);
+   }).fail(function(response){
+       alert("로그인을 해주세요");
+       location.href="/login";
+   })
+
+});
+
+// 피드 좋아요 버튼
 $(".post_like_btn").click(function (event){
     const postId =$(this).attr('data-id');
     const obj = $(this);
@@ -122,17 +182,22 @@ $(".post_like_btn").click(function (event){
     })
 });
 
+//스크랩
 $(".scrap_btn").click(function (event){
     const postId =$(this).attr('data-id');
     const obj = $(this);
+    // const isClicked = $(this).attr('data-clicked');
+
     let ico =obj.children().eq(0);
     let like = obj.children().eq(1);
+
+
     $.ajax({
         "url" :"/scrap/"+postId,
         "method":"post"
     }).done(function (response){
-
-        if(response == true){
+        console.log(response);
+        if(response === true){
             ico.css('color','blue');
             like.css('color','blue');
             like.text(parseInt(like.text())+1);
@@ -146,3 +211,34 @@ $(".scrap_btn").click(function (event){
         location.href="/login";
     })
 });
+
+//메인페이지 팔로우
+$(".main_follow_btn").click(function(event){
+    const followId = $(this).attr('data-followId');
+
+    $.ajax({
+        "url" : "/follow/"+followId,
+        "method":"post"
+    }).done(function(response){
+
+    }).fail(function(response){
+        alert("권한이 없습니다.");
+        location.href="/login";
+
+    })
+})
+
+//프로필 팔로우
+$(".profile_follow_btn").click(function(event){
+    const userId = $(this).attr('data-userId');
+    alert(userId);
+
+    $.ajax({
+        "url" : "/follow/"+userId,
+        "method":"post"
+    }).done(function(response){
+
+    }).fail(function(response){
+        alert("권한이 없습니다.");
+    })
+})

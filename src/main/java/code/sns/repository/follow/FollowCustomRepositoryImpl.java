@@ -8,6 +8,7 @@ import code.sns.domain.dto.response.QFollowResponseDto;
 import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
@@ -22,10 +23,11 @@ public class FollowCustomRepositoryImpl implements FollowCustomRepository{
     private final JPAQueryFactory queryFactory;
 
     @Override
-    public List<FollowResponseDto> getUnFollowList(Long id) {
+    public List<FollowResponseDto> getUnFollowList(Long userId, PageRequest pageRequest) {
 
         List<FollowResponseDto> result = queryFactory.select(new QFollowResponseDto(
                         user.id,
+                        user.nickname,
                         user.username,
                         user.profile_img,
                         user.job
@@ -34,9 +36,11 @@ public class FollowCustomRepositoryImpl implements FollowCustomRepository{
                         JPAExpressions
                                 .select(follow.toFollow.id)
                                 .from(follow)
-                                .where(follow.fromFollow.id.eq(id))
+                                .where(follow.fromFollow.id.eq(userId))
 
-                )).where(user.id.ne(id))
+                )).where(user.id.ne(userId))
+                .offset(pageRequest.getOffset())
+                .limit(pageRequest.getPageSize())
                 .fetch();
 
 
@@ -48,6 +52,7 @@ public class FollowCustomRepositoryImpl implements FollowCustomRepository{
     public List<FollowResponseDto> getBasicList() {
         return  queryFactory.select(new QFollowResponseDto(
                 user.id,
+                user.nickname,
                 user.username,
                 user.profile_img,
                 user.job
@@ -59,6 +64,7 @@ public class FollowCustomRepositoryImpl implements FollowCustomRepository{
     public List<FollowResponseDto> getFollowList(Long id) {
         return queryFactory.select(new QFollowResponseDto(
                         user.id,
+                        user.nickname,
                         user.username,
                         user.profile_img,
                         user.job

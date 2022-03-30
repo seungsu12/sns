@@ -23,7 +23,7 @@
                               <p class="text-muted mb-0" th:text="'@'+${user.nickname}">@닉네임</p>
                            </div>
                            <div class="ms-auto btn-group" role="group" aria-label="Basic checkbox toggle button group">
-                              <input type="checkbox" class="btn-check" id="btncheck1">
+                              <input th:attr="data-userId=${user.userId}" type="checkbox" class="profile_follow_btn btn-check" id="btncheck1">
                               <label class="btn btn-outline-primary btn-sm px-3 rounded-pill" for="btncheck1"><span class="follow">+ Follow</span><span class="following d-none">Following</span></label>
                            </div>
                         </div>
@@ -54,7 +54,7 @@
                      </div>
                      <ul class="top-osahan-nav-tab nav nav-pills justify-content-center nav-justified mb-4 shadow-sm rounded-4 overflow-hidden bg-white mt-4" id="pills-tab" role="tablist">
                         <li class="nav-item" role="presentation">
-                           <button class="p-3 nav-link text-muted active" id="pills-feed-tab" data-bs-toggle="pill" data-bs-target="#pills-feed" type="button" role="tab" aria-controls="pills-feed" aria-selected="true">Vogel(2)</button>
+                           <button class="p-3 nav-link text-muted active" id="pills-feed-tab" data-bs-toggle="pill" data-bs-target="#pills-feed" type="button" role="tab" aria-controls="pills-feed" aria-selected="true">Vogel</button>
                         </li>
                         <li class="nav-item" role="presentation">
                            <button class="p-3 nav-link text-muted" id="pills-people-tab" data-bs-toggle="pill" data-bs-target="#pills-people" type="button" role="tab" aria-controls="pills-people" aria-selected="false">Liked</button>
@@ -102,8 +102,7 @@
 
                                                 <div class="d-flex align-items-center justify-content-between mb-2">
                                                    <div sec:authorize="isAuthenticated()">
-                                                      <a th:attr="data-id =${post.post_id}"  class="post_like_btn text-muted text-decoration-none d-flex align-items-start fw-light">
-                                                         <!--                                                   th:style="${post.userSelfLike == true ? 'color: blue;' : ''}"-->
+                                                      <a th:attr="data-id =${post.post_id}"  th:class="${post.isLike == true ? 'post_like_btn text-decoration-none d-flex align-items-start fw-light':'text-muted post_like_btn text-decoration-none d-flex align-items-start fw-light' }" >
                                                          <span class="material-icons md-20 me-2">thumb_up_off_alt</span>
                                                          <span th:text="${post.postLikeCount}">좋아요수</span></a>
                                                    </div>
@@ -116,9 +115,17 @@
                                                       <a href="#" class="text-muted text-decoration-none d-flex align-items-start fw-light"><span class="material-icons md-20 me-2">chat_bubble_outline</span><span th:text="${post.commentsCount}">코멘트수</span></a>
                                                    </div>
                                                    <div>
-                                                      <a th:attr="data-id =${post.post_id}" class="scrap_btn text-muted text-decoration-none d-flex align-items-start fw-light">
-                                                         <span class="material-icons md-20 me-2">repeat</span>
-                                                         <span th:text="${post.scrapCount}">스크랩수</span></a>
+                                                      <th:block sec:authorize="isAuthenticated()">
+                                                         <a th:attr="data-id =${post.post_id}" th:class="${post.isScrap == true ? 'scrap_btn text-decoration-none d-flex align-items-start fw-light':'text-muted scrap_btn text-decoration-none d-flex align-items-start fw-light' }">
+                                                            <span class="material-icons md-20 me-2">repeat</span>
+                                                            <span th:text="${post.scrapCount}">스크랩수</span></a>
+                                                      </th:block>
+
+                                                      <th:block sec:authorize="isAnonymous()">
+                                                         <a th:attr="data-id =${post.post_id}" class="scrap_btn text-muted text-decoration-none d-flex align-items-start fw-light">
+                                                            <span class="material-icons md-20 me-2">repeat</span>
+                                                            <span th:text="${post.scrapCount}">스크랩수</span></a>
+                                                      </th:block>
                                                    </div>
                                                    <div>
                                                       <a class="text-muted text-decoration-none d-flex align-items-start fw-light">
@@ -176,9 +183,9 @@
                                                 <img th:src="'/img/'+${post.storeFilename}" class="img-fluid rounded mb-3" alt="post-img">
                                              </a>
                                              <div class="d-flex align-items-center justify-content-between mb-2">
+
                                                 <div sec:authorize="isAuthenticated()">
-                                                   <a th:attr="data-id =${post.post_id}"  class="post_like_btn text-muted text-decoration-none d-flex align-items-start fw-light">
-                                                      <!--                                                   th:style="${post.userSelfLike == true ? 'color: blue;' : ''}"-->
+                                                   <a th:attr="data-id =${post.post_id}"  th:class="${post.isLike == true ? 'post_like_btn text-decoration-none d-flex align-items-start fw-light':'text-muted post_like_btn text-decoration-none d-flex align-items-start fw-light' }" >
                                                       <span class="material-icons md-20 me-2">thumb_up_off_alt</span>
                                                       <span th:text="${post.postLikeCount}">좋아요수</span></a>
                                                 </div>
@@ -191,12 +198,25 @@
                                                    <a href="#" class="text-muted text-decoration-none d-flex align-items-start fw-light"><span class="material-icons md-20 me-2">chat_bubble_outline</span><span th:text="${post.commentsCount}">코멘트수</span></a>
                                                 </div>
                                                 <div>
-                                                   <a href="#" class="text-muted text-decoration-none d-flex align-items-start fw-light"><span class="material-icons md-20 me-2">repeat</span><span>617</span></a>
+                                                   <th:block sec:authorize="isAuthenticated()">
+                                                      <a th:attr="data-id =${post.post_id}" th:class="${post.isScrap == true ? 'scrap_btn text-decoration-none d-flex align-items-start fw-light':'text-muted scrap_btn text-decoration-none d-flex align-items-start fw-light' }">
+                                                         <span class="material-icons md-20 me-2">repeat</span>
+                                                         <span th:text="${post.scrapCount}">스크랩수</span></a>
+                                                   </th:block>
+
+                                                   <th:block sec:authorize="isAnonymous()">
+                                                      <a th:attr="data-id =${post.post_id}" class="scrap_btn text-muted text-decoration-none d-flex align-items-start fw-light">
+                                                         <span class="material-icons md-20 me-2">repeat</span>
+                                                         <span th:text="${post.scrapCount}">스크랩수</span></a>
+                                                   </th:block>
                                                 </div>
                                                 <div>
-                                                   <a href="#" class="text-muted text-decoration-none d-flex align-items-start fw-light"><span class="material-icons md-18 me-2">share</span><span>Share</span></a>
+                                                   <a class="text-muted text-decoration-none d-flex align-items-start fw-light">
+                                                      <span class="material-icons md-18 me-2">share</span>
+                                                      <span>Share</span></a>
                                                 </div>
                                              </div>
+
                                              <div class="d-flex align-items-center mb-3" data-bs-toggle="modal" data-bs-target="#commentModal" th:attr="data-id=${post.post_id}">
                                                 <div style="display: none" class="feed-post-id" th:value="${post.post_id}"> </div>
                                                 <span class="material-icons bg-white border-0 text-primary pe-2 md-36">account_circle</span>
@@ -244,31 +264,39 @@
                                              <img th:src="'/img/'+${post.storeFilename}" class="img-fluid rounded mb-3" alt="post-img">
                                              </a>
                                              <div class="d-flex align-items-center justify-content-between mb-2">
-                                                <div sec:authorize="isAuthenticated()">
-                                                   <a th:attr="data-id =${post.post_id}"  class="post_like_btn text-muted text-decoration-none d-flex align-items-start fw-light">
-                                                      <!--                                                   th:style="${post.userSelfLike == true ? 'color: blue;' : ''}"-->
-                                                      <span class="material-icons md-20 me-2">thumb_up_off_alt</span>
-                                                      <span th:text="${post.postLikeCount}">좋아요수</span></a>
+                                                   <div sec:authorize="isAuthenticated()">
+                                                      <a th:attr="data-id =${post.post_id}"  th:class="${post.isLike == true ? 'post_like_btn text-decoration-none d-flex align-items-start fw-light':'text-muted post_like_btn text-decoration-none d-flex align-items-start fw-light' }" >
+                                                         <span class="material-icons md-20 me-2">thumb_up_off_alt</span>
+                                                         <span th:text="${post.postLikeCount}">좋아요수</span></a>
+                                                   </div>
+                                                   <div sec:authorize="isAnonymous()">
+                                                      <a th:attr="data-id =${post.post_id}"  class="post_like_btn text-muted text-decoration-none d-flex align-items-start fw-light">
+                                                         <span class="material-icons md-20 me-2">thumb_up_off_alt</span>
+                                                         <span th:text="${post.postLikeCount}">좋아요수</span></a>
+                                                   </div>
+                                                   <div>
+                                                      <a href="#" class="text-muted text-decoration-none d-flex align-items-start fw-light"><span class="material-icons md-20 me-2">chat_bubble_outline</span><span th:text="${post.commentsCount}">코멘트수</span></a>
+                                                   </div>
+                                                   <div>
+                                                      <th:block sec:authorize="isAuthenticated()">
+                                                         <a th:attr="data-id =${post.post_id}" th:class="${post.isScrap == true ? 'scrap_btn text-decoration-none d-flex align-items-start fw-light':'text-muted scrap_btn text-decoration-none d-flex align-items-start fw-light' }">
+                                                            <span class="material-icons md-20 me-2">repeat</span>
+                                                            <span th:text="${post.scrapCount}">스크랩수</span></a>
+                                                      </th:block>
+
+                                                      <th:block sec:authorize="isAnonymous()">
+                                                         <a th:attr="data-id =${post.post_id}" class="scrap_btn text-muted text-decoration-none d-flex align-items-start fw-light">
+                                                            <span class="material-icons md-20 me-2">repeat</span>
+                                                            <span th:text="${post.scrapCount}">스크랩수</span></a>
+                                                      </th:block>
+                                                   </div>
+                                                   <div>
+                                                      <a class="text-muted text-decoration-none d-flex align-items-start fw-light">
+                                                         <span class="material-icons md-18 me-2">share</span>
+                                                         <span>Share</span></a>
+                                                   </div>
                                                 </div>
-                                                <div sec:authorize="isAnonymous()">
-                                                   <a th:attr="data-id =${post.post_id}"  class="post_like_btn text-muted text-decoration-none d-flex align-items-start fw-light">
-                                                      <span class="material-icons md-20 me-2">thumb_up_off_alt</span>
-                                                      <span th:text="${post.postLikeCount}">좋아요수</span></a>
-                                                </div>
-                                                <div>
-                                                   <a href="#" class="text-muted text-decoration-none d-flex align-items-start fw-light"><span class="material-icons md-20 me-2">chat_bubble_outline</span><span th:text="${post.commentsCount}">코멘트수</span></a>
-                                                </div>
-                                                <div>
-                                                   <a th:attr="data-id =${post.post_id}" class="scrap_btn text-muted text-decoration-none d-flex align-items-start fw-light">
-                                                      <span class="material-icons md-20 me-2">repeat</span>
-                                                      <span th:text="${post.scrapCount}">스크랩수</span></a>
-                                                </div>
-                                                <div>
-                                                   <a class="text-muted text-decoration-none d-flex align-items-start fw-light">
-                                                      <span class="material-icons md-18 me-2">share</span>
-                                                      <span>Share</span></a>
-                                                </div>
-                                             </div>
+
                                              <div class="d-flex align-items-center mb-3" data-bs-toggle="modal" data-bs-target="#commentModal">
                                                 <span class="material-icons bg-white border-0 text-primary pe-2 md-36">account_circle</span>
                                                 <input type="text" class="form-control form-control-sm rounded-3 fw-light" placeholder="Write Your comment">
