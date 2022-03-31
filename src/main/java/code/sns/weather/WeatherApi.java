@@ -31,22 +31,25 @@ public class WeatherApi {
 
 
     public static void main(String[] args){
+        LocalDateTime lo = LocalDateTime.now();
+
         WeatherApi api = new WeatherApi();
-        api.getWeather();
+        Weather weather = api.getWeather();
+        System.out.println(weather);
     }
 
     public Weather getWeather() {
 
-        String apiUrl = "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst";
+        String apiUrl = "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtFcst";
         String nx = "55";
         String ny = "127";
         Map<String,String> timeMap = getTime();
         String baseDate = timeMap.get("date");
         String baseTime = timeMap.get("time");
+        String targetTime = timeMap.get("targetTime");
 
         String type ="json";
-        String time = baseTime;
-        String numOfRows = "12";
+        String numOfRows = "60";
 
         StringBuilder urlBuilder = new StringBuilder(apiUrl);
         urlBuilder.append("?"+ URLEncoder.encode("serviceKey", StandardCharsets.UTF_8)+"="+weatherKey);
@@ -54,10 +57,9 @@ public class WeatherApi {
         urlBuilder.append("&" + URLEncoder.encode("numOfRows",StandardCharsets.UTF_8) + "=" + URLEncoder.encode(numOfRows, StandardCharsets.UTF_8));	/* 한 페이지 결과 수 */
         urlBuilder.append("&" + URLEncoder.encode("dataType",StandardCharsets.UTF_8) + "=" + URLEncoder.encode(type, StandardCharsets.UTF_8));	/* 타입 */
         urlBuilder.append("&" + URLEncoder.encode("base_date",StandardCharsets.UTF_8) + "=" + URLEncoder.encode(baseDate, StandardCharsets.UTF_8)); /* 조회하고싶은 날짜*/
-        urlBuilder.append("&" + URLEncoder.encode("base_time",StandardCharsets.UTF_8) + "=" + URLEncoder.encode(time, StandardCharsets.UTF_8));	/* 한 페이지 결과 수 */
+        urlBuilder.append("&" + URLEncoder.encode("base_time",StandardCharsets.UTF_8) + "=" + URLEncoder.encode(baseTime, StandardCharsets.UTF_8));	/* 한 페이지 결과 수 */
         urlBuilder.append("&"+URLEncoder.encode("nx",StandardCharsets.UTF_8)+"="+URLEncoder.encode(nx,StandardCharsets.UTF_8));
         urlBuilder.append("&"+URLEncoder.encode("ny",StandardCharsets.UTF_8)+"="+URLEncoder.encode(ny,StandardCharsets.UTF_8));
-//        urlBuilder.append("&" + URLEncoder.encode("base_time",StandardCharsets.UTF_8) + "=" + URLEncoder.encode(baseTime, StandardCharsets.UTF_8)); /* 조회하고싶은 시간 AM 02시부터 3시간 단위 */
 
 
         try {
@@ -81,19 +83,21 @@ public class WeatherApi {
 
             JSONObject weather;
             Map<String, String> map = new HashMap<>();
-
             for (int i = 0; i < item.size(); i++) {
                 weather = (JSONObject) item.get(i);
-                map.put(String.valueOf(weather.get("category")), String.valueOf(weather.get("fcstValue")));
 
+                if(!String.valueOf(weather.get("fcstTime")).equals(targetTime)){
+                    continue;
+                }
+                map.put(String.valueOf(weather.get("category")), String.valueOf(weather.get("fcstValue")));
             }
 
         return Weather.builder()
-                .tmp(map.get("TMP"))
+                .tmp(map.get("T1H"))
                 .sky(checkSky(map.get("SKY")))
-                .pcp(map.get("PCP"))
+                .pcp(map.get("REH"))
                 .time(LocalDateTime.now())
-                .windSpeed(map.get("UUU"))
+                .windSpeed(map.get("WSD"))
                 .build();
 
         }catch (IOException e){
@@ -108,16 +112,22 @@ public class WeatherApi {
     private Map<String,String> getTime() {
 
         Map<String,String> map = new HashMap<>();
-        int time = Integer.valueOf(LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH")));
-
-        if (time <= 5) {
-            map.put("date",LocalDate.now().minusDays(1) .format(DateTimeFormatter.ofPattern("yyyyMMdd")));
-            map.put("time","1700");
+        int hour = LocalDateTime.now().getHour();
+        String baseDate="";
+        String baseTime ="";
+        String targetTime ="";
+        if (hour == 00) {
+            baseTime= "2300";
+            targetTime= "0100";
+            baseDate =LocalDate.now().minusDays(1).format(DateTimeFormatter.ofPattern("yyyyMMdd"));
         }else{
-            map.put("date",LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd")));
-            map.put("time",time >12 ? "0500" :"1700");
+            baseDate =LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
+            baseTime =String.format("%02d00" ,hour-1);
+            targetTime=String.format("%02d00",hour+1);
         }
-
+        map.put("time",baseTime);
+        map.put("date",baseDate);
+        map.put("targetTime",targetTime);
         return  map;
 
     }
@@ -126,12 +136,12 @@ public class WeatherApi {
 
         int key = Integer.valueOf(value);
 
-        if (key <= 5) {
-            return "맑음";
-        } else if (key <= 8) {
-            return "구름맑음";
-        }
-        return "흐림";
+       switch (key){
+           case 3: return "구름많음";
+           case 4 :return "흐림";
+           default:return "맑음";
+       }
+
 
     }
 
