@@ -17,13 +17,13 @@
                         <a href="tags.html" class="p-3 border-bottom d-flex align-items-center text-dark text-decoration-none">
                             <div>
                                 <div class="text-muted fw-light d-flex align-items-center">
-                                    <small>Celebrity</small><span class="mx-1 material-icons md-3">circle</span><small>Live</small>
+                                    <small>Weather</small><span class="mx-1 material-icons md-3">circle</span><small>Live</small>
                                 </div>
-                                <p class="fw-bold mb-0 pe-3">Happy birthday, Osahan 🎂</p>
-                                <small class="text-muted">Trending with</small><br/>
-                                <span class="text-primary">#HappyBirthdayJohnSmith</span>
+                                <p class="fw-bold mb-0 pe-3" th:text="'기온 '+${weather.tmp}+'℃'">Happy birthday, Osahan 🎂</p>
+                                <small class="text-muted" th:text="${weather.sky}">Trending with</small><br/>
+                                <span class="text-primary" th:text="'강수량 : '+${weather.pcp}+' 풍속 :'+${weather.windSpeed}">#HappyBirthdayJohnSmith</span>
                             </div>
-                            <img src="/img/rmate4.jpg" class="img-fluid rounded-4 ms-auto" alt="profile-img">
+                            <p style="font-size: 42px "class="img-fluid rounded-4 ms-auto" th:text="${weather.sky =='맑음'?'☀️':'☁️'}"> ☀️</p>
                         </a>
                         <!-- Trending Item -->
                         <a href="tags.html" class="p-3 border-bottom d-flex align-items-center text-dark text-decoration-none">
