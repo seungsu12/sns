@@ -2,6 +2,7 @@ package code.sns.service;
 
 import code.sns.domain.User;
 import code.sns.domain.dto.request.UserRequestDto;
+import code.sns.domain.dto.response.UserBirthDto;
 import code.sns.domain.dto.response.UserProfileDto;
 import code.sns.domain.enums.Role;
 import code.sns.exception.CustomException;
@@ -10,10 +11,13 @@ import code.sns.exception.NotFoundObjectException;
 import code.sns.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -57,5 +61,13 @@ public class UserService {
 
     public List<String> getFromFollowImg(Long id){
         return userRepository.getFromFollowImg(id);
+    }
+
+    public List<UserBirthDto> getBirthPeople(PageRequest pageRequest) {
+
+     return  userRepository.getBirthPeople(pageRequest).toList();
+
+
+
     }
 }

@@ -33,9 +33,6 @@ public class WeatherApi {
     public static void main(String[] args){
         LocalDateTime lo = LocalDateTime.now();
 
-        WeatherApi api = new WeatherApi();
-        Weather weather = api.getWeather();
-        System.out.println(weather);
     }
 
     public Weather getWeather() {
