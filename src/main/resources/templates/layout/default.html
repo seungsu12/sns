@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
-<th:block th:replace="/layout/fragments/head :: headFragment"></th:block>
+<th:block th:replace="layout/fragments/head :: headFragment"></th:block>
 
 <body class="bg-light">
 <th:block th:replace="layout/fragments/first_box ::firstFragment"></th:block>
@@ -11,8 +11,8 @@
         <div class="row position-relative">
             <!-- Main Content -->
             <th:block layout:fragment="content"></th:block>
-            <th:block th:replace="/layout/fragments/leftAside ::asideFragment"></th:block>
-            <th:block th:replace="/layout/fragments/rightAside ::asideFragment"></th:block>
+            <th:block th:replace="layout/fragments/leftAside ::asideFragment"></th:block>
+            <th:block th:replace="layout/fragments/rightAside ::asideFragment"></th:block>
 
         </div>
     </div>

@@ -9,7 +9,7 @@
 #    display-query-param-without-oauth2: true
 spring:
   thymeleaf:
-    prefix: classpath:/templates
+    prefix: classpath:/templates/
   servlet:
     multipart:
       enabled: true
