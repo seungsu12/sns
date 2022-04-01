@@ -3,16 +3,21 @@ package code.sns.api;
 
 import code.sns.config.HashTagConfig;
 import code.sns.domain.Item;
+import code.sns.domain.Weather;
 import code.sns.domain.dto.response.CommentResponseDto;
 import code.sns.domain.dto.response.PostResponseDto;
+import code.sns.domain.dto.response.UserBirthDto;
 import code.sns.repository.HashTag.HashTagRepository;
 import code.sns.repository.like.PostLikeRepository;
 import code.sns.service.CommentService;
 import code.sns.service.HashTagService;
 import code.sns.service.PostService;
+import code.sns.service.UserService;
+import code.sns.weather.WeatherApi;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.json.simple.parser.ParseException;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -38,6 +43,24 @@ public class TestApiController {
     private final HashTagService hashTagService;
     private final PostService postService;
     private final CommentService commentService;
+    private final WeatherApi weatherApi;
+    private final UserService userService;
+
+    @GetMapping("/birth")
+    public ResponseEntity birth() {
+
+        List<UserBirthDto> birthPeople = userService.getBirthPeople(PageRequest.of(0,3));
+
+        return ResponseEntity.status(HttpStatus.OK).body(birthPeople);
+    }
+
+    @GetMapping("/weather")
+    public ResponseEntity weather() throws IOException, ParseException {
+
+        Weather weather = weatherApi.getWeather();
+
+        return ResponseEntity.status(HttpStatus.OK).body(weather);
+    }
 
     @GetMapping("/comments")
     public List<CommentResponseDto> comment() {
