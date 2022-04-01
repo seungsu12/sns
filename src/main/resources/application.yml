@@ -7,8 +7,9 @@
 #    path: /swagger-ui.html
 #    disable-swagger-default-url: true
 #    display-query-param-without-oauth2: true
-
 spring:
+  thymeleaf:
+    prefix: classpath:/templates/
   servlet:
     multipart:
       enabled: true
@@ -21,16 +22,19 @@ spring:
 #      path: /h2-console
 
   datasource:
-    url: jdbc:mysql://localhost:3306/comedb
-    username: root
-    password: 6568
+#    url: jdbc:mysql://localhost:3306/comedb
+    url: jdbc:mysql://sns.cyslqz4yprk6.ap-northeast-2.rds.amazonaws.com:3306/sns
+    username: admin
+    password : po6568tygh!
+#    username: root
+#    password: 6568
     driver-class-name: com.mysql.cj.jdbc.Driver
 
 
   jpa:
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
     hibernate:
-      ddl-auto: update
+      ddl-auto: none
     properties:
       hibernate:
         format_sql: true
