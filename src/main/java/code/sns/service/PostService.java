@@ -38,10 +38,16 @@ public class PostService {
     private final FollowRepository followRepository;
     private final PostLikeRepository postLikeRepository;
     private final ScrapRepository scrapRepository;
+    private final HashTagService hashTagService;
     private final FileStore fileStore;
 
     public List<PostResponseDto> getPosts() {
-        return postRepository.getPosts();
+       return postRepository.getPosts();
+//
+//        for (PostResponseDto post : posts) {
+//            hashTagService.getHashTags(posts.size());
+//
+//        }
     }
 
     public void createPost(PostRequestDto requestDto) throws IOException {
@@ -113,6 +119,7 @@ public class PostService {
             User user = userRepository.findById(userId).orElseThrow(()->new CustomException(ErrorCode.NOT_FOUND_USER));
             Post post = postRepository.findById(dto.getPost_id()).orElseThrow(()->new CustomException(ErrorCode.NOT_FOUND_POST));
             dto.setIsScrap(scrapRepository.existsByUserAndPost(user,post));
+
             result.add(dto);
         }
         return result;

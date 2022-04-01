@@ -38,4 +38,8 @@ public class HashTagService {
         }
 
     }
+
+//    public List<String> getHashTags(int size) {
+//        hashTagRepository.getHashTags
+//    }
 }
