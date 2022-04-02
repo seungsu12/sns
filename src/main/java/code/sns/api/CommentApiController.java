@@ -37,8 +37,7 @@ public class CommentApiController {
 
     @GetMapping("/api/comment/{postId}")
     public List<CommentResponseDto> getCommentsByPostId(@PathVariable("postId")Long postId){
-//        int size = Integer.valueOf(map.get("size"));
-//        int page = Integer.valueOf(map.get("page"));
+
         int page = 0;
         int size =5;
         List<CommentResponseDto> result = commentService.getCommentById(postId, PageRequest.of(page,size));
