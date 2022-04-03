@@ -17,6 +17,7 @@ import code.sns.repository.user.UserRepository;
 import code.sns.upload.FileStore;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -41,6 +42,7 @@ public class PostService {
     private final HashTagService hashTagService;
     private final FileStore fileStore;
 
+    @Cacheable()
     public List<PostResponseDto> getPosts() {
        return postRepository.getPosts();
 //

@@ -11,6 +11,7 @@ import code.sns.exception.NotFoundObjectException;
 import code.sns.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -63,6 +64,7 @@ public class UserService {
         return userRepository.getFromFollowImg(id);
     }
 
+    @Cacheable(value = "birth")
     public List<UserBirthDto> getBirthPeople(PageRequest pageRequest) {
 
      return  userRepository.getBirthPeople(pageRequest).toList();
