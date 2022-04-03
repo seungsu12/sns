@@ -26,7 +26,11 @@ repositories {
 }
 
 dependencies {
+//	implementation group: 'it.ozimov', name: 'embedded-redis', version: '0.7.1'
+	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+
 	implementation 'com.googlecode.json-simple:json-simple:1.1.1'
+	implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'
 //	implementation 'com.fasterxml.jackson.core:jackson-annotations'
 //	implementation 'com.fasterxml.jackson.core:jackson-core'
 //	implementation 'com.fasterxml.jackson.core:jackson-databind'

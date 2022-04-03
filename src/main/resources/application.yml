@@ -1,15 +1,20 @@
-#springdoc:
-#  default-consumes-media-type: application/json
-#  default-produces-media-type: application/json
-#  swagger-ui:
-#    operations-sorter: alpha
-#    tags-sorter: alpha
-#    path: /swagger-ui.html
-#    disable-swagger-default-url: true
-#    display-query-param-without-oauth2: true
+
 spring:
+
+# redis
+  cache:
+    type: redis
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    username:
+    password:
+
+  # Thymleaf
   thymeleaf:
     prefix: classpath:/templates/
+
+#파일 저장
   servlet:
     multipart:
       enabled: true
@@ -43,6 +48,7 @@ spring:
     profiles:
       active: true
     database: mysql
+#
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
@@ -50,4 +56,5 @@ spring:
 file:
   dir: /Users/seungsu/dev/sns/src/main/resources/static/img/
 
+# weather api key
 weatherKey: cuNe1YMC4Qsginx6w4aexI6qIHu%2FbHYZPa34K58T3ipMCCHCmKuigo9imZv7FqYFOL0Lkit8QRlJH9T4Yd5bvQ%3D%3D
