@@ -104,20 +104,27 @@ public class PostService {
 
     public List<PostResponseDto> getPostsByUserId(Long userId, Pageable pageable) {
 
-        Page<PostResponseDto> pageResult = postRepository.getPostsByUserId(userId, pageable);
+        List<PostResponseDto> pageResult = postRepository.getPostsByUserId(userId, pageable).toList();
 
         return addScrapAndLike(pageResult,userId);
     }
 
 
     public List<PostResponseDto> getFollowPost(Long userId, Pageable pageable) {
-        Page<PostResponseDto> pageResult = postRepository.getPostsByFollow(userId,pageable);
+        List<PostResponseDto> pageResult = postRepository.getPostsByFollow(userId,pageable).toList();
+
+//        return addScrapAndLike(pageResult,userId);
+
+        Iterator<String> hashTagList = postHashService.getHashTagList(pageResult.stream().
+                map(p -> p.getPost_id()).collect(Collectors.toList()));
+
+        pageResult.stream().forEach( p -> p.setHashes(hashTagList.next()));
 
         return addScrapAndLike(pageResult,userId);
     }
 
     public List<PostResponseDto> getPostsLiked(Long userId, Pageable pageable) {
-        Page<PostResponseDto> pageResult = postRepository.getPostsLiked(userId, pageable);
+        List<PostResponseDto> pageResult = postRepository.getPostsLiked(userId, pageable).toList();
 
         return addScrapAndLike(pageResult,userId);
     }
@@ -125,7 +132,7 @@ public class PostService {
 
 
     public List<PostResponseDto> getScraps(Long userId, Pageable pageable) {
-        Page<PostResponseDto> pageResult = postRepository.getScraps(userId, pageable);
+        List<PostResponseDto> pageResult = postRepository.getScraps(userId, pageable).toList();
         return addScrapAndLike(pageResult,userId);
     }
 
@@ -133,7 +140,7 @@ public class PostService {
         return postRepository.getPostsLogins (userId, pageable);
 
     }
-    private List<PostResponseDto> addScrapAndLike(Page<PostResponseDto> pageResult, Long userId) {
+    private List<PostResponseDto> addScrapAndLike(List<PostResponseDto> pageResult, Long userId) {
         List<PostResponseDto> result =new ArrayList<>();
 
         for (PostResponseDto dto : pageResult) {

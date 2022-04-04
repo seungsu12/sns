@@ -23,6 +23,36 @@ Version: 1.0
 @import url('fonts/dm-sans/dm-sans.css');
 @import url('fonts/gilroy/Gilroy.css');
 
+
+.search_wrapper{
+    width: 500px;
+    height: 500px;
+    flex-direction: column;
+    align-items: flex-start;
+}
+.search_box{
+    width: inherit;
+    display: flex;
+    justify-content: flex-start;
+    padding-left: 20px;
+    padding-top: 10px;
+}
+.search_box_img {
+    width: 60px;
+    border-radius: 1rem;
+
+}
+.search_box_context {
+    width: 120px;
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+    margin-left: 20px;
+}
+.search_box_follow{
+    margin-left: 160px;
+    align-self: center;
+}
 /* Body */
 body {
     font-size: 13px;

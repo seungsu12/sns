@@ -72,4 +72,9 @@ public class UserService {
 
 
     }
+
+    public List<User> searchUser(String word) {
+
+        return userRepository.findByUsernameContains(word);
+    }
 }

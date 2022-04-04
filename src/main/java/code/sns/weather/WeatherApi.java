@@ -34,9 +34,8 @@ public class WeatherApi {
 
 
     public static void main(String[] args){
-        List<String> result = Arrays.asList("1","2","3");
-        System.out.println(result.stream().map(s -> s.toString()).collect(Collectors.joining()));
-        System.out.println(result.toString());
+        WeatherApi ap = new WeatherApi();
+        System.out.println(ap.getWeather());
     }
 
     public Weather getWeather() {
@@ -74,7 +73,6 @@ public class WeatherApi {
                 result = result.concat(line);
 
             }
-
             JSONParser parser = new JSONParser();
             JSONObject jsonObject = (JSONObject) parser.parse(result);
             JSONObject response = (JSONObject) jsonObject.get("response");

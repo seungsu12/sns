@@ -5,6 +5,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class basicController {
+
+
+
     @GetMapping("/upload")
     public String upload() {
         return "upload";

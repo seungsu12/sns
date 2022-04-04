@@ -21,7 +21,7 @@
                               <h6 class="mb-0 d-flex align-items-start text-body fs-6 fw-bold" th:text="${user.username}">유저네임<span class="ms-2 material-icons bg-primary p-0 md-16 fw-bold text-white rounded-circle ov-icon">done</span></h6>
                               <p class="text-muted mb-0" th:text="'@'+${user.nickname}">@닉네임</p>
                            </div>
-                           //로그인
+<!--                          로그인-->
                            <div sec:authorize="isAuthenticated()" class="ms-auto btn-group" role="group" aria-label="Basic checkbox toggle button group">
                               <input th:attr="data-userId=${user.userId}" th:checked="${isFollow}" type="checkbox" class="profile_follow_btn btn-check" id="btnPro">
                               <label class="btn btn-outline-primary btn-sm px-3 rounded-pill" for="btnPro">

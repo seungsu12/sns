@@ -4,6 +4,7 @@ package code.sns.domain;
 import code.sns.domain.enums.Gender;
 import code.sns.domain.enums.Job;
 import code.sns.domain.enums.Role;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
@@ -49,19 +50,23 @@ public class User extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private Gender gender;
 
-
+    @JsonManagedReference
     @OneToMany(mappedBy = "toFollow")
     List<Follow> toFollower = new ArrayList<>();
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "fromFollow")
     List<Follow> fromFollower = new ArrayList<>();
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "user")
     List<Comment> comments =new ArrayList<>();
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "user")
     private List<Post> posts = new ArrayList<>();
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
     List<Scrap> scraps = new ArrayList<>();
 
