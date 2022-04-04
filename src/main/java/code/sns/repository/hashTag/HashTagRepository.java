@@ -1,4 +1,4 @@
-package code.sns.repository.HashTag;
+package code.sns.repository.hashTag;
 
 import code.sns.domain.HashTag;
 import org.springframework.data.jpa.repository.JpaRepository;

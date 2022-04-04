@@ -19,8 +19,11 @@ import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Configuration
 @Slf4j
@@ -31,8 +34,9 @@ public class WeatherApi {
 
 
     public static void main(String[] args){
-        LocalDateTime lo = LocalDateTime.now();
-
+        List<String> result = Arrays.asList("1","2","3");
+        System.out.println(result.stream().map(s -> s.toString()).collect(Collectors.joining()));
+        System.out.println(result.toString());
     }
 
     public Weather getWeather() {

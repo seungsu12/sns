@@ -99,6 +99,9 @@
                                           <a href="#" class="text-decoration-none" data-bs-toggle="modal" data-bs-target="#commentModal">
                                              <img th:src="'/img/'+${post.storeFilename}" class="img-fluid rounded mb-3" alt="post-img">
                                           </a>
+                                          <p class="link-primary" th:text="${post.hashes}">
+
+                                          </p>
                                           <div class="d-flex align-items-center justify-content-between mb-2">
                                              <div sec:authorize="isAuthenticated()">
                                                 <a th:attr="data-id =${post.post_id}"  th:class="${post.isLike == true ? 'post_like_btn text-decoration-none d-flex align-items-start fw-light':'text-muted post_like_btn text-decoration-none d-flex align-items-start fw-light' }" >

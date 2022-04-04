@@ -52,8 +52,13 @@ public class Post extends BaseEntity {
         return post;
     }
 
+
     public void changeUser(User user) {
         this.user = user;
         user.getPosts().add(this);
+    }
+
+    public void addPostHashes(List<PostHash> postHashes){
+        this.postHashes = postHashes;
     }
 }

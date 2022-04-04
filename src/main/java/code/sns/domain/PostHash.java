@@ -28,4 +28,10 @@ public class PostHash {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "post_id")
     private Post post;
+
+
+    public PostHash(HashTag hashTag, Post post) {
+        this.hashTag = hashTag;
+        this.post = post;
+    }
 }

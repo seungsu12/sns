@@ -2,13 +2,13 @@
 spring:
 
 # redis
-  cache:
-    type: redis
-  redis:
-    host: 127.0.0.1
-    port: 6379
-    username:
-    password:
+#  cache:
+#    type: redis
+#  redis:
+#    host: 127.0.0.1
+#    port: 6379
+#    username:
+#    password:
 
   # Thymleaf
   thymeleaf:
@@ -43,7 +43,7 @@ spring:
     properties:
       hibernate:
         format_sql: true
-        show_sql: true
+        show_sql: false
     defer-datasource-initialization: true
     profiles:
       active: true
