@@ -1,6 +1,7 @@
 package code.sns.api;
 
 
+import code.sns.config.util.AuthUtil;
 import code.sns.domain.User;
 import code.sns.domain.dto.request.UserRequestDto;
 import code.sns.domain.dto.response.UserProfileDto;
@@ -9,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -23,6 +25,20 @@ public class UserApiController {
 
 
     private final UserService userService;
+
+    @GetMapping("/search/user/{word}")
+    public ResponseEntity searchUser(@PathVariable("word") String word) {
+
+        List<User> users = userService.searchUser(word);
+        return ResponseEntity.status(HttpStatus.OK).body(users);
+    }
+
+    @GetMapping("/user/isLogin")
+    public ResponseEntity isLogin(Authentication authentication) {
+
+        AuthUtil.getAuthenticationUserId();
+        return ResponseEntity.status(HttpStatus.OK).body("로그인 한 상태입니다.");
+    }
 
     @PostMapping("/api/login")
     public ResponseEntity login(@RequestBody Map<String, Object> map) {

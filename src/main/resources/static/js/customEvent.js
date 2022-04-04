@@ -1,3 +1,18 @@
+
+$("#main-people-tab").click(function (event){
+
+    $.ajax({
+        url: "/user/isLogin",
+
+    }).done(function (response) {
+
+    }).fail(function (response){
+        alert("로그인이 필요합니다.");
+        location.href = '/login';
+    })
+
+});
+
 //회원가입
 $(".signup-btn").click(function (event){
     const data ={

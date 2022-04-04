@@ -19,8 +19,11 @@ import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Configuration
 @Slf4j
@@ -31,8 +34,8 @@ public class WeatherApi {
 
 
     public static void main(String[] args){
-        LocalDateTime lo = LocalDateTime.now();
-
+        WeatherApi ap = new WeatherApi();
+        System.out.println(ap.getWeather());
     }
 
     public Weather getWeather() {
@@ -70,7 +73,6 @@ public class WeatherApi {
                 result = result.concat(line);
 
             }
-
             JSONParser parser = new JSONParser();
             JSONObject jsonObject = (JSONObject) parser.parse(result);
             JSONObject response = (JSONObject) jsonObject.get("response");

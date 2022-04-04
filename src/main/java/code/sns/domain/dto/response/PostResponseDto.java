@@ -6,13 +6,14 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Getter
 @Setter
 @ToString
-public class PostResponseDto {
+public class PostResponseDto implements Serializable {
     private Long user_id;
     private Long post_id;
     private String profile_img;
@@ -27,6 +28,7 @@ public class PostResponseDto {
     private Boolean isLike;
     private Boolean isScrap;
     private String hashes;
+
 
     @QueryProjection
     public PostResponseDto(Long user_id, Long post_id, String profile_img, String username, String nickname, String context, String storeFilename, LocalDateTime createdAt, Integer postLikeCount, Integer commentsCount,Integer scrapCount){

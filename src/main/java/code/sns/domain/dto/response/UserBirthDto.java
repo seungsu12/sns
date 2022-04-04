@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.io.Serializable;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.Period;
@@ -12,7 +13,7 @@ import java.time.Period;
 @Getter
 @Setter
 @ToString
-public class UserBirthDto {
+public class UserBirthDto implements Serializable {
 
     private Long userId;
 

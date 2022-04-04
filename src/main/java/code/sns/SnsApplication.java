@@ -13,7 +13,7 @@ import java.util.Optional;
 
 @SpringBootApplication
 @EnableJpaAuditing
-@EnableCaching
+//@EnableCaching
 public class SnsApplication {
 
 	public static void main(String[] args) {

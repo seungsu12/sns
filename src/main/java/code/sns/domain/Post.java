@@ -5,6 +5,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.springframework.data.redis.core.RedisHash;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -51,8 +52,13 @@ public class Post extends BaseEntity {
         return post;
     }
 
+
     public void changeUser(User user) {
         this.user = user;
         user.getPosts().add(this);
+    }
+
+    public void addPostHashes(List<PostHash> postHashes){
+        this.postHashes = postHashes;
     }
 }

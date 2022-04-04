@@ -11,6 +11,7 @@ import java.util.Optional;
 public interface PostCustomRepository {
 
     Optional<PostResponseDto> findByIdDto(Long postId);
+
     List<PostResponseDto> getPosts();
 
     Page<PostResponseDto> getPostsByUserId(Long userId, Pageable pageable);
