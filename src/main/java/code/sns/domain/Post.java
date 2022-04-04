@@ -5,6 +5,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.springframework.data.redis.core.RedisHash;
 
 import javax.persistence.*;
 import java.util.ArrayList;

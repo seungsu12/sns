@@ -42,7 +42,7 @@ public class PostService {
     private final HashTagService hashTagService;
     private final FileStore fileStore;
 
-    @Cacheable()
+    @Cacheable(cacheNames = "post",key = "1L")
     public List<PostResponseDto> getPosts() {
        return postRepository.getPosts();
 //

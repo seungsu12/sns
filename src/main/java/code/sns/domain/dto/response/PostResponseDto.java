@@ -6,13 +6,14 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Getter
 @Setter
 @ToString
-public class PostResponseDto {
+public class PostResponseDto implements Serializable {
     private Long user_id;
     private Long post_id;
     private String profile_img;

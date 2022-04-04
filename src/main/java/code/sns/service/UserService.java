@@ -64,7 +64,7 @@ public class UserService {
         return userRepository.getFromFollowImg(id);
     }
 
-    @Cacheable(value = "birth")
+    @Cacheable(value = "birth",key = "#pageRequest.getPageNumber()")
     public List<UserBirthDto> getBirthPeople(PageRequest pageRequest) {
 
      return  userRepository.getBirthPeople(pageRequest).toList();
