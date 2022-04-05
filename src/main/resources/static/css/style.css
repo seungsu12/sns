@@ -39,6 +39,7 @@ Version: 1.0
 }
 .search_box_img {
     width: 60px;
+    height: 60px;
     border-radius: 1rem;
 
 }
