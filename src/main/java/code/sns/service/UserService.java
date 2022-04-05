@@ -64,7 +64,7 @@ public class UserService {
         return userRepository.getFromFollowImg(id);
     }
 
-    @Cacheable(value = "birth",key = "#pageRequest.getPageNumber()")
+    @Cacheable(value = "birth",key = "{#pageRequest.getPageNumber()}")
     public List<UserBirthDto> getBirthPeople(PageRequest pageRequest) {
 
      return  userRepository.getBirthPeople(pageRequest).toList();
@@ -73,7 +73,7 @@ public class UserService {
 
     }
 
-    public List<User> searchUser(String word) {
+    public List<UserBirthDto> searchUser(String word) {
 
         return userRepository.findByUsernameContains(word);
     }

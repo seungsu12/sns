@@ -19,6 +19,8 @@ public class UserBirthDto implements Serializable {
 
     private String username;
 
+    private String nickname;
+
     private String profile_img;
 
     private LocalDate birth;
@@ -26,7 +28,8 @@ public class UserBirthDto implements Serializable {
     private Integer dDay;
 
     @QueryProjection
-    public UserBirthDto(Long userId, String username, String profile_img,LocalDate birth) {
+    public UserBirthDto(Long userId,String nickname,  String username, String profile_img,LocalDate birth) {
+        this.nickname = nickname;
         this.userId = userId;
         this.username = username;
         this.profile_img = profile_img;

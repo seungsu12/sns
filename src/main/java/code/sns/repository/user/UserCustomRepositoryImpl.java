@@ -72,8 +72,10 @@ public class UserCustomRepositoryImpl implements  UserCustomRepository {
         LocalDate now = LocalDate.now();
         Integer start = now.getDayOfMonth();
         Integer end = now.lengthOfMonth();
+
         List<UserBirthDto> fetch = queryFactory.select(new QUserBirthDto(
                         user.id,
+                        user.nickname,
                         user.username,
                         user.profile_img,
                         user.birth
@@ -84,5 +86,19 @@ public class UserCustomRepositoryImpl implements  UserCustomRepository {
                 .limit(pageRequest.getPageSize())
                 .fetch();
         return new PageImpl<>(fetch,pageRequest,fetch.size());
+    }
+
+    @Override
+    public List<UserBirthDto> findByUsernameContains(String word) {
+
+        return queryFactory.select(new QUserBirthDto(
+                user.id,
+                user.nickname,
+                user.username,
+                user.profile_img,
+                user.birth
+        )).from(user)
+                .where(user.username.contains(word))
+                .fetch();
     }
 }
