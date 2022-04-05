@@ -1,9 +1,8 @@
 package code.sns.api;
 
 
-import code.sns.auth.PrincipalDetail;
 import code.sns.config.HashTagConfig;
-import code.sns.config.util.AuthUtil;
+import code.sns.config.auth.AuthUtil;
 import code.sns.domain.dto.request.PostRequestDto;
 import code.sns.domain.dto.response.PostResponseDto;
 import code.sns.domain.dto.response.PostResponseLoginDto;

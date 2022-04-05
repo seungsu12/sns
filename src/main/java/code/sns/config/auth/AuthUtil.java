@@ -1,9 +1,8 @@
-package code.sns.config.util;
+package code.sns.config.auth;
 
 import code.sns.auth.PrincipalDetail;
 import code.sns.exception.CustomException;
 import code.sns.exception.ErrorCode;
-import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;

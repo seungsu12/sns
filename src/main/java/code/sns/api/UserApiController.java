@@ -1,7 +1,7 @@
 package code.sns.api;
 
 
-import code.sns.config.util.AuthUtil;
+import code.sns.config.auth.AuthUtil;
 import code.sns.domain.User;
 import code.sns.domain.dto.request.UserRequestDto;
 import code.sns.domain.dto.response.UserBirthDto;

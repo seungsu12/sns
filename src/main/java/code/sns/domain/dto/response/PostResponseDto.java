@@ -1,5 +1,7 @@
 package code.sns.domain.dto.response;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.querydsl.core.annotations.QueryProjection;
 import lombok.Data;
 import lombok.Getter;
@@ -23,6 +25,7 @@ public class PostResponseDto implements Serializable {
     private String nickname;
     private String context;
     private String storeFilename;
+    @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate createdAt;
     private Integer postLikeCount;
     private Integer commentsCount;
