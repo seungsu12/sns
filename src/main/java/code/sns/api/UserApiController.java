@@ -1,9 +1,10 @@
 package code.sns.api;
 
 
-import code.sns.config.util.AuthUtil;
+import code.sns.config.auth.AuthUtil;
 import code.sns.domain.User;
 import code.sns.domain.dto.request.UserRequestDto;
+import code.sns.domain.dto.response.UserBirthDto;
 import code.sns.domain.dto.response.UserProfileDto;
 import code.sns.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -29,7 +30,8 @@ public class UserApiController {
     @GetMapping("/search/user/{word}")
     public ResponseEntity searchUser(@PathVariable("word") String word) {
 
-        List<User> users = userService.searchUser(word);
+        List<UserBirthDto> users = userService.searchUser(word.replaceAll("@",""));
+        log.info("search users {}",users);
         return ResponseEntity.status(HttpStatus.OK).body(users);
     }
 

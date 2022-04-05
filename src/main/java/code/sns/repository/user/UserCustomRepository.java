@@ -16,4 +16,6 @@ public interface UserCustomRepository {
     List<String> getFromFollowImg(Long id);
 
     Page<UserBirthDto> getBirthPeople(PageRequest pageRequest);
+
+    List<UserBirthDto> findByUsernameContains(String word);
 }

@@ -1,10 +1,13 @@
 package code.sns.domain.dto.response;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.querydsl.core.annotations.QueryProjection;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.data.redis.core.RedisHash;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -13,6 +16,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @ToString
+@RedisHash
 public class PostResponseDto implements Serializable {
     private Long user_id;
     private Long post_id;
@@ -21,6 +25,7 @@ public class PostResponseDto implements Serializable {
     private String nickname;
     private String context;
     private String storeFilename;
+    @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate createdAt;
     private Integer postLikeCount;
     private Integer commentsCount;

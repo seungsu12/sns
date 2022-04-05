@@ -1,23 +1,19 @@
 package code.sns.api;
 
 
-import code.sns.config.util.AuthUtil;
+import code.sns.config.auth.AuthUtil;
 import code.sns.domain.dto.request.CommentRequestDto;
 import code.sns.domain.dto.response.CommentResponseDto;
 import code.sns.service.CommentService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.parameters.P;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor

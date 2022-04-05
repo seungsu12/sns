@@ -1,18 +1,12 @@
 package code.sns.api;
 
-import code.sns.auth.PrincipalDetail;
-import code.sns.config.util.AuthUtil;
-import code.sns.exception.CustomException;
-import code.sns.exception.ErrorCode;
+import code.sns.config.auth.AuthUtil;
 import code.sns.service.ScrapService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
-
-import javax.security.auth.message.config.AuthConfig;
-import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor

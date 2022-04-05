@@ -1,10 +1,7 @@
 package code.sns.api;
 
-import code.sns.auth.PrincipalDetail;
-import code.sns.config.util.AuthUtil;
+import code.sns.config.auth.AuthUtil;
 import code.sns.domain.dto.response.FollowResponseDto;
-import code.sns.exception.CustomException;
-import code.sns.exception.ErrorCode;
 import code.sns.service.FollowService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

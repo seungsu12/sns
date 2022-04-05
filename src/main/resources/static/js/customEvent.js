@@ -133,6 +133,43 @@ $('#commentModal').on('show.bs.modal',function(event) {
 
 });
 
+// 유저,게시글 서치
+$(".search_btn").click(function (event) {
+    let data = $(".search_input").val();
+    let bol =data.startsWith('@');
+    const wrapper = $(".search_wrapper");
+    wrapper.children().remove();
+
+    if (bol == true) {
+
+        $.ajax({
+            url: "/search/user/" + data,
+
+        }).done(function (response) {
+
+            response.forEach(function(item) {
+                let str = '<div class="search_box">';
+                str += '<div><a href="/profile/' + item.userId + 'class="text-muted><img class="search_box_img" src="/img/' + item.profile_img + '"></a></div>';
+                str += '<div class="search_box_context"><span>'+ item.username + '</span>';
+                str += '<span class="link-primary">@' + item.nickname + '</span></div>';
+                str += '<div class="search_box_follow">';
+                str += '<input type="checkbox" class="profile_follow_btn btn-check" id="btnPro">';
+                str += '<label class="btn btn-outline-primary btn-sm px-3 rounded-pill" for="btnPro">';
+                str += '<span class="follow">+ Follow</span>';
+                str += '<span class="following d-none">Following</span></label></div></div>'
+                wrapper.append(str);
+            });
+
+        }).fail(function (response){
+            alert("오류")
+        });
+
+        return;
+    }
+
+
+});
+
 // 댓글 작성
 
 $(".create-comment-btn").click(function(event){
@@ -256,16 +293,16 @@ $(".profile_follow_btn").click(function(event){
         event.preventDefault();
     })
 })
-let isRequestPost = false;
-window.addEventListener('scroll',() => {
-    // $("#mainPost").height() : DOM의 길이
-    // $("#mainPost").offset().top : DOM의 최상단 위치
-    //window.pageYOffset : 현제 스크롤 최상단 위치
-    //window.innerHeight : 창 길이
-    const domPositionY = $("#mainPost").height() + $("#mainPost").offset().top;
-    const windowPositionY = window.pageYOffset + window.innerHeight;
-    if(domPositionY <= windowPositionY && !this.isRequestPost) {
-        this.isRequestPost = true;
-        setTimeout(() => this.isRequestPost = false, 1000);
-    }
-});
+// let isRequestPost = false;
+// window.addEventListener('scroll',() => {
+//     // $("#mainPost").height() : DOM의 길이
+//     // $("#mainPost").offset().top : DOM의 최상단 위치
+//     //window.pageYOffset : 현제 스크롤 최상단 위치
+//     //window.innerHeight : 창 길이
+//     const domPositionY = $("#mainPost").height() + $("#mainPost").offset().top;
+//     const windowPositionY = window.pageYOffset + window.innerHeight;
+//     if(domPositionY <= windowPositionY && !this.isRequestPost) {
+//         this.isRequestPost = true;
+//         setTimeout(() => this.isRequestPost = false, 1000);
+//     }
+// });

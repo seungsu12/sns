@@ -1,5 +1,8 @@
 package code.sns.domain.dto.response;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.querydsl.core.annotations.QueryProjection;
 import lombok.Getter;
 import lombok.Setter;
@@ -19,14 +22,19 @@ public class UserBirthDto implements Serializable {
 
     private String username;
 
+    private String nickname;
+
     private String profile_img;
 
+//    @JsonDeserialize(using = LocalDateDeserializer.class)
+    @JsonFormat(pattern = "yyyy-MM-dd",timezone = "Asia/Seoul")
     private LocalDate birth;
 
     private Integer dDay;
 
     @QueryProjection
-    public UserBirthDto(Long userId, String username, String profile_img,LocalDate birth) {
+    public UserBirthDto(Long userId,String nickname,  String username, String profile_img,LocalDate birth) {
+        this.nickname = nickname;
         this.userId = userId;
         this.username = username;
         this.profile_img = profile_img;
