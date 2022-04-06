@@ -25,7 +25,8 @@ public class PrincipalDetailService implements UserDetailsService {
                 .orElseThrow(() ->{
             return new CustomException(ErrorCode.NOT_FOUND_EMAIL,String.format("[%s] 이메일을 찾을 수 없습니다.",email));
         });
-        log.info("User datails user {}",principal);
+//        log.info("User datails user {}",principal);
+
 
         return new PrincipalDetail(principal);
     }

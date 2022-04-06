@@ -2,6 +2,8 @@ package code.sns.api;
 
 
 import code.sns.config.HashTagConfig;
+import code.sns.config.redis.RedisPublisher;
+import code.sns.config.redis.RedisSubscriber;
 import code.sns.domain.Item;
 import code.sns.domain.Weather;
 import code.sns.domain.dto.response.CommentResponseDto;
@@ -16,6 +18,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.json.simple.parser.ParseException;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.redis.listener.ChannelTopic;
+import org.springframework.data.redis.listener.RedisMessageListenerContainer;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -38,6 +42,26 @@ public class TestApiController {
     private final CommentService commentService;
     private final WeatherApi weatherApi;
     private final UserService userService;
+    private final RedisMessageListenerContainer redisMessageListenerContainer;
+    private final RedisPublisher redisPublisher;
+    private final RedisSubscriber redisSubscriber;
+
+    @GetMapping("/message")
+    public void openChat() {
+        redisMessageListenerContainer.addMessageListener(redisSubscriber, ChannelTopic.of("1"));
+
+    }
+
+    @GetMapping("/delete")
+    public void outChat() {
+        redisMessageListenerContainer.removeMessageListener(redisSubscriber,ChannelTopic.of("1"));
+    }
+    @GetMapping("/send/{message}")
+    public void openChat(@PathVariable("message")String message) {
+
+
+    }
+
 
     @GetMapping("/birth")
     public ResponseEntity birth() {
