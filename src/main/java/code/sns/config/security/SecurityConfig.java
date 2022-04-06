@@ -2,6 +2,7 @@ package code.sns.config.security;
 
 
 import code.sns.auth.PrincipalDetailService;
+import code.sns.config.redis.RedisFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

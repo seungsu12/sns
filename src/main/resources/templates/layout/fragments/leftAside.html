@@ -90,8 +90,15 @@
                     </li>
                 </ul>
             </div>
-            <a href="/signup" class="btn btn-primary w-100 text-decoration-none rounded-4 py-3 fw-bold text-uppercase m-0" >Sign In +</a>
+            <th:block sec:authorize="isAuthenticated()">
+                <a  class="btn btn-primary w-100 text-decoration-none rounded-4 py-3 fw-bold text-uppercase m-0" >Notification</a>
+
+            </th:block>
+            <th:block sec:authorize="isAnonymous()">
+                <a href="/signup" class="btn btn-primary w-100 text-decoration-none rounded-4 py-3 fw-bold text-uppercase m-0" >Sign In +</a>
+            </th:block>
         </div>
+
     </aside>
 
 </th:block>

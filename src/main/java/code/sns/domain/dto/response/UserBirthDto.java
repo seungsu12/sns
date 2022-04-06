@@ -26,8 +26,6 @@ public class UserBirthDto implements Serializable {
 
     private String profile_img;
 
-//    @JsonDeserialize(using = LocalDateDeserializer.class)
-    @JsonFormat(pattern = "yyyy-MM-dd",timezone = "Asia/Seoul")
     private LocalDate birth;
 
     private Integer dDay;
