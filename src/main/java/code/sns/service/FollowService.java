@@ -1,5 +1,7 @@
 package code.sns.service;
 
+import code.sns.config.stomp.NoticeManger;
+import code.sns.config.stomp.NoticeMessage;
 import code.sns.domain.Follow;
 import code.sns.domain.User;
 import code.sns.domain.dto.response.FollowResponseDto;
@@ -24,6 +26,7 @@ public class FollowService {
 
     private final FollowRepository followRepository;
     private final UserRepository  userRepository;
+    private final NoticeManger noticeManger;
 
     public void follow(Long to_id, Long id) {
         User toUser = userRepository.getById(to_id);
@@ -35,6 +38,7 @@ public class FollowService {
             return;
         }
         followRepository.save(new Follow(toUser,fromUser));
+        noticeManger.sendNotice(to_id, NoticeMessage.createMessage(fromUser.getUsername(),fromUser.getProfile_img(), NoticeMessage.Type.follow));
     }
 
     private boolean checkFollow(User to_id, User id) {

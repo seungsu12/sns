@@ -1,6 +1,8 @@
 package code.sns.service;
 
 
+import code.sns.config.stomp.NoticeManger;
+import code.sns.config.stomp.NoticeMessage;
 import code.sns.domain.Comment;
 import code.sns.domain.Post;
 import code.sns.domain.User;
@@ -25,7 +27,7 @@ public class CommentService {
     private final CommentRepository commentRepository;
     private final UserRepository userRepository;
     private final PostRepository postRepository;
-
+    private final NoticeManger noticeManger;
 
     public CommentResponseDto createComment(CommentRequestDto requestDto) {
 
@@ -41,6 +43,10 @@ public class CommentService {
                 .build();
 
             commentRepository.save(comment);
+
+        Long fromId = post.getUser().getId();
+        noticeManger.sendNotice(fromId, NoticeMessage.createMessage(user.getUsername(),user.getProfile_img(), NoticeMessage.Type.comment));
+
         return commentRepository.getCommentById(comment.getId());
     }
 

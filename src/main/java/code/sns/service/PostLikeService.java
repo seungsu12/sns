@@ -1,5 +1,7 @@
 package code.sns.service;
 
+import code.sns.config.stomp.NoticeManger;
+import code.sns.config.stomp.NoticeMessage;
 import code.sns.domain.Post;
 import code.sns.domain.PostLike;
 import code.sns.domain.User;
@@ -20,6 +22,7 @@ public class PostLikeService {
     private final PostLikeRepository postLikeRepository;
     private final PostRepository postRepository;
     private final UserRepository userRepository;
+    private final NoticeManger  noticeManger;
 
     public boolean postLike(Long userId, Long postId) {
 
@@ -28,6 +31,8 @@ public class PostLikeService {
 
         if (existLike(user, post)) {
             postLikeRepository.save(new PostLike(user,post));
+            Long fromId = post.getUser().getId();
+            noticeManger.sendNotice(fromId,NoticeMessage.createMessage(user.getUsername(),user.getProfile_img(), NoticeMessage.Type.like));
             return true;
         }
         postLikeRepository.deleteByUserAndPost(user,post);

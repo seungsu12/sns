@@ -15,7 +15,48 @@ function getNotificationPermission() {
 }
 
 
+let stompClient = null;
+
+function notice(result) {
+    let username = result.username;
+    let message = result.message;
+    let img = '/img/'+result.profile_img;
+    let option ={body :username,
+                icon:img,
+                vibrate:true,
+                image :'/img/logo.png'}
+    let notification = new Notification(message,option);
+    setTimeout(notification.close.bind(notification),15000);
+}
+function IsLogin(){
+    $.ajax({
+        url :"/user/isLogin",
+
+    }).done(function (response){
+       let id =response.valueOf();
+       connect(id);
+    }).fail(function (resposne){
+
+    })
+
+}
+function connect(userId) {
+
+
+    let socket = new SockJS('/websocket');
+    stompClient =Stomp.over(socket);
+    stompClient.connect({},function (frame){
+        // setConnected(true);
+        console.log("connected :"+frame);
+        stompClient.subscribe('/topic/notice/'+userId,function (result){
+            console.log(JSON.parse(result.body));
+            notice(JSON.parse(result.body));
+
+        });
+    });
+}
 getNotificationPermission();
+IsLogin();
 
 $("#main-people-tab").click(function (event){
 
@@ -135,7 +176,7 @@ $('#commentModal').on('show.bs.modal',function(event) {
                 str+='<div class="bg-light px-3 py-2 rounded-4 mb-1 chat-text">';
                 str+='<p class="fw-500 mb-0">'+item.username+'</p>';
                 str+='<span class="text-muted">'+item.context+'</span>';
-                str+='</div>';
+                str +='</div>';
                 str+='<div class="d-flex align-items-center ms-2">';
                 str+='<a href="#" class="small text-muted text-decoration-none">Like</a>';
                 str+='<span class="fs-3 text-muted material-icons mx-1">circle</span>';

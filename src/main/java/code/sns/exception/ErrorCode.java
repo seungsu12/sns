@@ -13,6 +13,7 @@ public enum ErrorCode {
     UNAUTHORIZED_USER(HttpStatus.UNAUTHORIZED, "로그인이 필요합니다"),
     FORBIDDEN_USER(HttpStatus.FORBIDDEN, "권한이 없는 요청입니다"),
     FORBIDDEN_AUTHORITY(HttpStatus.FORBIDDEN,"해당 포스트에 접근 권한이 업습니다"),
+    FORBIDDEN_REQUEST(HttpStatus.FORBIDDEN,"자기 자신에게 알림을 보낼수 없습니다."),
 
 
     NOT_FOUND_POST(HttpStatus.NOT_FOUND, "해당 글을 찾을 수 없습니다"),
