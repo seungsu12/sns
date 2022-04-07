@@ -98,8 +98,8 @@
                                 </div>
                                 <div class="ms-auto">
                                     <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
-                                        <input type="checkbox" class="btn-check" th:id="'btncheck'+${index.index}">
-                                        <label class="btn btn-outline-primary btn-sm px-3 rounded-pill" th:for="'btncheck'+${index.index}">
+                                        <input  th:attr="data-followId=${user.getUserId}" type="checkbox" class="btn-check main_follow_btn" th:id="'btnsidecheck'+${index.index}">
+                                        <label class="btn btn-outline-primary btn-sm px-3 rounded-pill" th:for="'btnsidecheck'+${index.index}">
                                             <span class="follow">+ Follow</span>
                                             <span class="following d-none">Following</span>
                                         </label>

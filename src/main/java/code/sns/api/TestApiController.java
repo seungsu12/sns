@@ -15,8 +15,7 @@ import code.sns.service.HashTagService;
 import code.sns.service.PostService;
 import code.sns.service.UserService;
 import code.sns.weather.WeatherApi;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.RequiredArgsConstructor;
+import com.fasterxml.jackson.databind.ObjectMapper;import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.json.simple.parser.ParseException;
 import org.springframework.data.domain.PageRequest;
@@ -24,9 +23,7 @@ import org.springframework.data.redis.listener.ChannelTopic;
 import org.springframework.data.redis.listener.RedisMessageListenerContainer;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.handler.annotation.SendTo;
-import org.springframework.messaging.simp.SimpMessageSendingOperations;
+
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -49,9 +46,6 @@ public class TestApiController {
     private final UserService userService;
     private final RedisMessageListenerContainer redisMessageListenerContainer;
     private final RedisSubscriber redisSubscriber;
-
-
-
 
 
     @GetMapping("/message")
