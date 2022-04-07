@@ -48,17 +48,15 @@ public class TestApiController {
     private final WeatherApi weatherApi;
     private final UserService userService;
     private final RedisMessageListenerContainer redisMessageListenerContainer;
-    private final RedisPublisher redisPublisher;
     private final RedisSubscriber redisSubscriber;
-    private final SimpMessageSendingOperations sendingOperations;
-    private final ObjectMapper objectMapper;
+
 
 
 
 
     @GetMapping("/message")
-    public void openChat() {
-//        sendingOperations.convertAndSend("/topic/notice/1",new NoticeMessage("lss","이승수"));
+    public List<PostResponseDto> openChat() {
+        return postService.getTrendList(PageRequest.ofSize(5));
     }
 
     @GetMapping("/delete")

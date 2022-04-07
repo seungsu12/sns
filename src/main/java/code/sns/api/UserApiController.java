@@ -36,7 +36,7 @@ public class UserApiController {
     }
 
     @GetMapping("/user/isLogin")
-    public ResponseEntity isLogin(Authentication authentication) {
+    public ResponseEntity isLogin() {
 
         Long userId = AuthUtil.getAuthenticationUserId();
         return ResponseEntity.status(HttpStatus.OK).body(userId);

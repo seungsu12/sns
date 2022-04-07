@@ -50,6 +50,7 @@ public class indexController {
         }
 
         model.addAttribute("followList",followList);
+        model.addAttribute("trend",postService.getTrendList(PageRequest.of(0,3)));
         return "index";
     }
 

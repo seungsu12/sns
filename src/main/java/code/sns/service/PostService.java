@@ -158,4 +158,8 @@ public class PostService {
     public List<FollowResponseDto> getUnFollowList(Long userId, PageRequest pageRequest) {
         return followRepository.getUnFollowList(userId,pageRequest);
     }
+
+    public List<PostResponseDto> getTrendList(PageRequest pageRequest) {
+        return postRepository.getTrendList(pageRequest).toList();
+    }
 }

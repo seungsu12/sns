@@ -11,6 +11,7 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
@@ -216,5 +217,31 @@ public class PostCustomRepositoryImpl implements PostCustomRepository {
                 .fetch();
 
         return result;
+    }
+
+    @Override
+    public Page<PostResponseDto> getTrendList(PageRequest pageRequest) {
+        List<PostResponseDto> fetch = queryFactory.select(new QPostResponseDto(
+                        user.id,
+                        post.id,
+                        user.profile_img,
+                        user.username,
+                        user.nickname,
+                        post.context,
+                        post.uploadFile.storeFileName,
+                        post.created_at,
+                        post.postLikes.size(),
+                        post.comments.size(),
+                        post.scraps.size()
+                )).from(post)
+                .leftJoin(post.user, user)
+                .orderBy(post.postLikes.size().desc())
+                .orderBy(post.scraps.size().desc())
+                .orderBy(post.created_at.desc())
+                .offset(pageRequest.getOffset())
+                .limit(pageRequest.getPageSize())
+                .fetch();
+
+        return new PageImpl<>(fetch,pageRequest,fetch.size());
     }
 }
