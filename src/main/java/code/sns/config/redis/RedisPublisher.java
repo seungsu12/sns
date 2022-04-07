@@ -1,6 +1,6 @@
 package code.sns.config.redis;
 
-import code.sns.domain.NoticeMessage;
+import code.sns.config.stomp.NoticeMessage;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;

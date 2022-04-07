@@ -38,8 +38,8 @@ public class UserApiController {
     @GetMapping("/user/isLogin")
     public ResponseEntity isLogin(Authentication authentication) {
 
-        AuthUtil.getAuthenticationUserId();
-        return ResponseEntity.status(HttpStatus.OK).body("로그인 한 상태입니다.");
+        Long userId = AuthUtil.getAuthenticationUserId();
+        return ResponseEntity.status(HttpStatus.OK).body(userId);
     }
 
     @PostMapping("/api/login")

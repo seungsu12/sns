@@ -1,8 +1,6 @@
 package code.sns.config.redis;
 
-import code.sns.domain.NoticeMessage;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.mysql.cj.protocol.x.Notice;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.connection.Message;

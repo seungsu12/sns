@@ -5,6 +5,7 @@ import code.sns.config.HashTagConfig;
 import code.sns.config.redis.RedisPublisher;
 import code.sns.config.redis.RedisSubscriber;
 import code.sns.domain.Item;
+import code.sns.config.stomp.NoticeMessage;
 import code.sns.domain.Weather;
 import code.sns.domain.dto.response.CommentResponseDto;
 import code.sns.domain.dto.response.PostResponseDto;
@@ -14,6 +15,7 @@ import code.sns.service.HashTagService;
 import code.sns.service.PostService;
 import code.sns.service.UserService;
 import code.sns.weather.WeatherApi;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.json.simple.parser.ParseException;
@@ -22,6 +24,9 @@ import org.springframework.data.redis.listener.ChannelTopic;
 import org.springframework.data.redis.listener.RedisMessageListenerContainer;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -45,11 +50,15 @@ public class TestApiController {
     private final RedisMessageListenerContainer redisMessageListenerContainer;
     private final RedisPublisher redisPublisher;
     private final RedisSubscriber redisSubscriber;
+    private final SimpMessageSendingOperations sendingOperations;
+    private final ObjectMapper objectMapper;
+
+
+
 
     @GetMapping("/message")
     public void openChat() {
-        redisMessageListenerContainer.addMessageListener(redisSubscriber, ChannelTopic.of("1"));
-
+//        sendingOperations.convertAndSend("/topic/notice/1",new NoticeMessage("lss","이승수"));
     }
 
     @GetMapping("/delete")
