@@ -18,6 +18,7 @@ import java.time.LocalDateTime;
 @ToString
 @RedisHash
 public class PostResponseDto implements Serializable {
+
     private Long user_id;
     private Long post_id;
     private String profile_img;

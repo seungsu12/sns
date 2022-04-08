@@ -14,6 +14,7 @@ import code.sns.repository.post.PostRepository;
 import code.sns.repository.scrap.ScrapRepository;
 import code.sns.repository.user.UserRepository;
 import code.sns.upload.FileStore;
+import code.sns.upload.S3Uploader;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.Cacheable;
@@ -43,6 +44,7 @@ public class PostService {
     private final HashTagService hashTagService;
     private final PostHashService postHashService;
     private final FileStore fileStore;
+    private final S3Uploader s3Uploader;
 
 //    @Cacheable(cacheNames = "post",key = "1L")
     public List<PostResponseDto> getPosts() {
@@ -61,7 +63,11 @@ public class PostService {
         User user = userRepository.findById(requestDto.getUser_id())
                 .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_POST,String.format("해당 [%s] 아이디는 없습니다.",requestDto.getUser_id())));
 
-        UploadFile uploadFile = fileStore.storeFile(requestDto.getFile());
+//        UploadFile uploadFile = fileStore.storeFile(requestDto.getFile());
+
+        log.info("post service url 얻기전");
+        String url = s3Uploader.uploadFile(requestDto.getFile(), "/src/main/resources/static/img");
+        UploadFile loadFileDto = new UploadFile(requestDto.getFile().getOriginalFilename(),url);
 
         // context의 해쉬태그만 추출
         List<String> hashes = HashTagConfig.extractionHash(requestDto.getContext());
@@ -70,7 +76,7 @@ public class PostService {
 
         // post 객체 create
         Post post = Post.createPost(requestDto.getContext(),
-                uploadFile,user);
+                loadFileDto,user);
 
         // 한번 저장
         Post createdPost = postRepository.save(post);

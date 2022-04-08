@@ -52,7 +52,7 @@ public class PostApiController {
         List<String> hashes = HashTagConfig.extractionHash(requestDto.getContext ());
         hashTagService.IsExistHash (hashes);
 
-
+        log.info("controller 진입 createPost");
         postService.createPost(requestDto);
         return ResponseEntity.status(HttpStatus.OK).body("");
     }
