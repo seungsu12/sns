@@ -3,6 +3,7 @@ package code.sns.repository.post;
 import code.sns.domain.dto.response.PostResponseDto;
 import code.sns.domain.dto.response.PostResponseLoginDto;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
@@ -25,4 +26,6 @@ public interface PostCustomRepository {
     Page<PostResponseDto> getScraps(Long userId, Pageable pageable);
 
     List<PostResponseLoginDto> getPostsLogins(Long userId, Pageable pageable);
+
+    Page<PostResponseDto> getTrendList(PageRequest pageRequest);
 }

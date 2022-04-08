@@ -17,11 +17,18 @@ public class AuthUtil {
 
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-            if (authentication == null) {
+//            if (authentication.isAuthenticated()) {
+//                throw new CustomException(ErrorCode.FORBIDDEN_USER, "권한이 없습니다.");
+//            }
+//            PrincipalDetail principal = (PrincipalDetail) authentication.getPrincipal();
+//            return principal.getId();
+
+                        if (!authentication.isAuthenticated()) {
                 throw new CustomException(ErrorCode.FORBIDDEN_USER, "권한이 없습니다.");
             }
             PrincipalDetail principal = (PrincipalDetail) authentication.getPrincipal();
             return principal.getId();
+
         } catch (ClassCastException e) {
             log.error(e.getMessage());
             throw new CustomException(ErrorCode.FORBIDDEN_AUTHORITY);

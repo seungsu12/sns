@@ -15,7 +15,7 @@ function getNotificationPermission() {
 }
 
 
-let stompClient = null;
+
 
 function notice(result) {
     let username = result.username;
@@ -35,37 +35,36 @@ function IsLogin(){
     }).done(function (response){
        let id =response.valueOf();
        connect(id);
-    }).fail(function (resposne){
+    }).fail(function (error){
 
     })
 
 }
+//websocket 연결
 function connect(userId) {
-
-
     let socket = new SockJS('/websocket');
     stompClient =Stomp.over(socket);
     stompClient.connect({},function (frame){
         // setConnected(true);
-        console.log("connected :"+frame);
+        // console.log("connected :"+frame);
         stompClient.subscribe('/topic/notice/'+userId,function (result){
-            console.log(JSON.parse(result.body));
+            // console.log(JSON.parse(result.body));
             notice(JSON.parse(result.body));
 
         });
     });
 }
+let stompClient = null;
 getNotificationPermission();
 IsLogin();
 
-$("#main-people-tab").click(function (event){
-
+$(".main-people-tab").click(function (event){
     $.ajax({
         url: "/user/isLogin",
 
     }).done(function (response) {
 
-    }).fail(function (response){
+    }).fail(function (error){
         alert("로그인이 필요합니다.");
         location.href = '/login';
     })

@@ -44,7 +44,7 @@ public class PostService {
     private final PostHashService postHashService;
     private final FileStore fileStore;
 
-    @Cacheable(cacheNames = "post",key = "1L")
+//    @Cacheable(cacheNames = "post",key = "1L")
     public List<PostResponseDto> getPosts() {
         List<PostResponseDto> posts = postRepository.getPosts();
 
@@ -157,5 +157,9 @@ public class PostService {
 
     public List<FollowResponseDto> getUnFollowList(Long userId, PageRequest pageRequest) {
         return followRepository.getUnFollowList(userId,pageRequest);
+    }
+
+    public List<PostResponseDto> getTrendList(PageRequest pageRequest) {
+        return postRepository.getTrendList(pageRequest).toList();
     }
 }
