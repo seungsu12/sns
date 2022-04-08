@@ -18,9 +18,10 @@ public class NoticeManger {
     public void sendNotice(Long toUserId ,NoticeMessage noticeMessage) {
         String url = "/topic/notice/"+toUserId;
         Long loginId = AuthUtil.getAuthenticationUserId();
-        if (loginId.equals(toUserId)) {
-            throw new CustomException(ErrorCode.FORBIDDEN_REQUEST);
-        }
+
+//        if (loginId.equals(toUserId)) {
+//            throw new CustomException(ErrorCode.FORBIDDEN_REQUEST);
+//        }
 
         try {
             sendingOperations.convertAndSend(url, noticeMessage);
