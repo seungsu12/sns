@@ -48,7 +48,7 @@
                            </p>
                            <div class="d-flex followers">
                               <div>
-                                 <p class="mb-0" ><span th:text="${user.getFollowerCount()}"/><span style="color: #0a58ca" class="text-muted"> Followers</span></p>
+                                 <p class="mb-0" ><span th:text="${user.getFollowerCount()}"/><span style="color: #0a58ca" class="text-muted"> Following</span></p>
                                  <div class="d-flex" >
                                     <div th:block th:each="img :${fromFollow}">
                                        <img th:src="'/img/'+${img}" class="img-fluid rounded-circle" alt="follower-img">
@@ -56,7 +56,7 @@
                                  </div>
                               </div>
                               <div class="ms-5 ps-5">
-                                 <p class="mb-0" ><span th:text="${user.followingCount}"/> <span style="color: #0a58ca" class="text-muted"> Following</span></p>
+                                 <p class="mb-0" ><span th:text="${user.followingCount}"/> <span style="color: #0a58ca" class="text-muted"> Followers</span></p>
                                  <div class="d-flex" >
                                     <div th:block th:each="img :${toFollow}">
                                        <img th:src="'/img/'+${img}" class="img-fluid rounded-circle" alt="follower-img">
@@ -113,7 +113,9 @@
                                              </div>
                                              <div class="my-2">
                                                 <p class="mb-3 text-primary" th:text="${post.context}">본문</p>
-
+                                                <a href="#" class="text-decoration-none" data-bs-toggle="modal" data-bs-target="#commentModal">
+                                                   <img th:src="${post.storeFilename}" class="img-fluid rounded mb-3" alt="post-img">
+                                                </a>
                                                 <div class="d-flex align-items-center justify-content-between mb-2">
                                                    <div sec:authorize="isAuthenticated()">
                                                       <a th:attr="data-id =${post.post_id}"  th:class="${post.isLike == true ? 'post_like_btn text-decoration-none d-flex align-items-start fw-light':'text-muted post_like_btn text-decoration-none d-flex align-items-start fw-light' }" >
@@ -194,7 +196,7 @@
                                                 본문
                                              </p>
                                              <a href="#" class="text-decoration-none" data-bs-toggle="modal" data-bs-target="#commentModal">
-                                                <img th:src="'/img/'+${post.storeFilename}" class="img-fluid rounded mb-3" alt="post-img">
+                                                <img th:src="${post.storeFilename}" class="img-fluid rounded mb-3" alt="post-img">
                                              </a>
                                              <div class="d-flex align-items-center justify-content-between mb-2">
 
@@ -275,7 +277,7 @@
                                           <div class="my-2">
                                              <p th:text="${post.context}">본문</p>
                                              <a href="#" class="text-decoration-none" data-bs-toggle="modal" data-bs-target="#commentModal">
-                                             <img th:src="'/img/'+${post.storeFilename}" class="img-fluid rounded mb-3" alt="post-img">
+                                             <img th:src="${post.storeFilename}" class="img-fluid rounded mb-3" alt="post-img">
                                              </a>
                                              <div class="d-flex align-items-center justify-content-between mb-2">
                                                    <div sec:authorize="isAuthenticated()">

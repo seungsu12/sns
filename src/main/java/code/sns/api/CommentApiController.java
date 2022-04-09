@@ -23,7 +23,7 @@ public class CommentApiController {
     private final CommentService commentService;
 
     @PostMapping("/api/comment")
-    public ResponseEntity createComment(@RequestBody CommentRequestDto requestDto, Authentication authentication) {
+    public ResponseEntity createComment(@RequestBody CommentRequestDto requestDto) {
         Long userId = AuthUtil.getAuthenticationUserId();
         requestDto.setUserId(userId);
         CommentResponseDto comment = commentService.createComment(requestDto);

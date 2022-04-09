@@ -16,8 +16,6 @@ public class NoticeMessage implements Serializable {
 
     private static final long serialVersionUID =1234125L;
 
-//    private static String basicMsg ="%s님이 %s 하였습니다.";
-
     public enum Type{
         like,follow,comment,scrap;
     }

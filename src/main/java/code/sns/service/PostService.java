@@ -64,19 +64,24 @@ public class PostService {
                 .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_POST,String.format("해당 [%s] 아이디는 없습니다.",requestDto.getUser_id())));
 
 //        UploadFile uploadFile = fileStore.storeFile(requestDto.getFile());
-
-        log.info("post service url 얻기전");
-        String url = s3Uploader.uploadFile(requestDto.getFile(), "/src/main/resources/static/img");
-        UploadFile loadFileDto = new UploadFile(requestDto.getFile().getOriginalFilename(),url);
+        // file image 저장
+        UploadFile loadFileDto;
+        if(requestDto.getFile() !=null) {
+            String url = s3Uploader.uploadFile(requestDto.getFile(), "sns");
+             loadFileDto = new UploadFile(requestDto.getFile().getOriginalFilename(), url);
+        }else{
+             loadFileDto =new UploadFile(null,null);
+        }
 
         // context의 해쉬태그만 추출
         List<String> hashes = HashTagConfig.extractionHash(requestDto.getContext());
+
         // 해쉬태그들중 없는 태그들은 등록하고, 해시태그 리스트 반환
         List<HashTag> hashTagList = hashTagService.IsExistHash(hashes);
 
         // post 객체 create
         Post post = Post.createPost(requestDto.getContext(),
-                loadFileDto,user);
+                loadFileDto ,user);
 
         // 한번 저장
         Post createdPost = postRepository.save(post);
