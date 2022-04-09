@@ -23,7 +23,7 @@ public class AuthUtil {
 //            PrincipalDetail principal = (PrincipalDetail) authentication.getPrincipal();
 //            return principal.getId();
 
-                        if (!authentication.isAuthenticated()) {
+            if (authentication ==null) {
                 throw new CustomException(ErrorCode.FORBIDDEN_USER, "권한이 없습니다.");
             }
             PrincipalDetail principal = (PrincipalDetail) authentication.getPrincipal();

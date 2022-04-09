@@ -1,0 +1,11 @@
+cloud:
+  aws:
+    credentials:
+      accessKey: AKIAZ7DMM4CVE6CNRXHA
+      secretKey: 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
+    s3:
+      bucket: birdsns-bucket
+    region:
+      static: ap-northeast-2
+    stack:
+      auto: false

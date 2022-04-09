@@ -48,13 +48,8 @@ public class PostApiController {
         Long userId = authUtil.getAuthenticationUserId();
         requestDto.setUser_id(userId);
 
-        //해시태그 작업
-        List<String> hashes = HashTagConfig.extractionHash(requestDto.getContext ());
-        hashTagService.IsExistHash (hashes);
-
-
         postService.createPost(requestDto);
-        return ResponseEntity.status(HttpStatus.OK).body("");
+        return ResponseEntity.status(HttpStatus.OK).body("ok");
     }
 
     @GetMapping("/api/post/{postId}")
