@@ -14,9 +14,6 @@ function getNotificationPermission() {
     });
 }
 
-
-
-
 function notice(result) {
     let username = result.username;
     let message = result.message;
@@ -55,7 +52,7 @@ function connect(userId) {
     });
 }
 let stompClient = null;
-getNotificationPermission();
+// getNotificationPermission();
 IsLogin();
 
 $(".main-people-tab").click(function (event){
@@ -133,6 +130,7 @@ $(".post-delete-btn").click(function (event) {
         data :JSON.stringify(Object.fromEntries(map))
     }).done(function (response){
         alert("삭제");
+        location.href ="/";
     }).fail(function(response){
         alert("권한이 없습니다.")
     })
@@ -154,7 +152,7 @@ $('#commentModal').on('show.bs.modal',function(event) {
         modal.find('a.create-comment-btn').attr('data-postId',postId);
         modal.find('img#comment-img').attr('src','img/'+response.profile_img);
         modal.find('span#comment-modal-like').text(response.postLikeCount);
-        modal.find('img.d-block').attr('src','img/'+response.storeFilename);
+        modal.find('img.d-block').attr('src',response.storeFilename);
     });
 
     $.ajax({

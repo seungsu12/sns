@@ -14,11 +14,11 @@ import org.springframework.context.annotation.PropertySource;
 @PropertySource(value = "classpath:cloud.yml", factory = YmlPropertySourceFactory.class, ignoreResourceNotFound = true)
 public class AwsConfig {
 
-//    @Value("${cloud.aws.credentials.accessKey}")
-    private String accessKey ="AKIAZ7DMM4CVE6CNRXHA";
+    @Value("${cloud.aws.credentials.access-key}")
+    private String accessKey;
 
-//    @Value("{cloud.aws.credentials.secretKey}")
-    private String secretKey ="EmN1yTudnGahnA5qj5DD79jtNL4h2TtYykZlEnhU";
+    @Value("{cloud.aws.credentials.secret-key}")
+    private String secretKey;
 
     @Value("${cloud.aws.region.static}")
     private String region;
