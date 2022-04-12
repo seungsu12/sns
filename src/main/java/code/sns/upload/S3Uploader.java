@@ -40,7 +40,7 @@ public class S3Uploader {
     public String upload(File uploadFile, String filePath) {
         String fileName = filePath+"/"+ UUID.randomUUID()+uploadFile.getName();
         String uploadImageUrl = putS3(uploadFile,fileName);
-        log.info("upload 메서드");
+        log.info("upload 메서드 put3 url {}",uploadImageUrl);
 
         removeNewFile(uploadFile);
         return uploadImageUrl;
@@ -49,7 +49,7 @@ public class S3Uploader {
     //로컬에 저장된 이미지 지우기
     private String putS3(File uploadFile, String fileName) {
         amazonS3Client.putObject(new PutObjectRequest(bucket,fileName,uploadFile).withCannedAcl(CannedAccessControlList.PublicRead));
-        log.info("pustS3 메서드");
+        log.info("pustS3 메서드 fileName {}",fileName );
         return amazonS3Client.getUrl(bucket,fileName).toString();
     }
 
@@ -66,6 +66,7 @@ public class S3Uploader {
 
     private Optional<File> convert(MultipartFile file) throws IOException{
         File convertFile = new File(System.getProperty("user.dir")+"/"+file.getOriginalFilename());
+        log.info("userdir {}",System.getProperty("user.dir"));
         if (convertFile.createNewFile()) {
             try (FileOutputStream fos = new FileOutputStream(convertFile)) {
                 fos.write(file.getBytes());
