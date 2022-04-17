@@ -25,4 +25,5 @@ SNS 기능들을 구현.
 * Redis cache 적용
 
 ### 인프라
+
 <img width="815" alt="스크린샷 2022-04-15 오후 6 54 01" src="https://user-images.githubusercontent.com/66988341/163556945-b5f81263-25ba-442b-ab33-52d5a23eafca.png">
