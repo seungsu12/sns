@@ -15,9 +15,11 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
+import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
 import java.time.LocalDate;
 import java.util.Optional;
+import java.util.TimeZone;
 
 @SpringBootApplication
 @EnableJpaAuditing
@@ -38,6 +40,9 @@ public class SnsApplication {
 		return new JPAQueryFactory(em);
 	}
 
-
+	@PostConstruct
+	public void timezone() {
+		TimeZone.setDefault(TimeZone.getTimeZone("Asia/Seoul"));
+	}
 
 }

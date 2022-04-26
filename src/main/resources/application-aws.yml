@@ -1,0 +1,7 @@
+cloud:
+  aws:
+    s3:
+      bucket : birdsns-bucket
+    credentials:
+      access-key: AKIAZ7DMM4CVASW6JKPH
+      secret-key: CZ1T9xm6Gt6LdUQUD9ahqX3ibd5trBoXLIFVv3N
